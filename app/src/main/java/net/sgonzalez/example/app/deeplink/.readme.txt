@@ -1,0 +1,22 @@
+SEGMENT HISTORY
+===============
+
+--------------------
+     11-04-2016
+--------------------
+/nav[/destiny] - navigation action
+/not[/title/message] - notification action
+/toa[/message] - toast action
+--------------------
+
+HOW TO ADD MORE DEEP LINKS
+==========================
+1. Create a dedicated parser "ExampleParser.java" in parser package. Connect it to MainParser.
+2. Create a dedicated action "ExampleAction.java" in action package. Connect it to MainParser.
+3. Extend the switch in parser.MainParser, plus relevant constants and methods.
+
+NOTES
+=====
+* Actions are declared package private, and provided through ActionFactory class.
+* MainParser should take care of passing correct parameter amount, depending on action.
+* Take a look to other parsers for reference.
