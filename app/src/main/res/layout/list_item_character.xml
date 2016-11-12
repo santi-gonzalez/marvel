@@ -1,10 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          android:id="@+id/text_view_character"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:padding="8dp"
-          android:textColor="#aaa"
-          android:textSize="20sp"
-          tools:text="Placeholder" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+  <ImageView
+      android:id="@+id/image_view_character"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_alignBottom="@+id/dummy_view"
+      android:contentDescription="@null"
+      android:scaleType="centerCrop"
+      tools:src="@drawable/ic_notification" />
+
+  <net.sgonzalez.example.presentation.ui.view.MarvelCharacterNameTextView
+      android:id="@+id/text_view_character"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="60dp"
+      android:background="@drawable/bg_marvel_character_name"
+      android:ellipsize="end"
+      android:gravity="center_vertical"
+      android:lines="2"
+      android:maxLines="2"
+      android:maxWidth="200dp"
+      android:textColor="@android:color/white"
+      android:textSize="16sp"
+      tools:text="Abyss (Age of Apocalypse) " />
+
+  <View
+      android:id="@+id/dummy_view"
+      android:layout_width="match_parent"
+      android:layout_height="20dp"
+      android:layout_below="@+id/text_view_character" />
+</RelativeLayout>

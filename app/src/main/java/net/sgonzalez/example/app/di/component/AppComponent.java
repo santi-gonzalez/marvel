@@ -12,6 +12,7 @@ import net.sgonzalez.example.app.di.scope.ApplicationScope;
 import net.sgonzalez.example.app.executor.MainThreadExecutor;
 import net.sgonzalez.example.app.executor.NewThreadExecutor;
 import net.sgonzalez.example.app.executor.SameThreadExecutor;
+import net.sgonzalez.example.presentation.ui.manager.TypefaceManager;
 
 @ApplicationScope @Component(modules = { AppModule.class }) public interface AppComponent
 extends RepositoryProvider, DataSourceProvider, MapperProvider {
@@ -22,4 +23,5 @@ extends RepositoryProvider, DataSourceProvider, MapperProvider {
   MainThreadExecutor getMainThreadExecutor();
   NewThreadExecutor getNewThreadExecutor();
   SameThreadExecutor getSameThreadExecutor();
+  TypefaceManager getTypefaceManager();
 }

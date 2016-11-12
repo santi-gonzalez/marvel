@@ -28,8 +28,29 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
   }
 
   public void init() {
-    appendFakeCharacters();
+    renderCharacters();
     appendFakeComics();
+  }
+
+  private void renderCharacters() {
+    retrieveCharactersUseCase.execute(null, new Callbacks<List<CharacterModel>>() {
+      @Override
+      public void onExecute() {
+        // TODO: 12/11/2016 show loading in menu drawer
+      }
+
+      @Override
+      public void onResult(List<CharacterModel> models) {
+        getPresentable().appendCharacters(models);
+        // TODO: 12/11/2016 hide loading in menu drawer
+      }
+
+      @Override
+      public void onError(Exception exception) {
+        // TODO: 12/11/2016 hide loading in menu drawer
+        // TODO: 12/11/2016 show error
+      }
+    });
   }
 
   private void appendFakeCharacters() {
