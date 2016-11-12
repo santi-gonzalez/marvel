@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import net.sgonzalez.example.data.entity.Entity;
-import net.sgonzalez.example.domain.model.id.Id;
-import net.sgonzalez.example.domain.model.id.impl.StringId;
+import net.sgonzalez.example.app.identifier.Id;
+import net.sgonzalez.example.app.identifier.impl.StringId;
 import net.sgonzalez.example.domain.model.impl.FilterModel;
 
 public class FilterEntity extends RealmObject implements Entity<String, FilterModel> {
@@ -15,20 +15,16 @@ public class FilterEntity extends RealmObject implements Entity<String, FilterMo
 
   // Realm requirement
   public FilterEntity() {
-    this("");
+    this(null, null, null);
   }
 
   // Mapper requirement
   public FilterEntity(@NonNull FilterModel source) {
     this(source.getId()
-               .get());
+               .get(), source.getKey(), source.getValue());
   }
 
-  public FilterEntity(@NonNull String id) {
-    this(id, null, null);
-  }
-
-  public FilterEntity(@NonNull String id, String key, String value) {
+  public FilterEntity(String id, String key, String value) {
     this.id = id;
     this.key = key;
     this.value = value;
@@ -63,7 +59,8 @@ public class FilterEntity extends RealmObject implements Entity<String, FilterMo
   @NonNull
   @Override
   public FilterModel toModel() {
-    return FilterModel.newBuilder(getId())
+    return FilterModel.newBuilder()
+                      .withId(getId())
                       .withKey(getKey())
                       .withValue(getValue())
                       .build();

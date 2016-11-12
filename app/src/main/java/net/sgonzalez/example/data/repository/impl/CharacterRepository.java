@@ -3,7 +3,7 @@ package net.sgonzalez.example.data.repository.impl;
 import android.support.annotation.NonNull;
 import java.util.List;
 import javax.inject.Inject;
-import net.sgonzalez.example.app.di.scope.ApplicationScope;
+import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 import net.sgonzalez.example.data.cache.impl.TimeCachePolicy;
 import net.sgonzalez.example.data.callbacks.RetrieveCallbacks;
 import net.sgonzalez.example.data.datasource.impl.CharacterRetrofitCloudDataSource;

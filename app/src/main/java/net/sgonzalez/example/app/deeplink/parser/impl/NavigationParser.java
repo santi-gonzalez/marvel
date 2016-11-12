@@ -5,7 +5,7 @@ import net.sgonzalez.example.app.deeplink.DeepLinkActionRegistry;
 import net.sgonzalez.example.app.deeplink.action.impl.ActionFactory;
 import net.sgonzalez.example.app.deeplink.parser.AbsParser;
 import net.sgonzalez.example.app.deeplink.parser.Parser;
-import net.sgonzalez.example.app.di.scope.ApplicationScope;
+import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 import net.sgonzalez.example.app.navigation.NavigationDestiny;
 
 @ApplicationScope public class NavigationParser extends AbsParser {

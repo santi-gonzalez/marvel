@@ -22,7 +22,7 @@ import butterknife.BindView;
 import java.util.List;
 import javax.inject.Inject;
 import net.sgonzalez.example.R;
-import net.sgonzalez.example.app.di.component.AndroidComponent;
+import net.sgonzalez.example.app.dependency.component.AndroidComponent;
 import net.sgonzalez.example.app.navigation.Navigator;
 import net.sgonzalez.example.domain.model.impl.CharacterModel;
 import net.sgonzalez.example.domain.model.impl.ComicModel;

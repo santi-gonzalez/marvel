@@ -3,7 +3,7 @@ package net.sgonzalez.example.app.deeplink.action.impl;
 import android.support.annotation.Nullable;
 import javax.inject.Inject;
 import net.sgonzalez.example.app.deeplink.action.Action;
-import net.sgonzalez.example.app.di.scope.ApplicationScope;
+import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 import net.sgonzalez.example.app.navigation.NavigationDestiny;
 import net.sgonzalez.example.app.navigation.Navigator;
 import net.sgonzalez.example.app.navigation.extras.ExtrasProvider;

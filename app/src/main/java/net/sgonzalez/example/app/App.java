@@ -1,9 +1,9 @@
 package net.sgonzalez.example.app;
 
 import android.app.Application;
-import net.sgonzalez.example.app.di.component.AppComponent;
-import net.sgonzalez.example.app.di.component.DaggerAppComponent;
-import net.sgonzalez.example.app.di.module.AppModule;
+import net.sgonzalez.example.app.dependency.component.AppComponent;
+import net.sgonzalez.example.app.dependency.component.DaggerAppComponent;
+import net.sgonzalez.example.app.dependency.module.AppModule;
 
 public class App extends Application {
   private AppComponent appComponent;

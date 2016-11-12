@@ -1,22 +1,26 @@
 package net.sgonzalez.example.domain.model.impl;
 
+import android.support.annotation.NonNull;
 import java.util.Collections;
 import java.util.List;
 import net.sgonzalez.example.domain.model.Model;
-import net.sgonzalez.example.domain.model.id.Id;
+import net.sgonzalez.example.app.identifier.Id;
+import net.sgonzalez.example.domain.model.impl.submodel.ImageModel;
+import net.sgonzalez.example.domain.model.impl.submodel.ItemCollectionModel;
+import net.sgonzalez.example.domain.model.impl.submodel.UrlModel;
 
 public class CharacterModel implements Model<Long> {
   private final Id<Long> id;
   private final String name;
   private final String description;
   private final String modified;
-  private final Thumbnail thumbnail;
+  private final ImageModel thumbnail;
   private final String resourceURI;
-  private final Club comics;
-  private final Club series;
-  private final Club stories;
-  private final Club events;
-  private final List<Url> urls;
+  private final ItemCollectionModel comics;
+  private final ItemCollectionModel series;
+  private final ItemCollectionModel stories;
+  private final ItemCollectionModel events;
+  private final List<UrlModel> urls;
 
   private CharacterModel(Builder builder) {
     id = builder.id;
@@ -32,14 +36,25 @@ public class CharacterModel implements Model<Long> {
     urls = builder.urls != null ? Collections.unmodifiableList(builder.urls) : null;
   }
 
-  public static Builder newBuilder(Id<Long> id) {
-    return new Builder(id);
+  public static Builder newBuilder() {
+    return new Builder();
   }
 
-  public static Builder newBuilder(CharacterModel copy) {
-    return new Builder(copy.id);
+  public static Builder newBuilder(@NonNull CharacterModel copy) {
+    return newBuilder().withId(copy.getId())
+                       .withName(copy.getName())
+                       .withDescription(copy.getDescription())
+                       .withModified(copy.getModified())
+                       .withThumbnail(copy.getThumbnail())
+                       .withResourceURI(copy.getResourceURI())
+                       .withComics(copy.getComics())
+                       .withSeries(copy.getSeries())
+                       .withStories(copy.getStories())
+                       .withEvents(copy.getEvents())
+                       .withUrls(copy.getUrls());
   }
 
+  @Override
   public Id<Long> getId() {
     return id;
   }
@@ -56,7 +71,7 @@ public class CharacterModel implements Model<Long> {
     return modified;
   }
 
-  public Thumbnail getThumbnail() {
+  public ImageModel getThumbnail() {
     return thumbnail;
   }
 
@@ -64,23 +79,23 @@ public class CharacterModel implements Model<Long> {
     return resourceURI;
   }
 
-  public Club getComics() {
+  public ItemCollectionModel getComics() {
     return comics;
   }
 
-  public Club getSeries() {
+  public ItemCollectionModel getSeries() {
     return series;
   }
 
-  public Club getStories() {
+  public ItemCollectionModel getStories() {
     return stories;
   }
 
-  public Club getEvents() {
+  public ItemCollectionModel getEvents() {
     return events;
   }
 
-  public List<Url> getUrls() {
+  public List<UrlModel> getUrls() {
     return urls;
   }
 
@@ -106,16 +121,15 @@ public class CharacterModel implements Model<Long> {
     private String name;
     private String description;
     private String modified;
-    private Thumbnail thumbnail;
+    private ImageModel thumbnail;
     private String resourceURI;
-    private Club comics;
-    private Club series;
-    private Club stories;
-    private Club events;
-    private List<Url> urls;
+    private ItemCollectionModel comics;
+    private ItemCollectionModel series;
+    private ItemCollectionModel stories;
+    private ItemCollectionModel events;
+    private List<UrlModel> urls;
 
-    private Builder(Id<Long> id) {
-      withId(id);
+    private Builder() {
     }
 
     public Builder withId(Id<Long> id) {
@@ -138,8 +152,8 @@ public class CharacterModel implements Model<Long> {
       return this;
     }
 
-    public Builder withThumbnail(String path, String extension) {
-      this.thumbnail = new Thumbnail(path, extension);
+    public Builder withThumbnail(ImageModel thumbnail) {
+      this.thumbnail = thumbnail;
       return this;
     }
 
@@ -148,27 +162,27 @@ public class CharacterModel implements Model<Long> {
       return this;
     }
 
-    public Builder withComics(int available, String collectionURI, List<Item> items, int returned) {
-      this.comics = new Club(available, collectionURI, items, returned);
+    public Builder withComics(ItemCollectionModel comics) {
+      this.comics = comics;
       return this;
     }
 
-    public Builder withSeries(int available, String collectionURI, List<Item> items, int returned) {
-      this.series = new Club(available, collectionURI, items, returned);
+    public Builder withSeries(ItemCollectionModel series) {
+      this.series = series;
       return this;
     }
 
-    public Builder withStories(int available, String collectionURI, List<Item> items, int returned) {
-      this.stories = new Club(available, collectionURI, items, returned);
+    public Builder withStories(ItemCollectionModel stories) {
+      this.stories = stories;
       return this;
     }
 
-    public Builder withEvents(int available, String collectionURI, List<Item> items, int returned) {
-      this.events = new Club(available, collectionURI, items, returned);
+    public Builder withEvents(ItemCollectionModel events) {
+      this.events = events;
       return this;
     }
 
-    public Builder withUrls(List<Url> urls) {
+    public Builder withUrls(List<UrlModel> urls) {
       this.urls = urls;
       return this;
     }

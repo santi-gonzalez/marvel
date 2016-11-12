@@ -1,0 +1,13 @@
+All models present:
+- Implements Model<IdType>.
+- All fields are 'final', only have 'getters'.
+- Identifier comes from the type 'Id<IdType>'
+- An inner 'Builder' class, with similar fields and 'setters' (in the form 'withX(X)').
+- 'private' constructor with a 'Builder' as parameter.
+- 'static' 'newBuilder' methods. One 'empty' and one with a Model 'copy' as parameter.
+- An auto-generated 'toString'.
+
+All sub-models present:
+- A 'public' constructor which gets an Entity 'source'.
+- A 'public' constructor with all relevant params.
+- An auto-generated 'toString'.

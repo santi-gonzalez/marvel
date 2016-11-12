@@ -4,7 +4,7 @@ import javax.inject.Inject;
 import net.sgonzalez.example.app.deeplink.DeepLinkActionRegistry;
 import net.sgonzalez.example.app.deeplink.action.impl.ActionFactory;
 import net.sgonzalez.example.app.deeplink.parser.AbsParser;
-import net.sgonzalez.example.app.di.scope.ApplicationScope;
+import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 
 @ApplicationScope public class ExampleParser extends AbsParser {
   public static final int INDEX_PARAM_1 = 0;

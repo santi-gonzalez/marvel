@@ -13,7 +13,7 @@ import net.sgonzalez.example.app.deeplink.action.impl.ActionFactory;
 import net.sgonzalez.example.app.deeplink.log.Logger;
 import net.sgonzalez.example.app.deeplink.parser.MainParser;
 import net.sgonzalez.example.app.deeplink.parser.Parser;
-import net.sgonzalez.example.app.di.scope.ApplicationScope;
+import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 import net.sgonzalez.example.app.navigation.NavigationDestiny;
 
 /**

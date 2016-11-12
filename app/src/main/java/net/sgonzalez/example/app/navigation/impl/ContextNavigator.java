@@ -2,7 +2,7 @@ package net.sgonzalez.example.app.navigation.impl;
 
 import android.content.Context;
 import javax.inject.Inject;
-import net.sgonzalez.example.app.di.scope.AndroidScope;
+import net.sgonzalez.example.app.dependency.scope.AndroidScope;
 import net.sgonzalez.example.app.navigation.Navigator;
 
 /**

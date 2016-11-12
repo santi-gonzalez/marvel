@@ -6,7 +6,7 @@ import net.sgonzalez.example.app.deeplink.action.impl.ActionFactory;
 import net.sgonzalez.example.app.deeplink.parser.impl.NavigationParser;
 import net.sgonzalez.example.app.deeplink.parser.impl.NotificationParser;
 import net.sgonzalez.example.app.deeplink.parser.impl.ToastParser;
-import net.sgonzalez.example.app.di.scope.ApplicationScope;
+import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 
 @ApplicationScope public class MainParser extends AbsParser {
   public static final int INDEX_ACTION_SEGMENT = 0;

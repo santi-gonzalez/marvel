@@ -2,7 +2,7 @@ package net.sgonzalez.example.data.datasource.impl;
 
 import java.util.List;
 import javax.inject.Inject;
-import net.sgonzalez.example.app.di.scope.ApplicationScope;
+import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 import net.sgonzalez.example.app.retrofit.retrofit.response.ComicResponse;
 import net.sgonzalez.example.app.retrofit.retrofit.service.ComicService;
 import net.sgonzalez.example.data.callbacks.RetrieveCallbacks;

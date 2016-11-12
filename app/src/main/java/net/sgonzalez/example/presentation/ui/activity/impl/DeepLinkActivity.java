@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import javax.inject.Inject;
 import net.sgonzalez.example.app.deeplink.DeepLinkResolver;
-import net.sgonzalez.example.app.di.component.AndroidComponent;
+import net.sgonzalez.example.app.dependency.component.AndroidComponent;
 import net.sgonzalez.example.presentation.ui.activity.AbsActivity;
 
 public class DeepLinkActivity extends AbsActivity {

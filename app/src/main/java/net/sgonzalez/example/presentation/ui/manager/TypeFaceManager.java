@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
 import net.sgonzalez.example.app.App;
-import net.sgonzalez.example.app.di.scope.ApplicationScope;
+import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 
 @SuppressWarnings("SpellCheckingInspection") @ApplicationScope public class TypefaceManager {
   public static final String AMERICAN_CAPTAIN_PATRIUS_02_OTF = "american_captain_patrius_02.otf";

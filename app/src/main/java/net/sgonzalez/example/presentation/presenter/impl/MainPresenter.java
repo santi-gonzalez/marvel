@@ -1,11 +1,9 @@
 package net.sgonzalez.example.presentation.presenter.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import net.sgonzalez.example.app.di.scope.AndroidScope;
+import net.sgonzalez.example.app.dependency.scope.AndroidScope;
 import net.sgonzalez.example.domain.callbacks.Callbacks;
-import net.sgonzalez.example.domain.model.id.impl.LongId;
 import net.sgonzalez.example.domain.model.impl.CharacterModel;
 import net.sgonzalez.example.domain.model.impl.ComicModel;
 import net.sgonzalez.example.domain.usecase.impl.GetFiltersUseCase;
@@ -29,7 +27,6 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
 
   public void init() {
     renderCharacters();
-    appendFakeComics();
   }
 
   private void renderCharacters() {
@@ -51,24 +48,6 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
         // TODO: 12/11/2016 show error
       }
     });
-  }
-
-  private void appendFakeCharacters() {
-    List<CharacterModel> characterList = new ArrayList<>();
-    for (int index = 0; index < 50; index++) {
-      characterList.add(CharacterModel.newBuilder(new LongId(index))
-                                      .build());
-    }
-    getPresentable().appendCharacters(characterList);
-  }
-
-  private void appendFakeComics() {
-    List<ComicModel> comicList = new ArrayList<>();
-    for (int index = 0; index < 50; index++) {
-      comicList.add(ComicModel.newBuilder(new LongId(index))
-                              .build());
-    }
-    getPresentable().appendComics(comicList);
   }
 
   public boolean onToolbarActionRequestComics() {

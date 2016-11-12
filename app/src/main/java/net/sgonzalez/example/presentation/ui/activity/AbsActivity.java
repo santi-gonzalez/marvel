@@ -8,10 +8,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import net.sgonzalez.example.app.App;
-import net.sgonzalez.example.app.di.component.AndroidComponent;
-import net.sgonzalez.example.app.di.component.AppComponent;
-import net.sgonzalez.example.app.di.component.DaggerAndroidComponent;
-import net.sgonzalez.example.app.di.module.AndroidModule;
+import net.sgonzalez.example.app.dependency.component.AndroidComponent;
+import net.sgonzalez.example.app.dependency.component.AppComponent;
+import net.sgonzalez.example.app.dependency.component.DaggerAndroidComponent;
+import net.sgonzalez.example.app.dependency.module.AndroidModule;
 
 public abstract class AbsActivity extends AppCompatActivity {
   public static final int INVALID_ID = 0;

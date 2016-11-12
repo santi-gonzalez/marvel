@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 import butterknife.BindView;
 import net.sgonzalez.example.R;
-import net.sgonzalez.example.app.di.component.AndroidComponent;
+import net.sgonzalez.example.app.dependency.component.AndroidComponent;
 import net.sgonzalez.example.presentation.ui.activity.AbsActivity;
 
 public class FiltersActivity extends AbsActivity {

@@ -7,9 +7,9 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 import javax.inject.Inject;
 import net.sgonzalez.example.app.App;
-import net.sgonzalez.example.app.di.component.AppComponent;
-import net.sgonzalez.example.app.di.component.DaggerAndroidComponent;
-import net.sgonzalez.example.app.di.module.AndroidModule;
+import net.sgonzalez.example.app.dependency.component.AppComponent;
+import net.sgonzalez.example.app.dependency.component.DaggerAndroidComponent;
+import net.sgonzalez.example.app.dependency.module.AndroidModule;
 import net.sgonzalez.example.presentation.ui.manager.TypefaceManager;
 
 public class MarvelCharacterNameTextView extends TextView {

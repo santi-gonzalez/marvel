@@ -1,7 +1,7 @@
 package net.sgonzalez.example.domain.model.impl;
 
 import net.sgonzalez.example.domain.model.Model;
-import net.sgonzalez.example.domain.model.id.Id;
+import net.sgonzalez.example.app.identifier.Id;
 
 public class FilterModel implements Model<String> {
   private final Id<String> id;
@@ -14,15 +14,14 @@ public class FilterModel implements Model<String> {
     value = builder.value;
   }
 
-  public static Builder newBuilder(Id<String> id) {
-    return new Builder(id);
+  public static Builder newBuilder() {
+    return new Builder();
   }
 
   public static Builder newBuilder(FilterModel copy) {
-    Builder builder = new Builder(copy.id);
-    builder.key = copy.key;
-    builder.value = copy.value;
-    return builder;
+    return newBuilder().withId(copy.id)
+                       .withKey(copy.getKey())
+                       .withValue(copy.getValue());
   }
 
   @Override
@@ -52,7 +51,7 @@ public class FilterModel implements Model<String> {
     private String key;
     private String value;
 
-    private Builder(Id<String> id) {
+    private Builder() {
       withId(id);
     }
 

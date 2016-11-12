@@ -4,39 +4,58 @@ import android.support.annotation.NonNull;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import java.util.ArrayList;
-import java.util.List;
 import net.sgonzalez.example.data.entity.Entity;
-import net.sgonzalez.example.domain.model.id.Id;
-import net.sgonzalez.example.domain.model.id.impl.LongId;
+import net.sgonzalez.example.data.entity.impl.subentity.ImageEntity;
+import net.sgonzalez.example.data.entity.impl.subentity.ItemCollectionEntity;
+import net.sgonzalez.example.data.entity.impl.subentity.UrlEntity;
+import net.sgonzalez.example.data.utils.RealmUtils;
+import net.sgonzalez.example.app.identifier.Id;
+import net.sgonzalez.example.app.identifier.impl.LongId;
 import net.sgonzalez.example.domain.model.impl.CharacterModel;
+import net.sgonzalez.example.domain.model.impl.submodel.ImageModel;
+import net.sgonzalez.example.domain.model.impl.submodel.ItemCollectionModel;
 
 public class CharacterEntity extends RealmObject implements Entity<Long, CharacterModel> {
   @PrimaryKey private Long id;
   private String name;
   private String description;
   private String modified;
-  private Thumbnail thumbnail;
+  private ImageEntity thumbnail;
   private String resourceURI;
-  private Club comics;
-  private Club series;
-  private Club stories;
-  private Club events;
-  private RealmList<Url> urls;
+  private ItemCollectionEntity comics;
+  private ItemCollectionEntity series;
+  private ItemCollectionEntity stories;
+  private ItemCollectionEntity events;
+  private RealmList<UrlEntity> urls;
 
   // Realm requirement
   public CharacterEntity() {
-    this(0L);
+    this(0L, null, null, null, null, null, null, null, null, null, null);
   }
 
   // Mapper requirement
   public CharacterEntity(@NonNull CharacterModel source) {
     this(source.getId()
-               .get());
+               .get(), source.getName(), source.getDescription(), source.getModified(), new ImageEntity(source.getThumbnail()),
+    source.getResourceURI(), new ItemCollectionEntity(source.getComics()), new ItemCollectionEntity(source.getSeries()),
+    new ItemCollectionEntity(source.getStories()), new ItemCollectionEntity(source.getEvents()),
+    RealmUtils.toUrlEntityList(source.getUrls()));
   }
 
-  public CharacterEntity(Long id) {
+  public CharacterEntity(Long id, String name, String description, String modified, ImageEntity thumbnail, String resourceURI,
+                         ItemCollectionEntity comics, ItemCollectionEntity series, ItemCollectionEntity stories,
+                         ItemCollectionEntity events, RealmList<UrlEntity> urls) {
     this.id = id;
+    this.name = name;
+    this.description = description;
+    this.modified = modified;
+    this.thumbnail = thumbnail;
+    this.resourceURI = resourceURI;
+    this.comics = comics;
+    this.series = series;
+    this.stories = stories;
+    this.events = events;
+    this.urls = urls;
   }
 
   @Override
@@ -47,10 +66,6 @@ public class CharacterEntity extends RealmObject implements Entity<Long, Charact
   @Override
   public void setId(Id<Long> id) {
     this.id = id.get();
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public String getName() {
@@ -77,11 +92,11 @@ public class CharacterEntity extends RealmObject implements Entity<Long, Charact
     this.modified = modified;
   }
 
-  public Thumbnail getThumbnail() {
+  public ImageEntity getThumbnail() {
     return thumbnail;
   }
 
-  public void setThumbnail(Thumbnail thumbnail) {
+  public void setThumbnail(ImageEntity thumbnail) {
     this.thumbnail = thumbnail;
   }
 
@@ -93,87 +108,63 @@ public class CharacterEntity extends RealmObject implements Entity<Long, Charact
     this.resourceURI = resourceURI;
   }
 
-  public Club getComics() {
+  public ItemCollectionEntity getComics() {
     return comics;
   }
 
-  public void setComics(Club comics) {
+  public void setComics(ItemCollectionEntity comics) {
     this.comics = comics;
   }
 
-  public Club getSeries() {
+  public ItemCollectionEntity getSeries() {
     return series;
   }
 
-  public void setSeries(Club series) {
+  public void setSeries(ItemCollectionEntity series) {
     this.series = series;
   }
 
-  public Club getStories() {
+  public ItemCollectionEntity getStories() {
     return stories;
   }
 
-  public void setStories(Club stories) {
+  public void setStories(ItemCollectionEntity stories) {
     this.stories = stories;
   }
 
-  public Club getEvents() {
+  public ItemCollectionEntity getEvents() {
     return events;
   }
 
-  public void setEvents(Club events) {
+  public void setEvents(ItemCollectionEntity events) {
     this.events = events;
   }
 
-  public RealmList<Url> getUrls() {
+  public RealmList<UrlEntity> getUrls() {
     return urls;
   }
 
-  public void setUrls(RealmList<Url> urls) {
+  public void setUrls(RealmList<UrlEntity> urls) {
     this.urls = urls;
   }
 
   @NonNull
   @Override
   public CharacterModel toModel() {
-    return CharacterModel.newBuilder(getId())
+    new ItemCollectionModel(getComics());
+    return CharacterModel.newBuilder()
+                         .withId(getId())
                          .withName(getName())
                          .withDescription(getDescription())
                          .withModified(getModified())
-                         .withThumbnail(getThumbnail().getPath(), getThumbnail().getExtension())
+                         .withThumbnail(new ImageModel(getThumbnail()))
                          .withResourceURI(getResourceURI())
-                         .withComics(getComics().getAvailable(), getComics().getCollectionURI(),
-                         toItemList(getComics().getItems()), getComics().getReturned())
-                         .withSeries(getSeries().getAvailable(), getSeries().getCollectionURI(),
-                         toItemList(getSeries().getItems()), getSeries().getReturned())
-                         .withStories(getStories().getAvailable(), getStories().getCollectionURI(),
-                         toItemList(getStories().getItems()), getStories().getReturned())
-                         .withEvents(getEvents().getAvailable(), getEvents().getCollectionURI(),
-                         toItemList(getEvents().getItems()), getEvents().getReturned())
-                         .withUrls(toUrlList(getUrls()))
+                         .withComics(new ItemCollectionModel(getComics()))
+                         .withSeries(new ItemCollectionModel(getSeries()))
+                         .withStories(new ItemCollectionModel(getStories()))
+                         .withEvents(new ItemCollectionModel(getEvents()))
+                         .withUrls(RealmUtils.toUrlModelList(getUrls()))
                          .build();
-  }
-
-  private List<net.sgonzalez.example.domain.model.impl.Item> toItemList(RealmList<Item> items) {
-    if (items == null) {
-      return null;
-    }
-    List<net.sgonzalez.example.domain.model.impl.Item> result = new ArrayList<>(items.size());
-    for (Item item : items) {
-      result.add(new net.sgonzalez.example.domain.model.impl.Item(item.getResourceURI(), item.getName()));
-    }
-    return result;
-  }
-
-  private List<net.sgonzalez.example.domain.model.impl.Url> toUrlList(RealmList<Url> urls) {
-    if (urls == null) {
-      return null;
-    }
-    List<net.sgonzalez.example.domain.model.impl.Url> result = new ArrayList<>(urls.size());
-    for (Url url : urls) {
-      result.add(new net.sgonzalez.example.domain.model.impl.Url(url.getType(), url.getUrl()));
-    }
-    return result;
   }
 
   @Override
