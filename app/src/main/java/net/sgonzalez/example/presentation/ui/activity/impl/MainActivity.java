@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 import butterknife.BindView;
 import java.util.List;
 import javax.inject.Inject;
@@ -30,6 +31,7 @@ import net.sgonzalez.example.presentation.presenter.impl.MainPresenter;
 import net.sgonzalez.example.presentation.ui.activity.AbsActivity;
 import net.sgonzalez.example.presentation.ui.adapter.CharactersAdapter;
 import net.sgonzalez.example.presentation.ui.adapter.ComicsAdapter;
+import net.sgonzalez.example.presentation.ui.adapter.EndlessScrollListener;
 
 public class MainActivity extends AbsActivity implements MainPresenter.Presentable {
   @Inject MainPresenter mainPresenter;
@@ -90,6 +92,12 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
     charactersRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     charactersAdapter = new CharactersAdapter();
     charactersRecyclerView.setAdapter(charactersAdapter);
+    charactersRecyclerView.addOnScrollListener(new EndlessScrollListener() {
+      @Override
+      public void onLoadMore(int currentPage) {
+        mainPresenter.onLoadMoreDrawer(currentPage);
+      }
+    });
   }
 
   private void initContentAdapter() {
@@ -157,6 +165,12 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
   @Override
   public void appendComics(List<ComicModel> comics) {
     comicsAdapter.appendItems(comics);
+  }
+
+  @Override
+  public void showToast(String message) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT)
+         .show();
   }
 
   private void issueTestNotification() {

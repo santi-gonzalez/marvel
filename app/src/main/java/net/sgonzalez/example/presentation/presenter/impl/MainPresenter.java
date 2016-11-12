@@ -6,21 +6,18 @@ import net.sgonzalez.example.app.dependency.scope.AndroidScope;
 import net.sgonzalez.example.domain.callbacks.Callbacks;
 import net.sgonzalez.example.domain.model.impl.CharacterModel;
 import net.sgonzalez.example.domain.model.impl.ComicModel;
-import net.sgonzalez.example.domain.usecase.impl.GetFiltersUseCase;
 import net.sgonzalez.example.domain.usecase.impl.RetrieveCharactersUseCase;
 import net.sgonzalez.example.domain.usecase.impl.RetrieveComicsByCharacterId;
 import net.sgonzalez.example.presentation.presenter.AbsPresenter;
 
 @AndroidScope public class MainPresenter extends AbsPresenter<MainPresenter.Presentable> {
   public static final long CHARACTER_ID = 1011334;
-  private final GetFiltersUseCase getFiltersUseCase;
   private final RetrieveComicsByCharacterId retrieveComicsByCharacterId;
   private final RetrieveCharactersUseCase retrieveCharactersUseCase;
 
   @Inject
-  public MainPresenter(GetFiltersUseCase getFiltersUseCase, RetrieveComicsByCharacterId retrieveComicsByCharacterId,
+  public MainPresenter(RetrieveComicsByCharacterId retrieveComicsByCharacterId,
                        RetrieveCharactersUseCase retrieveCharactersUseCase) {
-    this.getFiltersUseCase = getFiltersUseCase;
     this.retrieveComicsByCharacterId = retrieveComicsByCharacterId;
     this.retrieveCharactersUseCase = retrieveCharactersUseCase;
   }
@@ -92,8 +89,13 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
     });
   }
 
+  public void onLoadMoreDrawer(int currentPage) {
+    getPresentable().showToast("next page " + currentPage);
+  }
+
   public interface Presentable {
     void appendCharacters(List<CharacterModel> characters);
     void appendComics(List<ComicModel> comics);
+    void showToast(String message);
   }
 }
