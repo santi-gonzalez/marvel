@@ -11,13 +11,13 @@
       android:layout_alignBottom="@+id/dummy_view"
       android:contentDescription="@null"
       android:scaleType="centerCrop"
-      tools:src="@drawable/ic_notification" />
+      tools:background="#bbb" />
 
   <net.sgonzalez.example.presentation.ui.view.MarvelCharacterNameTextView
       android:id="@+id/text_view_character"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="60dp"
+      android:layout_marginTop="40dp"
       android:background="@drawable/bg_marvel_character_name"
       android:ellipsize="end"
       android:gravity="center_vertical"
@@ -31,6 +31,6 @@
   <View
       android:id="@+id/dummy_view"
       android:layout_width="match_parent"
-      android:layout_height="20dp"
+      android:layout_height="10dp"
       android:layout_below="@+id/text_view_character" />
 </RelativeLayout>

@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">Framework</string>
+  <string name="app_name">Marvel</string>
   <string name="request_comics">request comics</string>
   <string name="request_characters">request characters</string>
 </resources>
