@@ -1,6 +1,6 @@
 package net.sgonzalez.example.domain.usecase.log;
 
-import android.util.Log;
+import net.sgonzalez.example.app.log.MainLogger;
 
 public final class Logger {
   public static boolean DEBUG_LOGS_ENABLED = true;
@@ -10,11 +10,11 @@ public final class Logger {
 
   public static void logVerbose(String tag, String message) {
     if (DEBUG_LOGS_ENABLED) {
-      Log.v(tag, message);
+      MainLogger.v(tag, message);
     }
   }
 
   public static void logException(String tag, String message, Exception exception) {
-    Log.e(tag, message, exception);
+    MainLogger.e(tag, message, exception);
   }
 }

@@ -7,11 +7,6 @@ public class ItemEntity {
   private String resourceURI;
   private String name;
 
-  // Realm requirement
-  public ItemEntity() {
-    this(null, null);
-  }
-
   public ItemEntity(@NonNull ItemModel source) {
     this(source.getResourceURI(), source.getName());
   }

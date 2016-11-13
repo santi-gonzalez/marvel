@@ -49,12 +49,6 @@ public class ComicEntity implements Entity<Long, ComicModel> {
   private ItemCollectionEntity stories;
   private ItemCollectionEntity events;
 
-  // Realm requirement
-  public ComicEntity() {
-    this(0L, 0L, null, 0, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null, null, null, null,
-    null, null, null, null, null);
-  }
-
   // Mapper requirement
   public ComicEntity(@NonNull ComicModel source) {
     this(source.getId()

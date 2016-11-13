@@ -11,11 +11,6 @@ public class FilterEntity implements Entity<String, FilterModel> {
   private String key;
   private String value;
 
-  // Realm requirement
-  public FilterEntity() {
-    this(null, null, null);
-  }
-
   // Mapper requirement
   public FilterEntity(@NonNull FilterModel source) {
     this(source.getId()

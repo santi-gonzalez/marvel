@@ -1,15 +1,13 @@
 All entities present:
-- Extends RealmObject, implements Entity<IdType, EquivalentModel>.
+- Implements Entity<IdType, EquivalentModel>.
 - All fields have 'getters' and 'setters' (except 'id').
 - Identifier have especial 'setter' and 'getter', of the form 'Id<IdType>'
-- 'public' empty constructor.
-- 'public' Model 'source' constructor.
-- 'public' relevant fields constructor.
+- 'public' Model 'source' constructor, to map from domain.
+- 'public' relevant fields constructor, to create new instance.
 - 'toModel' method.
 - An auto-generated 'toString'.
 
 All sub-entities present:
-- Extends RealmObject.
 - 'public' empty constructor.
 - 'public' Model 'source' constructor.
 - 'public' relevant fields constructor.

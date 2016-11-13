@@ -7,10 +7,6 @@ public class DateEntity {
   private String type;
   private String date;
 
-  public DateEntity() {
-    this(null, null);
-  }
-
   public DateEntity(@NonNull DateModel source) {
     this(source.getType(), source.getDate());
   }

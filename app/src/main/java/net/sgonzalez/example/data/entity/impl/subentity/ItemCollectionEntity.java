@@ -11,11 +11,6 @@ public class ItemCollectionEntity {
   private List<ItemEntity> items;
   private int returned;
 
-  // Realm requirement
-  public ItemCollectionEntity() {
-    this(0, null, null, 0);
-  }
-
   public ItemCollectionEntity(@NonNull ItemCollectionModel source) {
     this(source.getAvailable(), source.getCollectionURI(), SubMapper.toItemEntity(source.getItems()), source.getReturned());
   }

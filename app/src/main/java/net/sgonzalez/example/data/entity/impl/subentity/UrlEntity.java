@@ -7,11 +7,6 @@ public class UrlEntity {
   private String type;
   private String url;
 
-  // Realm requirement
-  public UrlEntity() {
-    this(null, null);
-  }
-
   public UrlEntity(@NonNull UrlModel source) {
     this(source.getUrl(), source.getType());
   }

@@ -26,11 +26,6 @@ public class CharacterEntity implements Entity<Long, CharacterModel> {
   private ItemCollectionEntity events;
   private List<UrlEntity> urls;
 
-  // Realm requirement
-  public CharacterEntity() {
-    this(0L, null, null, null, null, null, null, null, null, null, null);
-  }
-
   // Mapper requirement
   public CharacterEntity(@NonNull CharacterModel source) {
     this(source.getId()

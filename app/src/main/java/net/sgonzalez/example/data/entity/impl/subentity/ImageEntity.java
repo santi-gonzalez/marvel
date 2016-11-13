@@ -7,11 +7,6 @@ public class ImageEntity {
   private String path;
   private String extension;
 
-  // Realm requirement
-  public ImageEntity() {
-    this(null, null);
-  }
-
   public ImageEntity(@NonNull ImageModel source) {
     this(source.getPath(), source.getExtension());
   }

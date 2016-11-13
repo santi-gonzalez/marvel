@@ -7,11 +7,6 @@ public class PriceEntity {
   private String type;
   private double price;
 
-  // Realm requirement
-  public PriceEntity() {
-    this(null, 0D);
-  }
-
   public PriceEntity(@NonNull PriceModel source) {
     this(source.toString(), source.getPrice());
   }

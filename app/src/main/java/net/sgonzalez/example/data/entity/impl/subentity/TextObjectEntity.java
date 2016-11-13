@@ -8,11 +8,6 @@ public class TextObjectEntity {
   private String language;
   private String text;
 
-  // Realm requirement
-  public TextObjectEntity() {
-    this(null, null, null);
-  }
-
   public TextObjectEntity(@NonNull TextObjectModel source) {
     this(source.getType(), source.getLanguage(), source.getText());
   }
