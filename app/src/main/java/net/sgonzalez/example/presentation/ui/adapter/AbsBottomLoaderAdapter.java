@@ -1,6 +1,7 @@
 package net.sgonzalez.example.presentation.ui.adapter;
 
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,8 +71,34 @@ extends RecyclerView.Adapter<AbsBottomLoaderAdapter.InnerViewHolder<VH>> {
 
     public InnerViewHolder(View itemView, @Nullable VH childViewHolder) {
       super(itemView);
-      this.childViewHolder = childViewHolder;
-      progressBar = (ProgressBar) itemView.findViewById(R.id.progress_bar);
+      if (childViewHolder != null) {
+        this.childViewHolder = childViewHolder;
+      } else {
+        this.progressBar = (ProgressBar) itemView.findViewById(R.id.progress_bar);
+      }
+    }
+  }
+
+  public static class SpanSizeLookupBLA extends GridLayoutManager.SpanSizeLookup {
+    private final AbsBottomLoaderAdapter adapter;
+    private final int spanCount;
+
+    public SpanSizeLookupBLA(AbsBottomLoaderAdapter adapter, int spanCount) {
+      this.adapter = adapter;
+      this.spanCount = spanCount;
+    }
+
+    @Override
+    public final int getSpanSize(int position) {
+      if (position == adapter.getItemCount() - 1) {
+        return spanCount;
+      } else {
+        return getSpanSizeBLA(position);
+      }
+    }
+
+    public int getSpanSizeBLA(int position) {
+      return 1;
     }
   }
 }

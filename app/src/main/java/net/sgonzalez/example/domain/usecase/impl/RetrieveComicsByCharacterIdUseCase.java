@@ -13,13 +13,13 @@ import net.sgonzalez.example.data.repository.impl.ComicRepository;
 import net.sgonzalez.example.domain.model.impl.ComicModel;
 import net.sgonzalez.example.domain.usecase.AbsUseCase;
 
-public class RetrieveComicsByCharacterId extends AbsUseCase<Long, List<ComicModel>> {
+public class RetrieveComicsByCharacterIdUseCase extends AbsUseCase<Long, List<ComicModel>> {
   private final ComicRepository comicRepository;
   private final ComicMapper comicMapper;
 
   @Inject
-  public RetrieveComicsByCharacterId(MainThreadExecutor mainThreadExecutor, NewThreadExecutor newThreadExecutor,
-                                     SameThreadExecutor sameThreadExecutor, ComicRepository comicRepository, ComicMapper comicMapper) {
+  public RetrieveComicsByCharacterIdUseCase(MainThreadExecutor mainThreadExecutor, NewThreadExecutor newThreadExecutor,
+                                            SameThreadExecutor sameThreadExecutor, ComicRepository comicRepository, ComicMapper comicMapper) {
     super(mainThreadExecutor, newThreadExecutor, sameThreadExecutor);
     this.comicRepository = comicRepository;
     this.comicMapper = comicMapper;

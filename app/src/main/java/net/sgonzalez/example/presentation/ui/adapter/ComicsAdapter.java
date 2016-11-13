@@ -12,23 +12,23 @@ import java.util.List;
 import net.sgonzalez.example.R;
 import net.sgonzalez.example.domain.model.impl.ComicModel;
 
-public class ComicsAdapter extends RecyclerView.Adapter<ComicsAdapter.ViewHolder> {
+public class ComicsAdapter extends AbsBottomLoaderAdapter<ComicsAdapter.ViewHolder> {
   private final List<ComicModel> dataSet = new ArrayList<>();
 
   @Override
-  public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  public ViewHolder onCreateViewHolderBLA(ViewGroup parent, int viewType) {
     return new ViewHolder(LayoutInflater.from(parent.getContext())
                                         .inflate(R.layout.list_item_comic, parent, false));
   }
 
   @Override
-  public void onBindViewHolder(ViewHolder holder, int position) {
+  public void onBindViewHolderBLA(ViewHolder holder, int position) {
     ComicModel item = getItem(position);
     holder.populate(item);
   }
 
   @Override
-  public int getItemCount() {
+  public int getItemCountBLA() {
     return dataSet.size();
   }
 
@@ -41,6 +41,12 @@ public class ComicsAdapter extends RecyclerView.Adapter<ComicsAdapter.ViewHolder
     dataSet.addAll(comics);
     int finalCount = getItemCount();
     notifyItemRangeInserted(previousCount, finalCount);
+  }
+
+  public void clear() {
+    int previousCount = getItemCount();
+    dataSet.clear();
+    notifyItemRangeRemoved(0, previousCount);
   }
 
   public static class ViewHolder extends RecyclerView.ViewHolder {

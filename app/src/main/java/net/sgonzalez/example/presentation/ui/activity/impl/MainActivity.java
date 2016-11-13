@@ -11,9 +11,9 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,11 +29,14 @@ import net.sgonzalez.example.domain.model.impl.CharacterModel;
 import net.sgonzalez.example.domain.model.impl.ComicModel;
 import net.sgonzalez.example.presentation.presenter.impl.MainPresenter;
 import net.sgonzalez.example.presentation.ui.activity.AbsActivity;
+import net.sgonzalez.example.presentation.ui.adapter.AbsBottomLoaderAdapter;
 import net.sgonzalez.example.presentation.ui.adapter.CharactersAdapter;
 import net.sgonzalez.example.presentation.ui.adapter.ComicsAdapter;
 import net.sgonzalez.example.presentation.ui.adapter.EndlessScrollListener;
+import net.sgonzalez.example.presentation.ui.adapter.OnItemClickListener;
 
 public class MainActivity extends AbsActivity implements MainPresenter.Presentable {
+  public static final int COMICS_SPAN_COUNT = 2;
   @Inject MainPresenter mainPresenter;
   @Inject Navigator navigator;
   @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
@@ -43,13 +46,14 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
   private ActionBarDrawerToggle drawerToggle;
   private CharactersAdapter charactersAdapter;
   private ComicsAdapter comicsAdapter;
+  private EndlessScrollListener comicsEndlessScrollListener;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     initToolbarDrawer();
-    initContentAdapter();
-    initContent();
+    initComicsList();
+    mainPresenter.onViewReady();
   }
 
   @Override
@@ -59,7 +63,7 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
 
   @Override
   protected void onBindPresentable() {
-    mainPresenter.attachPresentable(this);
+    mainPresenter.bindPresentable(this);
   }
 
   @Override
@@ -68,52 +72,57 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
   }
 
   private void initToolbarDrawer() {
-    drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, 0, 0) {
-      public void onDrawerClosed(View view) {
-        super.onDrawerClosed(view);
-        getSupportActionBar().setTitle("Drawer closed");
-        invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-      }
-
-      public void onDrawerOpened(View drawerView) {
-        super.onDrawerOpened(drawerView);
-        getSupportActionBar().setTitle("Drawer open");
-        invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-      }
-    };
+    drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, 0, 0);
     drawerLayout.addDrawerListener(drawerToggle);
     setSupportActionBar(toolbar);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
-    initDrawerAdapter();
+    initCharactersList();
   }
 
-  private void initDrawerAdapter() {
-    charactersRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+  private void initCharactersList() {
+    // init adapter
     charactersAdapter = new CharactersAdapter();
+    charactersAdapter.setOnItemClickListener(new OnItemClickListener() {
+      @Override
+      public void onItemClicked(View view, CharacterModel character) {
+        mainPresenter.onCharacterClicked(character);
+      }
+    });
+    // init layout manager
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+    // init recycler view
+    charactersRecyclerView.setLayoutManager(linearLayoutManager);
     charactersRecyclerView.setAdapter(charactersAdapter);
     charactersRecyclerView.addOnScrollListener(new EndlessScrollListener() {
       @Override
       public void onLoadMore(int currentPage) {
-        mainPresenter.onLoadMoreDrawer(currentPage);
+        mainPresenter.onCharactersBottomReached(currentPage);
       }
     });
   }
 
-  private void initContentAdapter() {
-    comicsRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-    //comicsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+  private void initComicsList() {
+    // init adapter
     comicsAdapter = new ComicsAdapter();
+    // init layout manager
+    GridLayoutManager gridLayoutManager = new GridLayoutManager(this, COMICS_SPAN_COUNT);
+    gridLayoutManager.setSpanSizeLookup(new AbsBottomLoaderAdapter.SpanSizeLookupBLA(comicsAdapter, COMICS_SPAN_COUNT));
+    // init recycler view
+    comicsRecyclerView.setLayoutManager(gridLayoutManager);
     comicsRecyclerView.setAdapter(comicsAdapter);
-  }
-
-  private void initContent() {
-    mainPresenter.init();
+    comicsEndlessScrollListener = new EndlessScrollListener() {
+      @Override
+      public void onLoadMore(int currentPage) {
+        mainPresenter.onComicsBottomReached(currentPage);
+      }
+    };
+    comicsRecyclerView.addOnScrollListener(comicsEndlessScrollListener);
   }
 
   @NonNull
   @Override
-  public ActionBar getSupportActionBar() {
+  public final ActionBar getSupportActionBar() {
     //noinspection ConstantConditions
     return super.getSupportActionBar();
   }
@@ -142,10 +151,6 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
       return true;
     }
     switch (item.getItemId()) {
-      case R.id.request_comics:
-        return mainPresenter.onToolbarActionRequestComics();
-      case R.id.request_character:
-        return mainPresenter.onToolbarActionRequestCharacters();
       default:
         return super.onOptionsItemSelected(item);
     }
@@ -165,6 +170,12 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
   @Override
   public void appendComics(List<ComicModel> comics) {
     comicsAdapter.appendItems(comics);
+  }
+
+  @Override
+  public void clearComicsWall() {
+    comicsAdapter.clear();
+    //comicsEndlessScrollListener.
   }
 
   @Override

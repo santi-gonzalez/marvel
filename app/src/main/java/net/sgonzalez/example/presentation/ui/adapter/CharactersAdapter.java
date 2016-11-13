@@ -16,6 +16,7 @@ import net.sgonzalez.example.presentation.ui.utils.PicassoUtils;
 
 public class CharactersAdapter extends AbsBottomLoaderAdapter<CharactersAdapter.ViewHolder> {
   private final List<CharacterModel> dataSet = new ArrayList<>();
+  private OnItemClickListener onItemClickListener;
 
   @Override
   public ViewHolder onCreateViewHolderBLA(ViewGroup parent, int viewType) {
@@ -26,12 +27,16 @@ public class CharactersAdapter extends AbsBottomLoaderAdapter<CharactersAdapter.
   @Override
   public void onBindViewHolderBLA(ViewHolder holder, int position) {
     CharacterModel item = getItem(position);
-    holder.populate(item);
+    holder.populate(holder.itemView, item, onItemClickListener);
   }
 
   @Override
   public int getItemCountBLA() {
     return dataSet.size();
+  }
+
+  public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+    this.onItemClickListener = onItemClickListener;
   }
 
   public CharacterModel getItem(int position) {
@@ -54,10 +59,18 @@ public class CharactersAdapter extends AbsBottomLoaderAdapter<CharactersAdapter.
       ButterKnife.bind(this, itemView);
     }
 
-    public void populate(CharacterModel item) {
+    public void populate(View view, final CharacterModel item, final OnItemClickListener onItemClickListener) {
       textView.setText(String.valueOf(item.getName()));
-      PicassoUtils.placeImage(itemView.getContext(), item.getThumbnail()
-                                                         .getFullPath(), imageView);
+      PicassoUtils.placeImage(this.itemView.getContext(), item.getThumbnail()
+                                                              .getFullPath(), imageView);
+      view.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          if (onItemClickListener != null) {
+            onItemClickListener.onItemClicked(view, item);
+          }
+        }
+      });
     }
   }
 }

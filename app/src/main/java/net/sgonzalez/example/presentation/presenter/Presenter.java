@@ -3,7 +3,7 @@ package net.sgonzalez.example.presentation.presenter;
 import android.support.annotation.NonNull;
 
 public interface Presenter<Presentable> {
-  void attachPresentable(@NonNull Presentable presentable);
+  void bindPresentable(@NonNull Presentable presentable);
   @NonNull
-  Presentable getPresentable();
+  Presentable presentable();
 }
