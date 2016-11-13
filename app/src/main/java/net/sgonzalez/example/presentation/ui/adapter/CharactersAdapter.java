@@ -14,23 +14,23 @@ import net.sgonzalez.example.R;
 import net.sgonzalez.example.domain.model.impl.CharacterModel;
 import net.sgonzalez.example.presentation.ui.utils.PicassoUtils;
 
-public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.ViewHolder> {
+public class CharactersAdapter extends AbsBottomLoaderAdapter<CharactersAdapter.ViewHolder> {
   private final List<CharacterModel> dataSet = new ArrayList<>();
 
   @Override
-  public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  public ViewHolder onCreateViewHolderBLA(ViewGroup parent, int viewType) {
     return new ViewHolder(LayoutInflater.from(parent.getContext())
                                         .inflate(R.layout.list_item_character, parent, false));
   }
 
   @Override
-  public void onBindViewHolder(ViewHolder holder, int position) {
+  public void onBindViewHolderBLA(ViewHolder holder, int position) {
     CharacterModel item = getItem(position);
     holder.populate(item);
   }
 
   @Override
-  public int getItemCount() {
+  public int getItemCountBLA() {
     return dataSet.size();
   }
 
