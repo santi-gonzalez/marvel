@@ -14,7 +14,11 @@ public final class HashUtils {
     try {
       MessageDigest m = MessageDigest.getInstance(MD5_DIGEST);
       m.update(s.getBytes(), 0, s.length());
-      return new BigInteger(1, m.digest()).toString(16);
+      String md5 = new BigInteger(1, m.digest()).toString(16);
+      while (md5.length() < 32) {
+        md5 = "0" + md5;
+      }
+      return md5;
     } catch(NoSuchAlgorithmException exception) {
       throw new RuntimeException("device can't create proper auth info to perform API requests", exception);
     }
