@@ -1,10 +1,9 @@
 package net.sgonzalez.example.data.entity.impl.subentity;
 
 import android.support.annotation.NonNull;
-import io.realm.RealmObject;
 import net.sgonzalez.example.domain.model.impl.submodel.ItemModel;
 
-public class ItemEntity extends RealmObject {
+public class ItemEntity {
   private String resourceURI;
   private String name;
 

@@ -1,15 +1,13 @@
 package net.sgonzalez.example.data.entity.impl;
 
 import android.support.annotation.NonNull;
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-import net.sgonzalez.example.data.entity.Entity;
 import net.sgonzalez.example.app.identifier.Id;
 import net.sgonzalez.example.app.identifier.impl.StringId;
+import net.sgonzalez.example.data.entity.Entity;
 import net.sgonzalez.example.domain.model.impl.FilterModel;
 
-public class FilterEntity extends RealmObject implements Entity<String, FilterModel> {
-  @PrimaryKey private String id;
+public class FilterEntity implements Entity<String, FilterModel> {
+  private String id;
   private String key;
   private String value;
 

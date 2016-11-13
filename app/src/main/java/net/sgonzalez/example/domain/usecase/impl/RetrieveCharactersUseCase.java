@@ -28,7 +28,7 @@ public class RetrieveCharactersUseCase extends AbsUseCase<Void, List<CharacterMo
 
   @Override
   protected void onExecute(Void params) {
-    characterRepository.retrieve(new RetrieveCallbacks<List<CharacterEntity>>() {
+    characterRepository.retrieveFromCloud(new RetrieveCallbacks<List<CharacterEntity>>() {
       @Override
       public void onResult(List<CharacterEntity> entities) {
         dispatchResult(characterMapper.toModel(entities));

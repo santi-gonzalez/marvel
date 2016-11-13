@@ -1,9 +1,9 @@
 package net.sgonzalez.example.data.entity.impl;
 
 import android.support.annotation.NonNull;
-import io.realm.RealmList;
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
+import java.util.List;
+import net.sgonzalez.example.app.identifier.Id;
+import net.sgonzalez.example.app.identifier.impl.LongId;
 import net.sgonzalez.example.data.entity.Entity;
 import net.sgonzalez.example.data.entity.impl.subentity.DateEntity;
 import net.sgonzalez.example.data.entity.impl.subentity.ImageEntity;
@@ -12,16 +12,14 @@ import net.sgonzalez.example.data.entity.impl.subentity.ItemEntity;
 import net.sgonzalez.example.data.entity.impl.subentity.PriceEntity;
 import net.sgonzalez.example.data.entity.impl.subentity.TextObjectEntity;
 import net.sgonzalez.example.data.entity.impl.subentity.UrlEntity;
-import net.sgonzalez.example.data.utils.RealmUtils;
-import net.sgonzalez.example.app.identifier.Id;
-import net.sgonzalez.example.app.identifier.impl.LongId;
+import net.sgonzalez.example.data.mapper.SubMapper;
 import net.sgonzalez.example.domain.model.impl.ComicModel;
 import net.sgonzalez.example.domain.model.impl.submodel.ImageModel;
 import net.sgonzalez.example.domain.model.impl.submodel.ItemCollectionModel;
 import net.sgonzalez.example.domain.model.impl.submodel.ItemModel;
 
-public class ComicEntity extends RealmObject implements Entity<Long, ComicModel> {
-  @PrimaryKey private Long id;
+public class ComicEntity implements Entity<Long, ComicModel> {
+  private Long id;
   private long digitalId;
   private String title;
   private int issueNumber;
@@ -35,17 +33,17 @@ public class ComicEntity extends RealmObject implements Entity<Long, ComicModel>
   private String issn;
   private String format;
   private int pageCount;
-  private RealmList<TextObjectEntity> textObjects;
+  private List<TextObjectEntity> textObjects;
   private String resourceURI;
-  private RealmList<UrlEntity> urls;
+  private List<UrlEntity> urls;
   private ItemEntity series;
-  private RealmList<ItemEntity> variants;
-  //private RealmList<Collection> collections;
-  //private RealmList<Issue> collectedIssues;
-  private RealmList<DateEntity> dates;
-  private RealmList<PriceEntity> prices;
+  private List<ItemEntity> variants;
+  //private List<Collection> collections;
+  //private List<Issue> collectedIssues;
+  private List<DateEntity> dates;
+  private List<PriceEntity> prices;
   private ImageEntity thumbnail;
-  private RealmList<ImageEntity> images;
+  private List<ImageEntity> images;
   private ItemCollectionEntity creators;
   private ItemCollectionEntity characters;
   private ItemCollectionEntity stories;
@@ -54,7 +52,7 @@ public class ComicEntity extends RealmObject implements Entity<Long, ComicModel>
   // Realm requirement
   public ComicEntity() {
     this(0L, 0L, null, 0, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null, null, null, null,
-    null, null, null, null);
+    null, null, null, null, null);
   }
 
   // Mapper requirement
@@ -62,20 +60,20 @@ public class ComicEntity extends RealmObject implements Entity<Long, ComicModel>
     this(source.getId()
                .get(), source.getDigitalId(), source.getTitle(), source.getIssueNumber(), source.getVariantDescription(),
     source.getDescription(), source.getModified(), source.getIsbn(), source.getUpc(), source.getDiamondCode(), source.getEan(),
-    source.getIssn(), source.getFormat(), source.getPageCount(), RealmUtils.toTextObjectEntityList(source.getTextObjects()),
-    source.getResourceURI(), RealmUtils.toUrlEntityList(source.getUrls()), new ItemEntity(source.getSeries()),
-    RealmUtils.toDateEntityList(source.getDates()), RealmUtils.toPriceEntityList(source.getPrices()),
-    new ImageEntity(source.getThumbnail()), RealmUtils.toImageEntityList(source.getImages()),
+    source.getIssn(), source.getFormat(), source.getPageCount(), SubMapper.toTextObjectEntity(source.getTextObjects()),
+    source.getResourceURI(), SubMapper.toUrlEntity(source.getUrls()), new ItemEntity(source.getSeries()),
+    SubMapper.toItemEntity(source.getVariants()), SubMapper.toDateEntity(source.getDates()), SubMapper.toPriceEntity(source.getPrices()),
+    new ImageEntity(source.getThumbnail()), SubMapper.toImageEntity(source.getImages()),
     new ItemCollectionEntity(source.getCreators()), new ItemCollectionEntity(source.getCharacters()),
     new ItemCollectionEntity(source.getStories()), new ItemCollectionEntity(source.getEvents()));
   }
 
   public ComicEntity(Long id, long digitalId, String title, int issueNumber, String variantDescription, String description,
                      String modified, String isbn, String upc, String diamondCode, String ean, String issn, String format,
-                     int pageCount, RealmList<TextObjectEntity> textObjects, String resourceURI, RealmList<UrlEntity> urls,
-                     ItemEntity series, RealmList<DateEntity> dates, RealmList<PriceEntity> prices, ImageEntity thumbnail,
-                     RealmList<ImageEntity> images, ItemCollectionEntity creators, ItemCollectionEntity characters,
-                     ItemCollectionEntity stories, ItemCollectionEntity events) {
+                     int pageCount, List<TextObjectEntity> textObjects, String resourceURI, List<UrlEntity> urls,
+                     ItemEntity series, List<ItemEntity> variants, List<DateEntity> dates, List<PriceEntity> prices,
+                     ImageEntity thumbnail, List<ImageEntity> images, ItemCollectionEntity creators,
+                     ItemCollectionEntity characters, ItemCollectionEntity stories, ItemCollectionEntity events) {
     this.id = id;
     this.digitalId = digitalId;
     this.title = title;
@@ -218,11 +216,11 @@ public class ComicEntity extends RealmObject implements Entity<Long, ComicModel>
     this.pageCount = pageCount;
   }
 
-  public RealmList<TextObjectEntity> getTextObjects() {
+  public List<TextObjectEntity> getTextObjects() {
     return textObjects;
   }
 
-  public void setTextObjects(RealmList<TextObjectEntity> textObjects) {
+  public void setTextObjects(List<TextObjectEntity> textObjects) {
     this.textObjects = textObjects;
   }
 
@@ -234,11 +232,11 @@ public class ComicEntity extends RealmObject implements Entity<Long, ComicModel>
     this.resourceURI = resourceURI;
   }
 
-  public RealmList<UrlEntity> getUrls() {
+  public List<UrlEntity> getUrls() {
     return urls;
   }
 
-  public void setUrls(RealmList<UrlEntity> urls) {
+  public void setUrls(List<UrlEntity> urls) {
     this.urls = urls;
   }
 
@@ -250,27 +248,27 @@ public class ComicEntity extends RealmObject implements Entity<Long, ComicModel>
     this.series = series;
   }
 
-  public RealmList<ItemEntity> getVariants() {
+  public List<ItemEntity> getVariants() {
     return variants;
   }
 
-  public void setVariants(RealmList<ItemEntity> variants) {
+  public void setVariants(List<ItemEntity> variants) {
     this.variants = variants;
   }
 
-  public RealmList<DateEntity> getDates() {
+  public List<DateEntity> getDates() {
     return dates;
   }
 
-  public void setDates(RealmList<DateEntity> dates) {
+  public void setDates(List<DateEntity> dates) {
     this.dates = dates;
   }
 
-  public RealmList<PriceEntity> getPrices() {
+  public List<PriceEntity> getPrices() {
     return prices;
   }
 
-  public void setPrices(RealmList<PriceEntity> prices) {
+  public void setPrices(List<PriceEntity> prices) {
     this.prices = prices;
   }
 
@@ -282,11 +280,11 @@ public class ComicEntity extends RealmObject implements Entity<Long, ComicModel>
     this.thumbnail = thumbnail;
   }
 
-  public RealmList<ImageEntity> getImages() {
+  public List<ImageEntity> getImages() {
     return images;
   }
 
-  public void setImages(RealmList<ImageEntity> images) {
+  public void setImages(List<ImageEntity> images) {
     this.images = images;
   }
 
@@ -340,15 +338,15 @@ public class ComicEntity extends RealmObject implements Entity<Long, ComicModel>
                      .withIssn(getIssn())
                      .withFormat(getFormat())
                      .withPageCount(getPageCount())
-                     .withTextObjects(RealmUtils.toTextObjectModelList(getTextObjects()))
+                     .withTextObjects(SubMapper.toTextObjectModel(getTextObjects()))
                      .withResourceURI(getResourceURI())
-                     .withUrls(RealmUtils.toUrlModelList(getUrls()))
+                     .withUrls(SubMapper.toUrlModel(getUrls()))
                      .withSeries(new ItemModel(getSeries()))
-                     .withVariants(RealmUtils.toItemModelList(getVariants()))
-                     .withDates(RealmUtils.toDetaeModelList(getDates()))
-                     .withPrices(RealmUtils.toPriceModelList(getPrices()))
+                     .withVariants(SubMapper.toItemModel(getVariants()))
+                     .withDates(SubMapper.toDateModel(getDates()))
+                     .withPrices(SubMapper.toPriceModel(getPrices()))
                      .withThumbnail(new ImageModel(getThumbnail()))
-                     .withImages(RealmUtils.toImageModelList(getImages()))
+                     .withImages(SubMapper.toImageModel(getImages()))
                      .withCreators(new ItemCollectionModel(getCreators()))
                      .withCharacters(new ItemCollectionModel(getCharacters()))
                      .withStories(new ItemCollectionModel(getStories()))

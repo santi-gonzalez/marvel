@@ -1,10 +1,9 @@
 package net.sgonzalez.example.data.entity.impl.subentity;
 
 import android.support.annotation.NonNull;
-import io.realm.RealmObject;
 import net.sgonzalez.example.domain.model.impl.submodel.TextObjectModel;
 
-public class TextObjectEntity extends RealmObject {
+public class TextObjectEntity {
   private String type;
   private String language;
   private String text;

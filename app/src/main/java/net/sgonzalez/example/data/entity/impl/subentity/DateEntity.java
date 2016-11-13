@@ -1,10 +1,9 @@
 package net.sgonzalez.example.data.entity.impl.subentity;
 
 import android.support.annotation.NonNull;
-import io.realm.RealmObject;
 import net.sgonzalez.example.domain.model.impl.submodel.DateModel;
 
-public class DateEntity extends RealmObject {
+public class DateEntity {
   private String type;
   private String date;
 

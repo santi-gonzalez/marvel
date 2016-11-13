@@ -7,6 +7,8 @@ import net.sgonzalez.example.data.mapper.AbsMapper;
 import net.sgonzalez.example.domain.model.impl.CharacterModel;
 
 @ApplicationScope public class CharacterMapper extends AbsMapper<CharacterModel, CharacterEntity> {
+  public static final CharacterMapper INSTANCE = new CharacterMapper();
+
   @Inject
   protected CharacterMapper() {
     super(CharacterEntity.class);

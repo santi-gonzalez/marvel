@@ -1,27 +1,26 @@
 package net.sgonzalez.example.data.entity.impl.subentity;
 
 import android.support.annotation.NonNull;
-import io.realm.RealmList;
-import io.realm.RealmObject;
-import net.sgonzalez.example.data.utils.RealmUtils;
+import java.util.List;
+import net.sgonzalez.example.data.mapper.SubMapper;
 import net.sgonzalez.example.domain.model.impl.submodel.ItemCollectionModel;
 
-public class ItemCollectionEntity extends RealmObject {
+public class ItemCollectionEntity {
   private int available;
   private String collectionURI;
-  private RealmList<ItemEntity> items;
+  private List<ItemEntity> items;
   private int returned;
 
   // Realm requirement
   public ItemCollectionEntity() {
-    this(0, null, new RealmList<ItemEntity>(), 0);
+    this(0, null, null, 0);
   }
 
   public ItemCollectionEntity(@NonNull ItemCollectionModel source) {
-    this(source.getAvailable(), source.getCollectionURI(), RealmUtils.toItemEntityList(source.getItems()), source.getReturned());
+    this(source.getAvailable(), source.getCollectionURI(), SubMapper.toItemEntity(source.getItems()), source.getReturned());
   }
 
-  public ItemCollectionEntity(int available, String collectionURI, RealmList<ItemEntity> items, int returned) {
+  public ItemCollectionEntity(int available, String collectionURI, List<ItemEntity> items, int returned) {
     this.available = available;
     this.collectionURI = collectionURI;
     this.items = items;
@@ -44,11 +43,11 @@ public class ItemCollectionEntity extends RealmObject {
     this.collectionURI = collectionURI;
   }
 
-  public RealmList<ItemEntity> getItems() {
+  public List<ItemEntity> getItems() {
     return items;
   }
 
-  public void setItems(RealmList<ItemEntity> items) {
+  public void setItems(List<ItemEntity> items) {
     this.items = items;
   }
 

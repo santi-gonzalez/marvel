@@ -1,11 +1,10 @@
 package net.sgonzalez.example.data.entity;
 
 import android.support.annotation.NonNull;
-import io.realm.RealmModel;
-import net.sgonzalez.example.domain.model.Model;
 import net.sgonzalez.example.app.identifier.Id;
+import net.sgonzalez.example.domain.model.Model;
 
-public interface Entity<IdType, M extends Model<IdType>> extends RealmModel {
+public interface Entity<IdType, M extends Model<IdType>> {
   Id<IdType> getId();
   void setId(Id<IdType> id);
   @NonNull

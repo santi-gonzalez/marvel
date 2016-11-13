@@ -7,21 +7,21 @@ import net.sgonzalez.example.data.cache.impl.TimeCachePolicy;
 import net.sgonzalez.example.data.callbacks.RetrieveCallbacks;
 import net.sgonzalez.example.data.callbacks.StoreCallbacks;
 import net.sgonzalez.example.data.datasource.impl.FiltersFakeCloudDataSource;
-import net.sgonzalez.example.data.datasource.impl.FiltersRealmLocalDataSource;
+import net.sgonzalez.example.data.datasource.impl.FiltersMemoryLocalDataSource;
 import net.sgonzalez.example.data.entity.impl.FilterEntity;
 import net.sgonzalez.example.data.repository.AbsRepository;
 import net.sgonzalez.example.data.repository.operation.Operation;
 import net.sgonzalez.example.data.repository.operation.impl.LocalOrCloudOperation;
 
 @ApplicationScope public class FiltersRepository extends AbsRepository {
-  private final FiltersRealmLocalDataSource filtersRealmLocalDataSource;
+  private final FiltersMemoryLocalDataSource filtersMemoryLocalDataSource;
   private final FiltersFakeCloudDataSource filtersFakeCloudDataSource;
 
   @Inject
-  public FiltersRepository(FiltersRealmLocalDataSource filtersRealmLocalDataSource,
+  public FiltersRepository(FiltersMemoryLocalDataSource filtersMemoryLocalDataSource,
                            FiltersFakeCloudDataSource filtersFakeCloudDataSource) {
     super(new TimeCachePolicy());
-    this.filtersRealmLocalDataSource = filtersRealmLocalDataSource;
+    this.filtersMemoryLocalDataSource = filtersMemoryLocalDataSource;
     this.filtersFakeCloudDataSource = filtersFakeCloudDataSource;
   }
 
@@ -47,7 +47,7 @@ import net.sgonzalez.example.data.repository.operation.impl.LocalOrCloudOperatio
   }
 
   private void retrieveFromLocalById(@NonNull String id, @NonNull final RetrieveCallbacks<FilterEntity> callbacks) {
-    filtersRealmLocalDataSource.retrieveById(id, callbacks);
+    filtersMemoryLocalDataSource.retrieveById(id, callbacks);
   }
 
   private void retrieveFromCloudById(@NonNull String id, @NonNull final RetrieveCallbacks<FilterEntity> callbacks) {
@@ -55,6 +55,6 @@ import net.sgonzalez.example.data.repository.operation.impl.LocalOrCloudOperatio
   }
 
   private void store(@NonNull FilterEntity entity, @NonNull StoreCallbacks<FilterEntity> callbacks) {
-    filtersRealmLocalDataSource.store(entity, callbacks);
+    filtersMemoryLocalDataSource.store(entity, callbacks);
   }
 }

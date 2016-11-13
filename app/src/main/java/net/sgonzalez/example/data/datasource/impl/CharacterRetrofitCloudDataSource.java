@@ -20,9 +20,9 @@ import retrofit2.Retrofit;
     this.characterService = characterService;
   }
 
-  public void retrieve(RetrieveCallbacks<List<CharacterEntity>> callbacks) {
+  public void retrieve(int offset, RetrieveCallbacks<List<CharacterEntity>> callbacks) {
     try {
-      Call<CharacterResponse> request = characterService.getCharacters();
+      Call<CharacterResponse> request = characterService.getCharacters(offset);
       CharacterResponse response = executeRequest(request);
       callbacks.onResult(response.data.results);
     } catch(Exception exception) {

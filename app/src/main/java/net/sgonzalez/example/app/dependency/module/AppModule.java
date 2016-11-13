@@ -3,8 +3,6 @@ package net.sgonzalez.example.app.dependency.module;
 import android.app.Application;
 import dagger.Module;
 import dagger.Provides;
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import net.sgonzalez.example.app.App;
 import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 import net.sgonzalez.example.app.navigation.Navigator;
@@ -41,14 +39,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
   @ApplicationScope
   Navigator getBaseNavigator(BaseNavigator baseNavigator) {
     return baseNavigator;
-  }
-
-  @Provides
-  @ApplicationScope
-  Realm getRealm(Application application) {
-    Realm.init(application);
-    return Realm.getInstance(new RealmConfiguration.Builder().deleteRealmIfMigrationNeeded()
-                                                             .build());
   }
 
   @Provides

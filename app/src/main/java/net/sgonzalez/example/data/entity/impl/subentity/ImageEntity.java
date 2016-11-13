@@ -1,10 +1,9 @@
 package net.sgonzalez.example.data.entity.impl.subentity;
 
 import android.support.annotation.NonNull;
-import io.realm.RealmObject;
 import net.sgonzalez.example.domain.model.impl.submodel.ImageModel;
 
-public class ImageEntity extends RealmObject {
+public class ImageEntity {
   private String path;
   private String extension;
 

@@ -23,14 +23,16 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
   }
 
   public void init() {
-    renderCharacters();
+    showMoreCharacters(0);
   }
 
-  private void renderCharacters() {
+  private void showMoreCharacters(final int currentPage) {
     retrieveCharactersUseCase.execute(null, new Callbacks<List<CharacterModel>>() {
       @Override
       public void onExecute() {
-        // TODO: 12/11/2016 show loading in menu drawer
+        if (currentPage == 0) {
+          // TODO: 12/11/2016 show loading in menu drawer
+        }
       }
 
       @Override
@@ -90,7 +92,7 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
   }
 
   public void onLoadMoreDrawer(int currentPage) {
-    getPresentable().showToast("next page " + currentPage);
+    showMoreCharacters(currentPage);
   }
 
   public interface Presentable {

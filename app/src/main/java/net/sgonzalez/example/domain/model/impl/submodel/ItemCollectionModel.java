@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import java.util.Collections;
 import java.util.List;
 import net.sgonzalez.example.data.entity.impl.subentity.ItemCollectionEntity;
-import net.sgonzalez.example.data.utils.RealmUtils;
+import net.sgonzalez.example.data.mapper.SubMapper;
 
 public class ItemCollectionModel {
   private final int available;
@@ -13,7 +13,7 @@ public class ItemCollectionModel {
   private final int returned;
 
   public ItemCollectionModel(@NonNull ItemCollectionEntity source) {
-    this(source.getAvailable(), source.getCollectionURI(), RealmUtils.toItemModelList(source.getItems()), source.getReturned());
+    this(source.getAvailable(), source.getCollectionURI(), SubMapper.toItemModel(source.getItems()), source.getReturned());
   }
 
   public ItemCollectionModel(int available, String collectionURI, List<ItemModel> items, int returned) {

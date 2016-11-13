@@ -1,10 +1,9 @@
 package net.sgonzalez.example.data.entity.impl.subentity;
 
 import android.support.annotation.NonNull;
-import io.realm.RealmObject;
 import net.sgonzalez.example.domain.model.impl.submodel.PriceModel;
 
-public class PriceEntity extends RealmObject {
+public class PriceEntity {
   private String type;
   private double price;
 

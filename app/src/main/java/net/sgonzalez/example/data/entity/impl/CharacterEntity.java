@@ -1,22 +1,20 @@
 package net.sgonzalez.example.data.entity.impl;
 
 import android.support.annotation.NonNull;
-import io.realm.RealmList;
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
+import java.util.List;
+import net.sgonzalez.example.app.identifier.Id;
+import net.sgonzalez.example.app.identifier.impl.LongId;
 import net.sgonzalez.example.data.entity.Entity;
 import net.sgonzalez.example.data.entity.impl.subentity.ImageEntity;
 import net.sgonzalez.example.data.entity.impl.subentity.ItemCollectionEntity;
 import net.sgonzalez.example.data.entity.impl.subentity.UrlEntity;
-import net.sgonzalez.example.data.utils.RealmUtils;
-import net.sgonzalez.example.app.identifier.Id;
-import net.sgonzalez.example.app.identifier.impl.LongId;
+import net.sgonzalez.example.data.mapper.SubMapper;
 import net.sgonzalez.example.domain.model.impl.CharacterModel;
 import net.sgonzalez.example.domain.model.impl.submodel.ImageModel;
 import net.sgonzalez.example.domain.model.impl.submodel.ItemCollectionModel;
 
-public class CharacterEntity extends RealmObject implements Entity<Long, CharacterModel> {
-  @PrimaryKey private Long id;
+public class CharacterEntity implements Entity<Long, CharacterModel> {
+  private Long id;
   private String name;
   private String description;
   private String modified;
@@ -26,7 +24,7 @@ public class CharacterEntity extends RealmObject implements Entity<Long, Charact
   private ItemCollectionEntity series;
   private ItemCollectionEntity stories;
   private ItemCollectionEntity events;
-  private RealmList<UrlEntity> urls;
+  private List<UrlEntity> urls;
 
   // Realm requirement
   public CharacterEntity() {
@@ -39,12 +37,12 @@ public class CharacterEntity extends RealmObject implements Entity<Long, Charact
                .get(), source.getName(), source.getDescription(), source.getModified(), new ImageEntity(source.getThumbnail()),
     source.getResourceURI(), new ItemCollectionEntity(source.getComics()), new ItemCollectionEntity(source.getSeries()),
     new ItemCollectionEntity(source.getStories()), new ItemCollectionEntity(source.getEvents()),
-    RealmUtils.toUrlEntityList(source.getUrls()));
+    SubMapper.toUrlEntity(source.getUrls()));
   }
 
   public CharacterEntity(Long id, String name, String description, String modified, ImageEntity thumbnail, String resourceURI,
                          ItemCollectionEntity comics, ItemCollectionEntity series, ItemCollectionEntity stories,
-                         ItemCollectionEntity events, RealmList<UrlEntity> urls) {
+                         ItemCollectionEntity events, List<UrlEntity> urls) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -140,11 +138,11 @@ public class CharacterEntity extends RealmObject implements Entity<Long, Charact
     this.events = events;
   }
 
-  public RealmList<UrlEntity> getUrls() {
+  public List<UrlEntity> getUrls() {
     return urls;
   }
 
-  public void setUrls(RealmList<UrlEntity> urls) {
+  public void setUrls(List<UrlEntity> urls) {
     this.urls = urls;
   }
 
@@ -163,7 +161,7 @@ public class CharacterEntity extends RealmObject implements Entity<Long, Charact
                          .withSeries(new ItemCollectionModel(getSeries()))
                          .withStories(new ItemCollectionModel(getStories()))
                          .withEvents(new ItemCollectionModel(getEvents()))
-                         .withUrls(RealmUtils.toUrlModelList(getUrls()))
+                         .withUrls(SubMapper.toUrlModel(getUrls()))
                          .build();
   }
 
