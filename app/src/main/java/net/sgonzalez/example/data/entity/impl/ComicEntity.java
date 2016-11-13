@@ -2,8 +2,6 @@ package net.sgonzalez.example.data.entity.impl;
 
 import android.support.annotation.NonNull;
 import java.util.List;
-import net.sgonzalez.example.app.identifier.Id;
-import net.sgonzalez.example.app.identifier.impl.LongId;
 import net.sgonzalez.example.data.entity.Entity;
 import net.sgonzalez.example.data.entity.impl.subentity.DateEntity;
 import net.sgonzalez.example.data.entity.impl.subentity.ImageEntity;
@@ -19,7 +17,7 @@ import net.sgonzalez.example.domain.model.impl.submodel.ItemCollectionModel;
 import net.sgonzalez.example.domain.model.impl.submodel.ItemModel;
 
 public class ComicEntity implements Entity<Long, ComicModel> {
-  private Long id;
+  private long id;
   private long digitalId;
   private String title;
   private int issueNumber;
@@ -51,18 +49,18 @@ public class ComicEntity implements Entity<Long, ComicModel> {
 
   // Mapper requirement
   public ComicEntity(@NonNull ComicModel source) {
-    this(source.getId()
-               .get(), source.getDigitalId(), source.getTitle(), source.getIssueNumber(), source.getVariantDescription(),
+    this(source.getId(), source.getDigitalId(), source.getTitle(), source.getIssueNumber(), source.getVariantDescription(),
     source.getDescription(), source.getModified(), source.getIsbn(), source.getUpc(), source.getDiamondCode(), source.getEan(),
     source.getIssn(), source.getFormat(), source.getPageCount(), SubMapper.toTextObjectEntity(source.getTextObjects()),
     source.getResourceURI(), SubMapper.toUrlEntity(source.getUrls()), new ItemEntity(source.getSeries()),
-    SubMapper.toItemEntity(source.getVariants()), SubMapper.toDateEntity(source.getDates()), SubMapper.toPriceEntity(source.getPrices()),
-    new ImageEntity(source.getThumbnail()), SubMapper.toImageEntity(source.getImages()),
-    new ItemCollectionEntity(source.getCreators()), new ItemCollectionEntity(source.getCharacters()),
-    new ItemCollectionEntity(source.getStories()), new ItemCollectionEntity(source.getEvents()));
+    SubMapper.toItemEntity(source.getVariants()), SubMapper.toDateEntity(source.getDates()),
+    SubMapper.toPriceEntity(source.getPrices()), new ImageEntity(source.getThumbnail()),
+    SubMapper.toImageEntity(source.getImages()), new ItemCollectionEntity(source.getCreators()),
+    new ItemCollectionEntity(source.getCharacters()), new ItemCollectionEntity(source.getStories()),
+    new ItemCollectionEntity(source.getEvents()));
   }
 
-  public ComicEntity(Long id, long digitalId, String title, int issueNumber, String variantDescription, String description,
+  public ComicEntity(long id, long digitalId, String title, int issueNumber, String variantDescription, String description,
                      String modified, String isbn, String upc, String diamondCode, String ean, String issn, String format,
                      int pageCount, List<TextObjectEntity> textObjects, String resourceURI, List<UrlEntity> urls,
                      ItemEntity series, List<ItemEntity> variants, List<DateEntity> dates, List<PriceEntity> prices,
@@ -86,6 +84,7 @@ public class ComicEntity implements Entity<Long, ComicModel> {
     this.resourceURI = resourceURI;
     this.urls = urls;
     this.series = series;
+    this.variants = variants;
     this.dates = dates;
     this.prices = prices;
     this.thumbnail = thumbnail;
@@ -97,13 +96,13 @@ public class ComicEntity implements Entity<Long, ComicModel> {
   }
 
   @Override
-  public Id<Long> getId() {
-    return new LongId(id);
+  public Long getId() {
+    return id;
   }
 
   @Override
-  public void setId(Id<Long> id) {
-    this.id = id.get();
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public long getDigitalId() {

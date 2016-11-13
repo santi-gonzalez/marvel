@@ -17,8 +17,7 @@ import net.sgonzalez.example.data.entity.impl.CharacterEntity;
 
   public void store(final List<CharacterEntity> entities, @NonNull final StoreCallbacks<List<CharacterEntity>> callbacks) {
     for (CharacterEntity entity : entities) {
-      memory().put(entity.getId()
-                         .get(), entity);
+      memory().put(entity.getId(), entity);
     }
     callbacks.onStore(entities);
   }

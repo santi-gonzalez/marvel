@@ -1,8 +1,6 @@
 package net.sgonzalez.example.data.entity.impl;
 
 import android.support.annotation.NonNull;
-import net.sgonzalez.example.app.identifier.Id;
-import net.sgonzalez.example.app.identifier.impl.StringId;
 import net.sgonzalez.example.data.entity.Entity;
 import net.sgonzalez.example.domain.model.impl.FilterModel;
 
@@ -13,8 +11,7 @@ public class FilterEntity implements Entity<String, FilterModel> {
 
   // Mapper requirement
   public FilterEntity(@NonNull FilterModel source) {
-    this(source.getId()
-               .get(), source.getKey(), source.getValue());
+    this(source.getId(), source.getKey(), source.getValue());
   }
 
   public FilterEntity(String id, String key, String value) {
@@ -24,13 +21,13 @@ public class FilterEntity implements Entity<String, FilterModel> {
   }
 
   @Override
-  public Id<String> getId() {
-    return new StringId(id);
+  public String getId() {
+    return id;
   }
 
   @Override
-  public void setId(Id<String> id) {
-    this.id = id.get();
+  public void setId(String id) {
+    this.id = id;
   }
 
   public String getKey() {

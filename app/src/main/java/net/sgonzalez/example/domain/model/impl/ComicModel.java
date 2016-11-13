@@ -3,7 +3,6 @@ package net.sgonzalez.example.domain.model.impl;
 import android.support.annotation.NonNull;
 import java.util.List;
 import net.sgonzalez.example.domain.model.Model;
-import net.sgonzalez.example.app.identifier.Id;
 import net.sgonzalez.example.domain.model.impl.submodel.DateModel;
 import net.sgonzalez.example.domain.model.impl.submodel.ImageModel;
 import net.sgonzalez.example.domain.model.impl.submodel.ItemCollectionModel;
@@ -13,7 +12,7 @@ import net.sgonzalez.example.domain.model.impl.submodel.TextObjectModel;
 import net.sgonzalez.example.domain.model.impl.submodel.UrlModel;
 
 public class ComicModel implements Model<Long> {
-  private final Id<Long> id;
+  private final long id;
   private final long digitalId;
   private final String title;
   private final int issueNumber;
@@ -108,7 +107,7 @@ public class ComicModel implements Model<Long> {
   }
 
   @Override
-  public Id<Long> getId() {
+  public Long getId() {
     return id;
   }
 
@@ -250,7 +249,7 @@ public class ComicModel implements Model<Long> {
   }
 
   public static final class Builder {
-    private Id<Long> id;
+    private long id;
     private long digitalId;
     private String title;
     private int issueNumber;
@@ -283,7 +282,7 @@ public class ComicModel implements Model<Long> {
     private Builder() {
     }
 
-    public Builder withId(Id<Long> id) {
+    public Builder withId(long id) {
       this.id = id;
       return this;
     }

@@ -4,13 +4,12 @@ import android.support.annotation.NonNull;
 import java.util.Collections;
 import java.util.List;
 import net.sgonzalez.example.domain.model.Model;
-import net.sgonzalez.example.app.identifier.Id;
 import net.sgonzalez.example.domain.model.impl.submodel.ImageModel;
 import net.sgonzalez.example.domain.model.impl.submodel.ItemCollectionModel;
 import net.sgonzalez.example.domain.model.impl.submodel.UrlModel;
 
 public class CharacterModel implements Model<Long> {
-  private final Id<Long> id;
+  private final long id;
   private final String name;
   private final String description;
   private final String modified;
@@ -55,7 +54,7 @@ public class CharacterModel implements Model<Long> {
   }
 
   @Override
-  public Id<Long> getId() {
+  public Long getId() {
     return id;
   }
 
@@ -117,7 +116,7 @@ public class CharacterModel implements Model<Long> {
   }
 
   public static final class Builder {
-    private Id<Long> id;
+    private long id;
     private String name;
     private String description;
     private String modified;
@@ -132,7 +131,7 @@ public class CharacterModel implements Model<Long> {
     private Builder() {
     }
 
-    public Builder withId(Id<Long> id) {
+    public Builder withId(long id) {
       this.id = id;
       return this;
     }

@@ -19,7 +19,7 @@ import net.sgonzalez.example.data.entity.impl.FilterEntity;
   }
 
   public void store(@NonNull final FilterEntity entity, @NonNull final StoreCallbacks<FilterEntity> callbacks) {
-    memory().put(entity.getId()
-                       .get(), entity);
+    memory().put(entity.getId(), entity);
+    callbacks.onStore(entity);
   }
 }

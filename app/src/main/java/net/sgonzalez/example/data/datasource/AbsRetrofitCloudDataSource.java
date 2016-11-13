@@ -16,8 +16,8 @@ import retrofit2.Retrofit;
  * or {@link net.sgonzalez.example.data.callbacks.StoreCallbacks}, depending on the intent, with any number and type of other
  * parameters before.
  * <p>
- * All methods must be enclosed in a {@code }try-catch(NetworkException)} clause, and should <b>NEVER</b> let an exception be
- * thrown.
+ * All network request methods must be enclosed in a {@code try-catch(NetworkException)} clause, and should <b>NEVER</b> throw an
+ * exception.
  * <p>
  * Execution must end with either invoking {@code callbacks.onResult()} / {@code onStore()} or {@code onError}
  * <p>

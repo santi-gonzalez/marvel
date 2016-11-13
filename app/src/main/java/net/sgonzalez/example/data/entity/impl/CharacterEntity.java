@@ -2,8 +2,6 @@ package net.sgonzalez.example.data.entity.impl;
 
 import android.support.annotation.NonNull;
 import java.util.List;
-import net.sgonzalez.example.app.identifier.Id;
-import net.sgonzalez.example.app.identifier.impl.LongId;
 import net.sgonzalez.example.data.entity.Entity;
 import net.sgonzalez.example.data.entity.impl.subentity.ImageEntity;
 import net.sgonzalez.example.data.entity.impl.subentity.ItemCollectionEntity;
@@ -28,8 +26,7 @@ public class CharacterEntity implements Entity<Long, CharacterModel> {
 
   // Mapper requirement
   public CharacterEntity(@NonNull CharacterModel source) {
-    this(source.getId()
-               .get(), source.getName(), source.getDescription(), source.getModified(), new ImageEntity(source.getThumbnail()),
+    this(source.getId(), source.getName(), source.getDescription(), source.getModified(), new ImageEntity(source.getThumbnail()),
     source.getResourceURI(), new ItemCollectionEntity(source.getComics()), new ItemCollectionEntity(source.getSeries()),
     new ItemCollectionEntity(source.getStories()), new ItemCollectionEntity(source.getEvents()),
     SubMapper.toUrlEntity(source.getUrls()));
@@ -52,13 +49,13 @@ public class CharacterEntity implements Entity<Long, CharacterModel> {
   }
 
   @Override
-  public Id<Long> getId() {
-    return new LongId(id);
+  public Long getId() {
+    return id;
   }
 
   @Override
-  public void setId(Id<Long> id) {
-    this.id = id.get();
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getName() {

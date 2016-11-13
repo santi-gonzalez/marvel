@@ -1,10 +1,9 @@
 package net.sgonzalez.example.domain.model.impl;
 
 import net.sgonzalez.example.domain.model.Model;
-import net.sgonzalez.example.app.identifier.Id;
 
 public class FilterModel implements Model<String> {
-  private final Id<String> id;
+  private final String id;
   private final String key;
   private final String value;
 
@@ -25,7 +24,7 @@ public class FilterModel implements Model<String> {
   }
 
   @Override
-  public Id<String> getId() {
+  public String getId() {
     return id;
   }
 
@@ -47,7 +46,7 @@ public class FilterModel implements Model<String> {
   }
 
   public static final class Builder {
-    private Id<String> id;
+    private String id;
     private String key;
     private String value;
 
@@ -55,7 +54,7 @@ public class FilterModel implements Model<String> {
       withId(id);
     }
 
-    public Builder withId(Id<String> id) {
+    public Builder withId(String id) {
       this.id = id;
       return this;
     }
