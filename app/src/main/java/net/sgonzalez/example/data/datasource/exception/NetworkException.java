@@ -1,7 +1,7 @@
 package net.sgonzalez.example.data.datasource.exception;
 
 import java.io.IOException;
-import net.sgonzalez.example.app.retrofit.retrofit.response.ErrorResponse;
+import net.sgonzalez.example.app.retrofit.response.ErrorResponse;
 
 public class NetworkException extends RuntimeException {
   public static final int NON_PRESENT = -1;

@@ -1,4 +1,4 @@
-package net.sgonzalez.example.app.retrofit.retrofit.interceptor;
+package net.sgonzalez.example.app.retrofit.interceptor;
 
 public class NoSourceControl {
   static final String PUBLIC_KEY = "7bb03cdfd44d30f2b20936db67a92366";

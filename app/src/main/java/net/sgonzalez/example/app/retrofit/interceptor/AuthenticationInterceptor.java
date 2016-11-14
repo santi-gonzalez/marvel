@@ -1,4 +1,4 @@
-package net.sgonzalez.example.app.retrofit.retrofit.interceptor;
+package net.sgonzalez.example.app.retrofit.interceptor;
 
 import java.io.IOException;
 import net.sgonzalez.example.app.utils.HashUtils;

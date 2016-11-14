@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import net.sgonzalez.example.app.executor.MainThreadExecutor;
 import net.sgonzalez.example.app.executor.NewThreadExecutor;
 import net.sgonzalez.example.app.executor.SameThreadExecutor;
-import net.sgonzalez.example.data.callbacks.RetrieveCallbacks;
+import net.sgonzalez.example.data.callbacks.Callbacks;
 import net.sgonzalez.example.data.entity.impl.FilterEntity;
 import net.sgonzalez.example.data.repository.impl.FiltersRepository;
 import net.sgonzalez.example.domain.model.impl.FilterModel;
@@ -25,9 +25,9 @@ public class GetFiltersUseCase extends AbsUseCase<String, FilterModel> {
   @Override
   protected void onExecute(String id) {
     if (!TextUtils.isEmpty(id)) {
-      filtersRepository.retrieveById(id, new RetrieveCallbacks<FilterEntity>() {
+      filtersRepository.retrieveById(id, new Callbacks<FilterEntity>() {
         @Override
-        public void onResult(FilterEntity entity) {
+        public void onDone(FilterEntity entity) {
           dispatchResult(entity.toModel());
         }
 

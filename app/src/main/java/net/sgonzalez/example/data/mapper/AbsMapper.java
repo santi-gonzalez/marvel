@@ -3,6 +3,7 @@ package net.sgonzalez.example.data.mapper;
 import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
+import net.sgonzalez.example.app.retrofit.response.PageResult;
 import net.sgonzalez.example.data.entity.Entity;
 import net.sgonzalez.example.domain.model.Model;
 
@@ -30,6 +31,7 @@ public abstract class AbsMapper<M extends Model<?>, E extends Entity<?, M>> {
   @NonNull
   private E toEntity(@NonNull M model) {
     try {
+      // the reflection of me is alive! (you better implement constructor with model parameter in every entity ;)
       return entityClass.getConstructor(model.getClass())
                         .newInstance(model);
     } catch(Exception ex) {
@@ -43,5 +45,13 @@ public abstract class AbsMapper<M extends Model<?>, E extends Entity<?, M>> {
       result.add(toEntity(model));
     }
     return result;
+  }
+
+  public PageResult<M> toPRModel(@NonNull PageResult<E> source) {
+    return new PageResult<>(toModel(source.result), source.bottomReached);
+  }
+
+  public PageResult<List<M>> toPRListModel(@NonNull PageResult<List<E>> source) {
+    return new PageResult<>(toModel(source.result), source.bottomReached);
   }
 }

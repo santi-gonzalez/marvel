@@ -4,9 +4,12 @@ import android.support.annotation.Nullable;
 import java.util.List;
 import javax.inject.Inject;
 import net.sgonzalez.example.app.dependency.scope.AndroidScope;
+import net.sgonzalez.example.app.retrofit.response.PageResult;
 import net.sgonzalez.example.domain.callbacks.Callbacks;
+import net.sgonzalez.example.domain.callbacks.CallbacksAdapter;
 import net.sgonzalez.example.domain.model.impl.CharacterModel;
 import net.sgonzalez.example.domain.model.impl.ComicModel;
+import net.sgonzalez.example.domain.usecase.impl.ClearCharacterComicsUseCase;
 import net.sgonzalez.example.domain.usecase.impl.RetrieveCharactersUseCase;
 import net.sgonzalez.example.domain.usecase.impl.RetrieveComicsByCharacterIdUseCase;
 import net.sgonzalez.example.presentation.presenter.AbsPresenter;
@@ -15,13 +18,15 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
   private static final int INITIAL_PAGE = 0;
   private final RetrieveCharactersUseCase retrieveCharactersUseCase;
   private final RetrieveComicsByCharacterIdUseCase retrieveComicsByCharacterIdUseCase;
+  private final ClearCharacterComicsUseCase clearCharacterComicsUseCase;
   @Nullable private CharacterModel currentCharacter;
 
   @Inject
-  public MainPresenter(RetrieveCharactersUseCase retrieveCharactersUseCase,
-                       RetrieveComicsByCharacterIdUseCase retrieveComicsByCharacterIdUseCase) {
+  public MainPresenter(RetrieveCharactersUseCase retrieveCharactersUseCase, RetrieveComicsByCharacterIdUseCase retrieveComicsByCharacterIdUseCase,
+                       ClearCharacterComicsUseCase clearCharacterComicsUseCase) {
     this.retrieveCharactersUseCase = retrieveCharactersUseCase;
     this.retrieveComicsByCharacterIdUseCase = retrieveComicsByCharacterIdUseCase;
+    this.clearCharacterComicsUseCase = clearCharacterComicsUseCase;
   }
 
   public void onViewReady() {
@@ -33,10 +38,31 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
   }
 
   public void onCharacterClicked(CharacterModel character) {
+    loadCharacterComicsWall(character);
+  }
+
+  public void onComicsBottomReached(int currentPage) {
+    showMoreComics(currentPage);
+  }
+
+  private void loadCharacterComicsWall(final CharacterModel character) {
     if (currentCharacter != character) {
-      setCurrentCharacter(character);
-      presentable().clearComicsWall();
-      showMoreComics(INITIAL_PAGE);
+      clearComics(new CallbacksAdapter<Void>() {
+        @Override
+        public void onResult(Void result) {
+          setCurrentCharacter(character);
+          showMoreComics(INITIAL_PAGE);
+        }
+      });
+    }
+  }
+
+  private void clearComics(Callbacks<Void> callbacks) {
+    presentable().clearComicsWall();
+    if (currentCharacter != null) {
+      clearCharacterComicsUseCase.execute(currentCharacter.getId(), callbacks);
+    } else {
+      callbacks.onResult(null);
     }
   }
 
@@ -69,7 +95,7 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
 
   private void showMoreComics(final int currentPage) {
     if (currentCharacter != null) {
-      retrieveComicsByCharacterIdUseCase.execute(currentCharacter.getId(), new Callbacks<List<ComicModel>>() {
+      retrieveComicsByCharacterIdUseCase.execute(currentCharacter.getId(), new Callbacks<PageResult<List<ComicModel>>>() {
         @Override
         public void onExecute() {
           if (currentPage == INITIAL_PAGE) {
@@ -78,8 +104,8 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
         }
 
         @Override
-        public void onResult(List<ComicModel> comics) {
-          presentable().appendComics(comics);
+        public void onResult(PageResult<List<ComicModel>> pageResult) {
+          presentable().appendComics(pageResult.result);
           // TODO: 13/11/2016 hide loading in wall
         }
 
@@ -92,14 +118,9 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
     }
   }
 
-  public void onComicsBottomReached(int currentPage) {
-    showMoreComics(currentPage);
-  }
-
   public interface Presentable {
     void appendCharacters(List<CharacterModel> characters);
     void appendComics(List<ComicModel> comics);
     void clearComicsWall();
-    void showToast(String message);
   }
 }

@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import net.sgonzalez.example.app.executor.MainThreadExecutor;
 import net.sgonzalez.example.app.executor.NewThreadExecutor;
 import net.sgonzalez.example.app.executor.SameThreadExecutor;
-import net.sgonzalez.example.data.callbacks.RetrieveCallbacks;
+import net.sgonzalez.example.data.callbacks.Callbacks;
 import net.sgonzalez.example.data.entity.impl.CharacterEntity;
 import net.sgonzalez.example.data.mapper.impl.CharacterMapper;
 import net.sgonzalez.example.data.repository.impl.CharacterRepository;
@@ -28,9 +28,9 @@ public class RetrieveCharactersUseCase extends AbsUseCase<Void, List<CharacterMo
 
   @Override
   protected void onExecute(Void params) {
-    characterRepository.retrieveFromCloud(new RetrieveCallbacks<List<CharacterEntity>>() {
+    characterRepository.retrieveFromCloud(new Callbacks<List<CharacterEntity>>() {
       @Override
-      public void onResult(List<CharacterEntity> entities) {
+      public void onDone(List<CharacterEntity> entities) {
         dispatchResult(characterMapper.toModel(entities));
       }
 

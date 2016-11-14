@@ -7,9 +7,9 @@ import net.sgonzalez.example.app.App;
 import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 import net.sgonzalez.example.app.navigation.Navigator;
 import net.sgonzalez.example.app.navigation.impl.BaseNavigator;
-import net.sgonzalez.example.app.retrofit.retrofit.interceptor.AuthenticationInterceptor;
-import net.sgonzalez.example.app.retrofit.retrofit.service.CharacterService;
-import net.sgonzalez.example.app.retrofit.retrofit.service.ComicService;
+import net.sgonzalez.example.app.retrofit.interceptor.AuthenticationInterceptor;
+import net.sgonzalez.example.app.retrofit.service.CharacterService;
+import net.sgonzalez.example.app.retrofit.service.ComicService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -45,7 +45,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
   @ApplicationScope
   OkHttpClient getOkHttpClient() {
     HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-    httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+    httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
     AuthenticationInterceptor authenticationInterceptor = new AuthenticationInterceptor();
     return new OkHttpClient.Builder().addInterceptor(authenticationInterceptor)
                                      .addInterceptor(httpLoggingInterceptor)

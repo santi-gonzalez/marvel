@@ -1,4 +1,4 @@
-package net.sgonzalez.example.app.retrofit.retrofit.response;
+package net.sgonzalez.example.app.retrofit.response;
 
 public class ErrorResponse {
   public String code;

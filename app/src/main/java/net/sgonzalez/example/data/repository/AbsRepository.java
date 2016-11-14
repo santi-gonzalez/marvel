@@ -1,13 +1,12 @@
 package net.sgonzalez.example.data.repository;
 
 import net.sgonzalez.example.data.cache.CachePolicy;
+import net.sgonzalez.example.data.callbacks.Callbacks;
 import net.sgonzalez.example.data.repository.log.Logger;
 
 /**
  * All repositories must return {@link net.sgonzalez.example.data.entity.Entity} type instances. <h3>Development</h3> All methods
- * must present the final parameter as {@link net.sgonzalez.example.data.callbacks.RetrieveCallbacks} or {@link
- * net.sgonzalez.example.data.callbacks.StoreCallbacks}, depending on the intent, with any number and type of other parameters
- * before.
+ * must present the final parameter as {@link Callbacks}, with any number and type of other parameters before.
  * <p>
  * All methods must create and run an {@link net.sgonzalez.example.data.repository.operation.Operation} instance, performing any
  * logic inside. <i>Operations</i> represent different work flows, such as "request from cloud and store", or "load from local".

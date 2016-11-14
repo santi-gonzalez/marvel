@@ -15,10 +15,10 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 import butterknife.BindView;
 import java.util.List;
 import javax.inject.Inject;
@@ -86,6 +86,7 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
     charactersAdapter.setOnItemClickListener(new OnItemClickListener() {
       @Override
       public void onItemClicked(View view, CharacterModel character) {
+        drawerLayout.closeDrawers();
         mainPresenter.onCharacterClicked(character);
       }
     });
@@ -114,6 +115,7 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
     comicsEndlessScrollListener = new EndlessScrollListener() {
       @Override
       public void onLoadMore(int currentPage) {
+        Log.e(">>>", "bottom reached!");
         mainPresenter.onComicsBottomReached(currentPage);
       }
     };
@@ -175,13 +177,7 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
   @Override
   public void clearComicsWall() {
     comicsAdapter.clear();
-    //comicsEndlessScrollListener.
-  }
-
-  @Override
-  public void showToast(String message) {
-    Toast.makeText(this, message, Toast.LENGTH_SHORT)
-         .show();
+    comicsEndlessScrollListener.reset();
   }
 
   private void issueTestNotification() {
@@ -193,8 +189,8 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
     notificationManager.notify(0, new NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_notification)
                                                                       .setContentTitle("Deep link notification")
                                                                       .setContentText(URL)
-                                                                      .setContentIntent(PendingIntent.getActivity(this, 0, intent,
-                                                                      PendingIntent.FLAG_UPDATE_CURRENT))
+                                                                      .setContentIntent(
+                                                                      PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT))
                                                                       .build());
   }
 }

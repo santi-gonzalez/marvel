@@ -9,15 +9,15 @@ import net.sgonzalez.example.domain.callbacks.Callbacks;
 import net.sgonzalez.example.domain.usecase.log.Logger;
 
 /**
- * All use cases must return {@link net.sgonzalez.example.domain.model.Model} type instances. Method {@link #dispatchExecute()} is
- * triggered automatically right before {@link #onExecute(Object)}, in the main thread. <h3>Usage</h3> Specify generic
- * <i>Development</i> and <i>Result</i>, which can be of any kind. Given more than a single field is required, create an {@code inner
- * static final class Params} and / or {@code Result}, with final fields and public constructor.
+ * All use cases must return {@link net.sgonzalez.example.domain.model.Model} type instances. Method {@link #dispatchExecute()} is triggered
+ * automatically right before {@link #onExecute(Object)}, in the main thread. <h3>Usage</h3> Specify generic <i>Development</i> and <i>Result</i>,
+ * which can be of any kind. Given more than a single field is required, create an {@code inner static final class Params} and / or {@code Result},
+ * with final fields and public constructor.
  * <p>
  * Inject repositories and mappers (models from data source come as Entities, and should exit as Models).
  * <p>
- * Dispatch result with {@link #dispatchResult(Object)} or error with {@link #dispatchError(Exception)} for convenience from
- * result callbacks. <h3>Logging</h3> Use convenient {@code log*} methods for easy integration with master switches.
+ * Dispatch result with {@link #dispatchResult(Object)} or error with {@link #dispatchError(Exception)} for convenience from result callbacks.
+ * <h3>Logging</h3> Use convenient {@code log*} methods for easy integration with master switches.
  *
  * @see net.sgonzalez.example.data.entity.Entity
  * @see net.sgonzalez.example.domain.model.Model
@@ -30,8 +30,7 @@ public abstract class AbsUseCase<Params, Result> implements Runnable {
   private Params params;
   @Nullable private Callbacks<Result> callbacks;
 
-  public AbsUseCase(MainThreadExecutor mainThreadExecutor, NewThreadExecutor newThreadExecutor,
-                    SameThreadExecutor sameThreadExecutor) {
+  public AbsUseCase(MainThreadExecutor mainThreadExecutor, NewThreadExecutor newThreadExecutor, SameThreadExecutor sameThreadExecutor) {
     this.mainThreadExecutor = mainThreadExecutor;
     this.newThreadExecutor = newThreadExecutor;
     this.sameThreadExecutor = sameThreadExecutor;

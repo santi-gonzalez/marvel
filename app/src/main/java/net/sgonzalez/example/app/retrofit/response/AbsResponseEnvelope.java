@@ -1,4 +1,4 @@
-package net.sgonzalez.example.app.retrofit.retrofit.response;
+package net.sgonzalez.example.app.retrofit.response;
 
 import java.util.List;
 import net.sgonzalez.example.data.entity.Entity;

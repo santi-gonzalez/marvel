@@ -5,15 +5,11 @@ import java.util.List;
 import javax.inject.Inject;
 import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 import net.sgonzalez.example.data.cache.impl.TimeCachePolicy;
-import net.sgonzalez.example.data.callbacks.RetrieveCallbacks;
-import net.sgonzalez.example.data.callbacks.StoreCallbacks;
+import net.sgonzalez.example.data.callbacks.Callbacks;
 import net.sgonzalez.example.data.datasource.impl.CharacterMemoryLocalDataSource;
 import net.sgonzalez.example.data.datasource.impl.CharacterRetrofitCloudDataSource;
 import net.sgonzalez.example.data.entity.impl.CharacterEntity;
 import net.sgonzalez.example.data.repository.AbsRepository;
-import net.sgonzalez.example.data.repository.operation.Operation;
-import net.sgonzalez.example.data.repository.operation.impl.CloudOperation;
-import net.sgonzalez.example.data.repository.operation.impl.LocalOperation;
 
 @ApplicationScope public class CharacterRepository extends AbsRepository {
   private final CharacterMemoryLocalDataSource characterMemoryLocalDataSource;
@@ -27,38 +23,23 @@ import net.sgonzalez.example.data.repository.operation.impl.LocalOperation;
     this.characterRetrofitCloudDataSource = characterRetrofitCloudDataSource;
   }
 
-  public void retrieveFromCloud(final @NonNull RetrieveCallbacks<List<CharacterEntity>> callbacks) {
-    new LocalOperation<>(null, new RetrieveCallbacks<Integer>() {
+  public void retrieveFromCloud(final @NonNull Callbacks<List<CharacterEntity>> callbacks) {
+    characterMemoryLocalDataSource.count(new Callbacks<Integer>() {
       @Override
-      public void onResult(Integer offset) {
-        new CloudOperation<>(offset, callbacks, createRetrieveFromCloudOperation()).run();
-      }
-
-      @Override
-      public void onError(@NonNull Exception exception) {
-        callbacks.onError(exception);
-      }
-    }, createCountFromLocalOperationCallbacks()).run();
-  }
-
-  @NonNull
-  private Operation.OperationCallbacks<Integer, List<CharacterEntity>> createRetrieveFromCloudOperation() {
-    return new CloudOperation.OperationCallbacks<Integer, List<CharacterEntity>>() {
-      @Override
-      public void retrieveFromCloud(Integer offset, @NonNull final RetrieveCallbacks<List<CharacterEntity>> callbacks) {
-        characterRetrofitCloudDataSource.retrieve(offset, new RetrieveCallbacks<List<CharacterEntity>>() {
+      public void onDone(Integer offset) {
+        characterRetrofitCloudDataSource.retrieve(offset, new Callbacks<List<CharacterEntity>>() {
           @Override
-          public void onResult(final List<CharacterEntity> entities) {
-            characterMemoryLocalDataSource.store(entities, new StoreCallbacks<List<CharacterEntity>>() {
+          public void onDone(final List<CharacterEntity> entities) {
+            characterMemoryLocalDataSource.store(entities, new Callbacks<List<CharacterEntity>>() {
               @Override
-              public void onStore(List<CharacterEntity> entities) {
-                callbacks.onResult(entities);
+              public void onDone(List<CharacterEntity> entities) {
+                callbacks.onDone(entities);
               }
 
               @Override
               public void onError(@NonNull Exception exception) {
                 callbacks.onError(exception);
-                callbacks.onResult(entities);
+                callbacks.onDone(entities);
               }
             });
           }
@@ -69,16 +50,11 @@ import net.sgonzalez.example.data.repository.operation.impl.LocalOperation;
           }
         });
       }
-    };
-  }
 
-  @NonNull
-  private Operation.OperationCallbacks<Void, Integer> createCountFromLocalOperationCallbacks() {
-    return new LocalOperation.OperationCallbacks<Void, Integer>() {
       @Override
-      public void retrieveFromLocal(Void aVoid, @NonNull RetrieveCallbacks<Integer> callbacks) {
-        characterMemoryLocalDataSource.count(callbacks);
+      public void onError(@NonNull Exception exception) {
+        callbacks.onError(exception);
       }
-    };
+    });
   }
 }

@@ -2,7 +2,8 @@ package net.sgonzalez.example.data.datasource;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-import net.sgonzalez.example.app.retrofit.retrofit.response.ErrorResponse;
+import net.sgonzalez.example.app.retrofit.response.ErrorResponse;
+import net.sgonzalez.example.data.callbacks.Callbacks;
 import net.sgonzalez.example.data.datasource.exception.NetworkException;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -11,13 +12,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * <h3>Development</h3> All methods must present the final parameter as
- * {@link net.sgonzalez.example.data.callbacks.RetrieveCallbacks}
- * or {@link net.sgonzalez.example.data.callbacks.StoreCallbacks}, depending on the intent, with any number and type of other
- * parameters before.
+ * <h3>Development</h3> All methods must present the final parameter as {@link Callbacks}, with any number and type of other parameters before.
  * <p>
- * All network request methods must be enclosed in a {@code try-catch(NetworkException)} clause, and should <b>NEVER</b> throw an
- * exception.
+ * All network request methods must be enclosed in a {@code try-catch(NetworkException)} clause, and should <b>NEVER</b> throw an exception.
  * <p>
  * Execution must end with either invoking {@code callbacks.onResult()} / {@code onStore()} or {@code onError}
  * <p>
