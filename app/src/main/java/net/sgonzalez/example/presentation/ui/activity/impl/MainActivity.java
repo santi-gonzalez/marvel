@@ -180,6 +180,16 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
     comicsEndlessScrollListener.reset();
   }
 
+  @Override
+  public void showWallLoading() {
+    comicsAdapter.showLoading();
+  }
+
+  @Override
+  public void hideWallLoading() {
+    comicsAdapter.hideLoading();
+  }
+
   private void issueTestNotification() {
     // URL syntax: scheme://authority/path1/path2/path3...
     final String URL = "framework://open/nav/fil/not/hello/world/toa/hello";

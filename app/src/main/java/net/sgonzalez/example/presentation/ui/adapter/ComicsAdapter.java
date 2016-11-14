@@ -15,6 +15,10 @@ import net.sgonzalez.example.domain.model.impl.ComicModel;
 public class ComicsAdapter extends AbsBottomLoaderAdapter<ComicsAdapter.ViewHolder> {
   private final List<ComicModel> dataSet = new ArrayList<>();
 
+  public ComicsAdapter() {
+    super(false);
+  }
+
   @Override
   public ViewHolder onCreateViewHolderBLA(ViewGroup parent, int viewType) {
     return new ViewHolder(LayoutInflater.from(parent.getContext())

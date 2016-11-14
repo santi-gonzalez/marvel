@@ -67,23 +67,14 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
   }
 
   private void showMoreCharacters(final int currentPage) {
-    retrieveCharactersUseCase.execute(null, new Callbacks<List<CharacterModel>>() {
-      @Override
-      public void onExecute() {
-        if (currentPage == INITIAL_PAGE) {
-          // TODO: 12/11/2016 show loading in menu drawer
-        }
-      }
-
+    retrieveCharactersUseCase.execute(null, new CallbacksAdapter<List<CharacterModel>>() {
       @Override
       public void onResult(List<CharacterModel> models) {
         presentable().appendCharacters(models);
-        // TODO: 12/11/2016 hide loading in menu drawer
       }
 
       @Override
       public void onError(Exception exception) {
-        // TODO: 12/11/2016 hide loading in menu drawer
         // TODO: 12/11/2016 show error
       }
     });
@@ -98,20 +89,20 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
       retrieveComicsByCharacterIdUseCase.execute(currentCharacter.getId(), new Callbacks<PageResult<List<ComicModel>>>() {
         @Override
         public void onExecute() {
-          if (currentPage == INITIAL_PAGE) {
-            // TODO: 13/11/2016 show loading in wall
-          }
+          presentable().showWallLoading();
         }
 
         @Override
         public void onResult(PageResult<List<ComicModel>> pageResult) {
           presentable().appendComics(pageResult.result);
-          // TODO: 13/11/2016 hide loading in wall
+          if (pageResult.bottomReached) {
+            presentable().hideWallLoading();
+          }
         }
 
         @Override
         public void onError(Exception exception) {
-          // TODO: 13/11/2016 hide loading in wall
+          presentable().hideWallLoading();
           // TODO: 13/11/2016 show error
         }
       });
@@ -122,5 +113,7 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
     void appendCharacters(List<CharacterModel> characters);
     void appendComics(List<ComicModel> comics);
     void clearComicsWall();
+    void showWallLoading();
+    void hideWallLoading();
   }
 }

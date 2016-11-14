@@ -12,6 +12,15 @@ import net.sgonzalez.example.R;
 public abstract class AbsBottomLoaderAdapter<VH extends RecyclerView.ViewHolder>
 extends RecyclerView.Adapter<AbsBottomLoaderAdapter.InnerViewHolder<VH>> {
   public static final int LOADER_LAYOUT_RES_ID = R.layout.list_item_loader;
+  private boolean visible;
+
+  public AbsBottomLoaderAdapter() {
+    this(true);
+  }
+
+  public AbsBottomLoaderAdapter(boolean visible) {
+    this.visible = visible;
+  }
 
   @Override
   public final int getItemViewType(int position) {
@@ -52,18 +61,28 @@ extends RecyclerView.Adapter<AbsBottomLoaderAdapter.InnerViewHolder<VH>> {
   public abstract void onBindViewHolderBLA(VH holder, int position);
   public abstract int getItemCountBLA();
 
+  public void showLoading() {
+    visible = true;
+    notifyItemChanged(getItemCount() - 1);
+  }
+
+  public void hideLoading() {
+    visible = false;
+    notifyItemChanged(getItemCount() - 1);
+  }
+
   private InnerViewHolder<VH> onCreateViewHolderInternal(ViewGroup parent, int viewType) {
     return new InnerViewHolder<>(LayoutInflater.from(parent.getContext())
                                                .inflate(viewType, parent, false));
   }
 
   private void onBindViewHolderInternal(InnerViewHolder<VH> holder, int position) {
-    // do nothing
+    holder.progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
   }
 
-  public static class InnerViewHolder<VH> extends RecyclerView.ViewHolder {
+  public static final class InnerViewHolder<VH> extends RecyclerView.ViewHolder {
     @Nullable public VH childViewHolder;
-    private ProgressBar progressBar; // in case we need to do something with it in the future...
+    private ProgressBar progressBar;
 
     public InnerViewHolder(View itemView) {
       this(itemView, null);
@@ -79,6 +98,10 @@ extends RecyclerView.Adapter<AbsBottomLoaderAdapter.InnerViewHolder<VH>> {
     }
   }
 
+  /**
+   * Use this class as a {@link android.support.v7.widget.GridLayoutManager.SpanSizeLookup}, providing the adapter and specifying the total span
+   * count, if you wish the loader to be centered.
+   */
   public static class SpanSizeLookupBLA extends GridLayoutManager.SpanSizeLookup {
     private final AbsBottomLoaderAdapter adapter;
     private final int spanCount;
