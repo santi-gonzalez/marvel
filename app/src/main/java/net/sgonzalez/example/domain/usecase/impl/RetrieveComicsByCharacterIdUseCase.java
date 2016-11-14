@@ -20,8 +20,7 @@ public class RetrieveComicsByCharacterIdUseCase extends AbsUseCase<Long, PageRes
 
   @Inject
   public RetrieveComicsByCharacterIdUseCase(MainThreadExecutor mainThreadExecutor, NewThreadExecutor newThreadExecutor,
-                                            SameThreadExecutor sameThreadExecutor, ComicRepository comicRepository,
-                                            ComicMapper comicMapper) {
+                                            SameThreadExecutor sameThreadExecutor, ComicRepository comicRepository, ComicMapper comicMapper) {
     super(mainThreadExecutor, newThreadExecutor, sameThreadExecutor);
     this.comicRepository = comicRepository;
     this.comicMapper = comicMapper;

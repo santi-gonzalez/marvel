@@ -28,13 +28,12 @@ public class CharacterEntity implements Entity<Long, CharacterModel> {
   public CharacterEntity(@NonNull CharacterModel source) {
     this(source.getId(), source.getName(), source.getDescription(), source.getModified(), new ImageEntity(source.getThumbnail()),
     source.getResourceURI(), new ItemCollectionEntity(source.getComics()), new ItemCollectionEntity(source.getSeries()),
-    new ItemCollectionEntity(source.getStories()), new ItemCollectionEntity(source.getEvents()),
-    SubMapper.toUrlEntity(source.getUrls()));
+    new ItemCollectionEntity(source.getStories()), new ItemCollectionEntity(source.getEvents()), SubMapper.toUrlEntity(source.getUrls()));
   }
 
   public CharacterEntity(Long id, String name, String description, String modified, ImageEntity thumbnail, String resourceURI,
-                         ItemCollectionEntity comics, ItemCollectionEntity series, ItemCollectionEntity stories,
-                         ItemCollectionEntity events, List<UrlEntity> urls) {
+                         ItemCollectionEntity comics, ItemCollectionEntity series, ItemCollectionEntity stories, ItemCollectionEntity events,
+                         List<UrlEntity> urls) {
     this.id = id;
     this.name = name;
     this.description = description;

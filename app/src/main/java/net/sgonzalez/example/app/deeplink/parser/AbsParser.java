@@ -15,10 +15,8 @@ public abstract class AbsParser implements Parser {
   @Override
   public void parse(DeepLinkActionRegistry deepLinkActionRegistry, String... params) {
     if (!checkParams(params)) {
-      throw new IllegalArgumentException("param count does not match; expected "
-                                         + getExpectedParamCount()
-                                         + " got "
-                                         + getProvidedParamsCount(params));
+      throw new IllegalArgumentException(
+                                        "param count does not match; expected " + getExpectedParamCount() + " got " + getProvidedParamsCount(params));
     }
     logVerbose("parsing... (params " + Arrays.asList(params) + ")");
     onParse(deepLinkActionRegistry, params);

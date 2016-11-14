@@ -14,7 +14,7 @@ import net.sgonzalez.example.R;
 import net.sgonzalez.example.domain.model.impl.CharacterModel;
 import net.sgonzalez.example.presentation.ui.utils.PicassoUtils;
 
-public class CharactersAdapter extends AbsBottomLoaderAdapter<CharactersAdapter.ViewHolder> {
+public class CharactersAdapter extends BottomLoaderAdapter<CharactersAdapter.ViewHolder> {
   private final List<CharacterModel> dataSet = new ArrayList<>();
   private OnItemClickListener onItemClickListener;
 

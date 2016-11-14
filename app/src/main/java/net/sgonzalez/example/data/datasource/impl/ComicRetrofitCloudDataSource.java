@@ -1,5 +1,6 @@
 package net.sgonzalez.example.data.datasource.impl;
 
+import android.util.Log;
 import java.util.List;
 import javax.inject.Inject;
 import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
@@ -22,11 +23,13 @@ import retrofit2.Retrofit;
     this.comicService = comicService;
   }
 
-  public void retrieveByCharacterId(ComicRepository.ByCharacterIdRequest byCharacterIdRequest,
-                                    Callbacks<PageResult<List<ComicEntity>>> callbacks) {
+  public void retrieveByCharacterId(ComicRepository.ByCharacterIdRequest byCharacterIdRequest, Callbacks<PageResult<List<ComicEntity>>> callbacks) {
     try {
       Call<ComicResponse> request = comicService.getComicsByCharacterId(byCharacterIdRequest.characterId, byCharacterIdRequest.offset);
       ComicResponse response = executeRequest(request);
+      Log.w("", "offset" + byCharacterIdRequest.offset);
+      Log.w("", "count" + response.data.count);
+      Log.w("", "total" + response.data.total);
       boolean bottomReached = byCharacterIdRequest.offset + response.data.count >= response.data.total;
       PageResult<List<ComicEntity>> pageResult = new PageResult<>(response.data.results, bottomReached);
       callbacks.onDone(pageResult);

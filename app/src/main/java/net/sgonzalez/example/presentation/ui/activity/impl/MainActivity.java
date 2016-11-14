@@ -7,6 +7,8 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -29,7 +31,7 @@ import net.sgonzalez.example.domain.model.impl.CharacterModel;
 import net.sgonzalez.example.domain.model.impl.ComicModel;
 import net.sgonzalez.example.presentation.presenter.impl.MainPresenter;
 import net.sgonzalez.example.presentation.ui.activity.AbsActivity;
-import net.sgonzalez.example.presentation.ui.adapter.AbsBottomLoaderAdapter;
+import net.sgonzalez.example.presentation.ui.adapter.BottomLoaderAdapter;
 import net.sgonzalez.example.presentation.ui.adapter.CharactersAdapter;
 import net.sgonzalez.example.presentation.ui.adapter.ComicsAdapter;
 import net.sgonzalez.example.presentation.ui.adapter.EndlessScrollListener;
@@ -40,6 +42,7 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
   @Inject MainPresenter mainPresenter;
   @Inject Navigator navigator;
   @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
+  @BindView(R.id.content_frame) CoordinatorLayout contentFrame;
   @BindView(R.id.left_drawer_recycler_view) RecyclerView charactersRecyclerView;
   @BindView(R.id.comics_recycler_view) RecyclerView comicsRecyclerView;
   @BindView(R.id.toolbar) Toolbar toolbar;
@@ -51,7 +54,7 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    initToolbarDrawer();
+    initDrawer();
     initComicsList();
     mainPresenter.onViewReady();
   }
@@ -71,7 +74,7 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
     return R.layout.activity_main;
   }
 
-  private void initToolbarDrawer() {
+  private void initDrawer() {
     drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, 0, 0);
     drawerLayout.addDrawerListener(drawerToggle);
     setSupportActionBar(toolbar);
@@ -87,6 +90,7 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
       @Override
       public void onItemClicked(View view, CharacterModel character) {
         drawerLayout.closeDrawers();
+        comicsEndlessScrollListener.disable();
         mainPresenter.onCharacterClicked(character);
       }
     });
@@ -108,7 +112,7 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
     comicsAdapter = new ComicsAdapter();
     // init layout manager
     GridLayoutManager gridLayoutManager = new GridLayoutManager(this, COMICS_SPAN_COUNT);
-    gridLayoutManager.setSpanSizeLookup(new AbsBottomLoaderAdapter.SpanSizeLookupBLA(comicsAdapter, COMICS_SPAN_COUNT));
+    gridLayoutManager.setSpanSizeLookup(new BottomLoaderAdapter.SpanSizeLookupBLA(comicsAdapter, COMICS_SPAN_COUNT));
     // init recycler view
     comicsRecyclerView.setLayoutManager(gridLayoutManager);
     comicsRecyclerView.setAdapter(comicsAdapter);
@@ -172,6 +176,7 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
   @Override
   public void appendComics(List<ComicModel> comics) {
     comicsAdapter.appendItems(comics);
+    comicsEndlessScrollListener.enable();
   }
 
   @Override
@@ -188,6 +193,12 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
   @Override
   public void hideWallLoading() {
     comicsAdapter.hideLoading();
+  }
+
+  @Override
+  public void showError(String message) {
+    Snackbar.make(contentFrame, message, Snackbar.LENGTH_LONG)
+            .show();
   }
 
   private void issueTestNotification() {

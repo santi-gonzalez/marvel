@@ -9,16 +9,22 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import net.sgonzalez.example.R;
 
-public abstract class AbsBottomLoaderAdapter<VH extends RecyclerView.ViewHolder>
-extends RecyclerView.Adapter<AbsBottomLoaderAdapter.InnerViewHolder<VH>> {
-  public static final int LOADER_LAYOUT_RES_ID = R.layout.list_item_loader;
+/**
+ * Works as a regular RecyclerView adapter, but manages a loader ProgressBar at the bottom of it.
+ */
+public abstract class BottomLoaderAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<BottomLoaderAdapter.InnerViewHolder<VH>> {
+  private static final int LOADER_LAYOUT_RES_ID = R.layout.list_item_loader;
+  private static final boolean VISIBLE_DEFAULT = true;
   private boolean visible;
 
-  public AbsBottomLoaderAdapter() {
-    this(true);
+  /**
+   * Loader visible by default.
+   */
+  public BottomLoaderAdapter() {
+    this(VISIBLE_DEFAULT);
   }
 
-  public AbsBottomLoaderAdapter(boolean visible) {
+  public BottomLoaderAdapter(boolean visible) {
     this.visible = visible;
   }
 
@@ -53,19 +59,37 @@ extends RecyclerView.Adapter<AbsBottomLoaderAdapter.InnerViewHolder<VH>> {
     return getItemCountBLA() + 1;
   }
 
+  /**
+   * Replace regular {@link #getItemViewType(int)} for this version.
+   */
   public int getItemViewTypeBLA(int position) {
     return super.getItemViewType(position);
   }
 
+  /**
+   * Replace regular {@link #onCreateViewHolder(ViewGroup, int)} for this version.
+   */
   public abstract VH onCreateViewHolderBLA(ViewGroup parent, int viewType);
+  /**
+   * Replace regular {@link #onBindViewHolder(RecyclerView.ViewHolder, int)} for this version.
+   */
   public abstract void onBindViewHolderBLA(VH holder, int position);
+  /**
+   * Replace regular {@link #getItemCount()} for this version.
+   */
   public abstract int getItemCountBLA();
 
+  /**
+   * Show the loader ProgressBar.
+   */
   public void showLoading() {
     visible = true;
     notifyItemChanged(getItemCount() - 1);
   }
 
+  /**
+   * Hide the loader ProgressBar.
+   */
   public void hideLoading() {
     visible = false;
     notifyItemChanged(getItemCount() - 1);
@@ -80,7 +104,7 @@ extends RecyclerView.Adapter<AbsBottomLoaderAdapter.InnerViewHolder<VH>> {
     holder.progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
   }
 
-  public static final class InnerViewHolder<VH> extends RecyclerView.ViewHolder {
+  static final class InnerViewHolder<VH> extends RecyclerView.ViewHolder {
     @Nullable public VH childViewHolder;
     private ProgressBar progressBar;
 
@@ -103,10 +127,10 @@ extends RecyclerView.Adapter<AbsBottomLoaderAdapter.InnerViewHolder<VH>> {
    * count, if you wish the loader to be centered.
    */
   public static class SpanSizeLookupBLA extends GridLayoutManager.SpanSizeLookup {
-    private final AbsBottomLoaderAdapter adapter;
+    private final BottomLoaderAdapter adapter;
     private final int spanCount;
 
-    public SpanSizeLookupBLA(AbsBottomLoaderAdapter adapter, int spanCount) {
+    public SpanSizeLookupBLA(BottomLoaderAdapter adapter, int spanCount) {
       this.adapter = adapter;
       this.spanCount = spanCount;
     }

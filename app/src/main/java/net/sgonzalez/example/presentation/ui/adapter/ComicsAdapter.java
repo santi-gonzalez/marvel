@@ -12,7 +12,7 @@ import java.util.List;
 import net.sgonzalez.example.R;
 import net.sgonzalez.example.domain.model.impl.ComicModel;
 
-public class ComicsAdapter extends AbsBottomLoaderAdapter<ComicsAdapter.ViewHolder> {
+public class ComicsAdapter extends BottomLoaderAdapter<ComicsAdapter.ViewHolder> {
   private final List<ComicModel> dataSet = new ArrayList<>();
 
   public ComicsAdapter() {

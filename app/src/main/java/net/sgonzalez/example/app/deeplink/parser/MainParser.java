@@ -18,8 +18,7 @@ import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
   private final Parser toastParser;
 
   @Inject
-  public MainParser(ActionFactory actionFactory, NavigationParser navigationParser, NotificationParser notificationParser,
-                    ToastParser toastParser) {
+  public MainParser(ActionFactory actionFactory, NavigationParser navigationParser, NotificationParser notificationParser, ToastParser toastParser) {
     super(actionFactory);
     this.navigationParser = navigationParser;
     this.notificationParser = notificationParser;

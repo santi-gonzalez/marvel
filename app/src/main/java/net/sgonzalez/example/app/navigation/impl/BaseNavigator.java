@@ -31,8 +31,7 @@ import net.sgonzalez.example.app.navigation.extras.ExtrasProvider;
   @Override
   public void navigateTo(@NonNull NavigationDestiny navigationDestiny, @Nullable ExtrasProvider extrasProvider) {
     if (!hasActivityContext()) {
-      throw new IllegalStateException("context == null; invoke #withActivityContext(Context) before, or from a ContextNavigator "
-                                      + "object");
+      throw new IllegalStateException("context == null; invoke #withActivityContext(Context) before, or from a ContextNavigator " + "object");
     }
     navigationDestiny.onNavigate(getActivityContext(), extrasProvider);
   }

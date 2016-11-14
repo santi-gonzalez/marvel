@@ -5,13 +5,12 @@ import net.sgonzalez.example.data.callbacks.Callbacks;
 import net.sgonzalez.example.data.repository.log.Logger;
 
 /**
- * All repositories must return {@link net.sgonzalez.example.data.entity.Entity} type instances. <h3>Development</h3> All methods
- * must present the final parameter as {@link Callbacks}, with any number and type of other parameters before.
+ * All repositories must return {@link net.sgonzalez.example.data.entity.Entity} type instances. <h3>Development</h3> All methods must present the
+ * final parameter as {@link Callbacks}, with any number and type of other parameters before.
  * <p>
- * All methods must create and run an {@link net.sgonzalez.example.data.repository.operation.Operation} instance, performing any
- * logic inside. <i>Operations</i> represent different work flows, such as "request from cloud and store", or "load from local".
- * They expose all the required actions in the form of callbacks. <h3>Logging</h3> Use convenient {@code log*} methods for easy
- * integration with master switches.
+ * All methods must create and run an {@link net.sgonzalez.example.data.repository.operation.Operation} instance, performing any logic inside.
+ * <i>Operations</i> represent different work flows, such as "request from cloud and store", or "load from local". They expose all the required
+ * actions in the form of callbacks. <h3>Logging</h3> Use convenient {@code log*} methods for easy integration with master switches.
  */
 public abstract class AbsRepository implements Repository {
   private final CachePolicy cachePolicy;

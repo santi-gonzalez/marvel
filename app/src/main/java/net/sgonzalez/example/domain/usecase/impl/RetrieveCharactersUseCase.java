@@ -18,9 +18,8 @@ public class RetrieveCharactersUseCase extends AbsUseCase<Void, List<CharacterMo
   private final CharacterMapper characterMapper;
 
   @Inject
-  public RetrieveCharactersUseCase(MainThreadExecutor mainThreadExecutor, NewThreadExecutor newThreadExecutor,
-                                   SameThreadExecutor sameThreadExecutor, CharacterRepository characterRepository,
-                                   CharacterMapper characterMapper) {
+  public RetrieveCharactersUseCase(MainThreadExecutor mainThreadExecutor, NewThreadExecutor newThreadExecutor, SameThreadExecutor sameThreadExecutor,
+                                   CharacterRepository characterRepository, CharacterMapper characterMapper) {
     super(mainThreadExecutor, newThreadExecutor, sameThreadExecutor);
     this.characterRepository = characterRepository;
     this.characterMapper = characterMapper;

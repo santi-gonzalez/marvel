@@ -16,8 +16,8 @@ public class GetFiltersUseCase extends AbsUseCase<String, FilterModel> {
   private final FiltersRepository filtersRepository;
 
   @Inject
-  public GetFiltersUseCase(MainThreadExecutor mainThreadExecutor, NewThreadExecutor newThreadExecutor,
-                           SameThreadExecutor sameThreadExecutor, FiltersRepository filtersRepository) {
+  public GetFiltersUseCase(MainThreadExecutor mainThreadExecutor, NewThreadExecutor newThreadExecutor, SameThreadExecutor sameThreadExecutor,
+                           FiltersRepository filtersRepository) {
     super(mainThreadExecutor, newThreadExecutor, sameThreadExecutor);
     this.filtersRepository = filtersRepository;
   }

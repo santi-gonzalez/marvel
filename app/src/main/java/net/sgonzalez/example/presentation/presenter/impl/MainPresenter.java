@@ -75,7 +75,7 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
 
       @Override
       public void onError(Exception exception) {
-        // TODO: 12/11/2016 show error
+        presentable().showError(exception.getMessage());
       }
     });
   }
@@ -102,8 +102,8 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
 
         @Override
         public void onError(Exception exception) {
-          presentable().hideWallLoading();
-          // TODO: 13/11/2016 show error
+          presentable().hideWallLoading(); // TODO: 14/11/2016 show retry button
+          presentable().showError(exception.getMessage());
         }
       });
     }
@@ -115,5 +115,6 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
     void clearComicsWall();
     void showWallLoading();
     void hideWallLoading();
+    void showError(String message);
   }
 }
