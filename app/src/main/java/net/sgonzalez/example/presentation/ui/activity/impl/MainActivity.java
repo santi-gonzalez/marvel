@@ -13,11 +13,9 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,11 +29,11 @@ import net.sgonzalez.example.domain.model.impl.CharacterModel;
 import net.sgonzalez.example.domain.model.impl.ComicModel;
 import net.sgonzalez.example.presentation.presenter.impl.MainPresenter;
 import net.sgonzalez.example.presentation.ui.activity.AbsActivity;
-import net.sgonzalez.example.presentation.ui.adapter.BottomLoaderAdapter;
 import net.sgonzalez.example.presentation.ui.adapter.CharactersAdapter;
 import net.sgonzalez.example.presentation.ui.adapter.ComicsAdapter;
 import net.sgonzalez.example.presentation.ui.adapter.EndlessScrollListener;
 import net.sgonzalez.example.presentation.ui.adapter.OnItemClickListener;
+import net.sgonzalez.example.presentation.ui.adapter.PaddingItemDecoration;
 
 public class MainActivity extends AbsActivity implements MainPresenter.Presentable {
   public static final int COMICS_SPAN_COUNT = 2;
@@ -72,6 +70,18 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
   @Override
   protected int getContentView() {
     return R.layout.activity_main;
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    mainPresenter.onSaveInstanceState(outState);
+  }
+
+  @Override
+  protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    super.onRestoreInstanceState(savedInstanceState);
+    mainPresenter.onRestoreInstanceState(savedInstanceState);
   }
 
   private void initDrawer() {
@@ -111,15 +121,14 @@ public class MainActivity extends AbsActivity implements MainPresenter.Presentab
     // init adapter
     comicsAdapter = new ComicsAdapter();
     // init layout manager
-    GridLayoutManager gridLayoutManager = new GridLayoutManager(this, COMICS_SPAN_COUNT);
-    gridLayoutManager.setSpanSizeLookup(new BottomLoaderAdapter.SpanSizeLookupBLA(comicsAdapter, COMICS_SPAN_COUNT));
-    // init recycler view
-    comicsRecyclerView.setLayoutManager(gridLayoutManager);
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+    // init recycler view;
+    comicsRecyclerView.setLayoutManager(linearLayoutManager);
+    comicsRecyclerView.addItemDecoration(new PaddingItemDecoration(getResources().getDimensionPixelSize(R.dimen.default_gap)));
     comicsRecyclerView.setAdapter(comicsAdapter);
     comicsEndlessScrollListener = new EndlessScrollListener() {
       @Override
       public void onLoadMore(int currentPage) {
-        Log.e(">>>", "bottom reached!");
         mainPresenter.onComicsBottomReached(currentPage);
       }
     };

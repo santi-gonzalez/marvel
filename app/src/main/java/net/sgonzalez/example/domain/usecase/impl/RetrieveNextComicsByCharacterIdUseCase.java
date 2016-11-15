@@ -14,13 +14,13 @@ import net.sgonzalez.example.data.repository.impl.ComicRepository;
 import net.sgonzalez.example.domain.model.impl.ComicModel;
 import net.sgonzalez.example.domain.usecase.AbsUseCase;
 
-public class RetrieveComicsByCharacterIdUseCase extends AbsUseCase<Long, PageResult<List<ComicModel>>> {
+public class RetrieveNextComicsByCharacterIdUseCase extends AbsUseCase<Long, PageResult<List<ComicModel>>> {
   private final ComicRepository comicRepository;
   private final ComicMapper comicMapper;
 
   @Inject
-  public RetrieveComicsByCharacterIdUseCase(MainThreadExecutor mainThreadExecutor, NewThreadExecutor newThreadExecutor,
-                                            SameThreadExecutor sameThreadExecutor, ComicRepository comicRepository, ComicMapper comicMapper) {
+  public RetrieveNextComicsByCharacterIdUseCase(MainThreadExecutor mainThreadExecutor, NewThreadExecutor newThreadExecutor,
+                                                SameThreadExecutor sameThreadExecutor, ComicRepository comicRepository, ComicMapper comicMapper) {
     super(mainThreadExecutor, newThreadExecutor, sameThreadExecutor);
     this.comicRepository = comicRepository;
     this.comicMapper = comicMapper;
@@ -28,7 +28,7 @@ public class RetrieveComicsByCharacterIdUseCase extends AbsUseCase<Long, PageRes
 
   @Override
   protected void onExecute(Long characterId) {
-    comicRepository.retrieveByCharacterId(characterId, new Callbacks<PageResult<List<ComicEntity>>>() {
+    comicRepository.retrieveNextPageByCharacterId(characterId, new Callbacks<PageResult<List<ComicEntity>>>() {
       @Override
       public void onDone(PageResult<List<ComicEntity>> pageResult) {
         dispatchResult(comicMapper.toPRListModel(pageResult));

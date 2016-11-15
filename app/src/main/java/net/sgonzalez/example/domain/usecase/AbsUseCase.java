@@ -37,12 +37,16 @@ public abstract class AbsUseCase<Params, Result> implements Runnable {
     this.calledFromExecute = false;
   }
 
-  @SuppressWarnings("unused")
+  /**
+   * Happens on a worker thread.
+   */
   public final void execute(Params params, @Nullable Callbacks<Result> callbacks) {
     executeInternal(params, newThreadExecutor, callbacks);
   }
 
-  @SuppressWarnings("unused")
+  /**
+   * Happens on caller thread. Meant to be used by light local operations.
+   */
   public final void executeSync(Params params, @Nullable Callbacks<Result> callbacks) {
     executeInternal(params, sameThreadExecutor, callbacks);
   }
@@ -83,6 +87,9 @@ public abstract class AbsUseCase<Params, Result> implements Runnable {
     }
   }
 
+  /**
+   * Wrapped to happen the on main thread.
+   */
   protected void dispatchResult(final Result result) {
     logVerbose("onResult: " + result);
     if (callbacks != null) {
@@ -95,6 +102,9 @@ public abstract class AbsUseCase<Params, Result> implements Runnable {
     }
   }
 
+  /**
+   * Wrapped to happen the on main thread.
+   */
   protected void dispatchError(final Exception exception) {
     logException(exception);
     if (callbacks != null) {

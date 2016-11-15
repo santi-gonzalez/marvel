@@ -26,12 +26,14 @@
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff">
+        android:background="#eee">
 
       <android.support.v7.widget.RecyclerView
           android:id="@+id/comics_recycler_view"
           android:layout_width="match_parent"
-          android:layout_height="match_parent" />
+          android:layout_height="match_parent"
+          android:clipToPadding="false"
+          android:padding="@dimen/default_gap" />
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.v7.widget.RecyclerView

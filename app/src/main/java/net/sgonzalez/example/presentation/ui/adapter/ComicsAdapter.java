@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.sgonzalez.example.R;
 import net.sgonzalez.example.domain.model.impl.ComicModel;
+import net.sgonzalez.example.presentation.ui.utils.PicassoUtils;
 
 public class ComicsAdapter extends BottomLoaderAdapter<ComicsAdapter.ViewHolder> {
   private final List<ComicModel> dataSet = new ArrayList<>();
@@ -55,6 +57,7 @@ public class ComicsAdapter extends BottomLoaderAdapter<ComicsAdapter.ViewHolder>
 
   public static class ViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.text_view) TextView textView;
+    @BindView(R.id.image_view) ImageView imageView;
 
     public ViewHolder(View itemView) {
       super(itemView);
@@ -62,7 +65,9 @@ public class ComicsAdapter extends BottomLoaderAdapter<ComicsAdapter.ViewHolder>
     }
 
     public void populate(ComicModel item) {
-      textView.setText(String.valueOf(item.getId()));
+      textView.setText(item.getTitle());
+      PicassoUtils.placeImage(itemView.getContext(), item.getThumbnail()
+                                                         .getFullPath(), imageView);
     }
   }
 }

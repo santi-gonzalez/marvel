@@ -1,6 +1,7 @@
 package net.sgonzalez.example.data.datasource;
 
 import android.support.annotation.NonNull;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import net.sgonzalez.example.data.callbacks.Callbacks;
@@ -24,7 +25,15 @@ public abstract class AbsMemoryLocalDataSource<IdType, E extends Entity<IdType, 
     callbacks.onDone(entities);
   }
 
+  public void getAll(@NonNull final Callbacks<List<E>> callbacks) {
+    callbacks.onDone(new ArrayList<>(memory().values()));
+  }
+
   public void count(@NonNull final Callbacks<Integer> callbacks) {
     callbacks.onDone(memory().size());
+  }
+
+  public void get(IdType id, @NonNull final Callbacks<E> callbacks) {
+    callbacks.onDone(memory().get(id));
   }
 }

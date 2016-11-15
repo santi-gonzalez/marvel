@@ -1,7 +1,6 @@
 package net.sgonzalez.example.domain.usecase.impl;
 
 import android.support.annotation.NonNull;
-import java.util.List;
 import javax.inject.Inject;
 import net.sgonzalez.example.app.executor.MainThreadExecutor;
 import net.sgonzalez.example.app.executor.NewThreadExecutor;
@@ -13,24 +12,24 @@ import net.sgonzalez.example.data.repository.impl.CharacterRepository;
 import net.sgonzalez.example.domain.model.impl.CharacterModel;
 import net.sgonzalez.example.domain.usecase.AbsUseCase;
 
-public class RetrieveCharactersUseCase extends AbsUseCase<Void, List<CharacterModel>> {
+public class RetrieveCharacterUseCase extends AbsUseCase<Long, CharacterModel> {
   private final CharacterRepository characterRepository;
   private final CharacterMapper characterMapper;
 
   @Inject
-  public RetrieveCharactersUseCase(MainThreadExecutor mainThreadExecutor, NewThreadExecutor newThreadExecutor, SameThreadExecutor sameThreadExecutor,
-                                   CharacterRepository characterRepository, CharacterMapper characterMapper) {
+  public RetrieveCharacterUseCase(MainThreadExecutor mainThreadExecutor, NewThreadExecutor newThreadExecutor, SameThreadExecutor sameThreadExecutor,
+                                  CharacterRepository characterRepository, CharacterMapper characterMapper) {
     super(mainThreadExecutor, newThreadExecutor, sameThreadExecutor);
     this.characterRepository = characterRepository;
     this.characterMapper = characterMapper;
   }
 
   @Override
-  protected void onExecute(Void params) {
-    characterRepository.retrieveFromCloud(new Callbacks<List<CharacterEntity>>() {
+  protected void onExecute(Long characterId) {
+    characterRepository.retrieveById(characterId, new Callbacks<CharacterEntity>() {
       @Override
-      public void onDone(List<CharacterEntity> entities) {
-        dispatchResult(characterMapper.toModel(entities));
+      public void onDone(CharacterEntity entity) {
+        dispatchResult(characterMapper.toModel(entity));
       }
 
       @Override

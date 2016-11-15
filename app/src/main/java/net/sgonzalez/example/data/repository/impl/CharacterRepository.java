@@ -23,7 +23,15 @@ import net.sgonzalez.example.data.repository.AbsRepository;
     this.characterRetrofitCloudDataSource = characterRetrofitCloudDataSource;
   }
 
-  public void retrieveFromCloud(final @NonNull Callbacks<List<CharacterEntity>> callbacks) {
+  public void retrieveById(long characterId, @NonNull Callbacks<CharacterEntity> callbacks) {
+    characterMemoryLocalDataSource.get(characterId, callbacks);
+  }
+
+  public void retrieveStored(final @NonNull Callbacks<List<CharacterEntity>> callbacks) {
+    characterMemoryLocalDataSource.getAll(callbacks);
+  }
+
+  public void retrieveNextPage(final @NonNull Callbacks<List<CharacterEntity>> callbacks) {
     characterMemoryLocalDataSource.count(new Callbacks<Integer>() {
       @Override
       public void onDone(Integer offset) {

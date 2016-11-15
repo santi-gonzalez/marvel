@@ -1,6 +1,7 @@
 package net.sgonzalez.example.data.repository.impl;
 
 import android.support.annotation.NonNull;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
@@ -23,7 +24,27 @@ import net.sgonzalez.example.data.repository.AbsRepository;
     this.comicRetrofitCloudDataSource = comicRetrofitCloudDataSource;
   }
 
-  public void retrieveByCharacterId(final long characterId, @NonNull final Callbacks<PageResult<List<ComicEntity>>> callbacks) {
+  public void retrieveStoredByCharacterId(final long characterId, @NonNull final Callbacks<List<ComicEntity>> callbacks) {
+    comicMemoryLocalDataSource.getAll(new Callbacks<List<ComicEntity>>() {
+      @Override
+      public void onDone(List<ComicEntity> result) {
+        List<ComicEntity> matches = new ArrayList<>();
+        for (ComicEntity entity : result) {
+          if (characterId == entity.getId()) {
+            matches.add(entity);
+          }
+        }
+        callbacks.onDone(matches);
+      }
+
+      @Override
+      public void onError(@NonNull Exception exception) {
+        callbacks.onError(exception);
+      }
+    });
+  }
+
+  public void retrieveNextPageByCharacterId(final long characterId, @NonNull final Callbacks<PageResult<List<ComicEntity>>> callbacks) {
     comicMemoryLocalDataSource.count(characterId, new Callbacks<Integer>() {
       @Override
       public void onDone(Integer offset) {
@@ -54,6 +75,7 @@ import net.sgonzalez.example.data.repository.AbsRepository;
 
       @Override
       public void onError(@NonNull Exception exception) {
+        callbacks.onError(exception);
       }
     });
   }
