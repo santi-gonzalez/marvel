@@ -3,7 +3,8 @@ package net.sgonzalez.example.data.cache.impl;
 import android.support.annotation.Nullable;
 import net.sgonzalez.example.data.cache.CachePolicy;
 
-public class TimeCachePolicy implements CachePolicy {
+public class TimeCachePolicy
+implements CachePolicy {
   public static final int FIVE_MINUTES_SECONDS = 60 * 5;
   private final int timeToLiveSeconds;
 
@@ -15,8 +16,7 @@ public class TimeCachePolicy implements CachePolicy {
     this.timeToLiveSeconds = seconds;
   }
 
-  @Override
-  public boolean isValid(@Nullable Object object) {
+  @Override public boolean isValid(@Nullable Object object) {
     if (object == null) {
       return false;
     }

@@ -16,45 +16,44 @@ import net.sgonzalez.example.domain.usecase.impl.RetrieveCharacterUseCase;
 import net.sgonzalez.example.domain.usecase.impl.RetrieveNextCharactersUseCase;
 import net.sgonzalez.example.domain.usecase.impl.RetrieveNextComicsByCharacterIdUseCase;
 import net.sgonzalez.example.domain.usecase.impl.RetrieveStoredCharactersUseCase;
-import net.sgonzalez.example.domain.usecase.impl.RetrieveStoredComicsByCharacterIdUseCase;
+import net.sgonzalez.example.domain.usecase.impl.RetrieveStoredComicsByCharacterNameUseCase;
 import net.sgonzalez.example.presentation.presenter.AbsPresenter;
 
-@AndroidScope public class MainPresenter extends AbsPresenter<MainPresenter.Presentable> {
+@AndroidScope public class MainPresenter
+extends AbsPresenter<MainPresenter.Presentable> {
   private static final String CURRENT_CHARACTER_ID = "CURRENT_CHARACTER_ID";
   private final RetrieveCharacterUseCase retrieveCharacterUseCase;
   private final RetrieveStoredCharactersUseCase retrieveStoredCharactersUseCase;
   private final RetrieveNextCharactersUseCase retrieveNextCharactersUseCase;
-  private final RetrieveStoredComicsByCharacterIdUseCase retrieveStoredComicsByCharacterIdUseCase;
+  private final RetrieveStoredComicsByCharacterNameUseCase retrieveStoredComicsByCharacterNameUseCase;
   private final RetrieveNextComicsByCharacterIdUseCase retrieveNextComicsByCharacterIdUseCase;
   private final ClearComicsByCharacterIdUseCase clearComicsByCharacterIdUseCase;
   @Nullable private CharacterModel currentCharacter;
 
   @Inject
-  public MainPresenter(RetrieveCharacterUseCase retrieveCharacterUseCase, RetrieveStoredCharactersUseCase retrieveStoredCharactersUseCase,
+  public MainPresenter(RetrieveCharacterUseCase retrieveCharacterUseCase,
+                       RetrieveStoredCharactersUseCase retrieveStoredCharactersUseCase,
                        RetrieveNextCharactersUseCase retrieveNextCharactersUseCase,
-                       RetrieveStoredComicsByCharacterIdUseCase retrieveStoredComicsByCharacterIdUseCase,
+                       RetrieveStoredComicsByCharacterNameUseCase retrieveStoredComicsByCharacterNameUseCase,
                        RetrieveNextComicsByCharacterIdUseCase retrieveNextComicsByCharacterIdUseCase,
                        ClearComicsByCharacterIdUseCase clearComicsByCharacterIdUseCase) {
     this.retrieveCharacterUseCase = retrieveCharacterUseCase;
     this.retrieveStoredCharactersUseCase = retrieveStoredCharactersUseCase;
     this.retrieveNextCharactersUseCase = retrieveNextCharactersUseCase;
-    this.retrieveStoredComicsByCharacterIdUseCase = retrieveStoredComicsByCharacterIdUseCase;
+    this.retrieveStoredComicsByCharacterNameUseCase = retrieveStoredComicsByCharacterNameUseCase;
     this.retrieveNextComicsByCharacterIdUseCase = retrieveNextComicsByCharacterIdUseCase;
     this.clearComicsByCharacterIdUseCase = clearComicsByCharacterIdUseCase;
   }
 
-  @Override
-  public void onSaveInstanceState(@NonNull Bundle state) {
+  @Override public void onSaveInstanceState(@NonNull Bundle state) {
     state.putLong(CURRENT_CHARACTER_ID, currentCharacter != null ? currentCharacter.getId() : 0L);
   }
 
-  @Override
-  public void onRestoreInstanceState(@Nullable Bundle state) {
+  @Override public void onRestoreInstanceState(@Nullable Bundle state) {
     if (state != null) {
       final long currentCharacterId = state.getLong(CURRENT_CHARACTER_ID, 0L);
       loadCurrentCharacter(currentCharacterId, new CallbacksAdapter<CharacterModel>() {
-        @Override
-        public void onResult(CharacterModel result) {
+        @Override public void onResult(CharacterModel result) {
           setCurrentCharacter(result);
           showStoredComics();
         }
@@ -64,8 +63,7 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
 
   public void onViewReady() {
     retrieveStoredCharacters(new CallbacksAdapter<List<CharacterModel>>() {
-      @Override
-      public void onResult(List<CharacterModel> result) {
+      @Override public void onResult(List<CharacterModel> result) {
         if (!result.isEmpty()) {
           presentable().appendCharacters(result);
         } else {
@@ -102,8 +100,7 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
   private void loadCharacterComicsWall(final CharacterModel character) {
     if (currentCharacter != character) {
       clearComics(new CallbacksAdapter<Void>() {
-        @Override
-        public void onResult(Void result) {
+        @Override public void onResult(Void result) {
           setCurrentCharacter(character);
           showMoreComics();
         }
@@ -122,13 +119,11 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
 
   private void showMoreCharacters() {
     retrieveNextCharactersUseCase.execute(null, new CallbacksAdapter<List<CharacterModel>>() {
-      @Override
-      public void onResult(List<CharacterModel> result) {
+      @Override public void onResult(List<CharacterModel> result) {
         presentable().appendCharacters(result);
       }
 
-      @Override
-      public void onError(Exception exception) {
+      @Override public void onError(Exception exception) {
         presentable().showError(exception.getMessage());
       }
     });
@@ -137,21 +132,18 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
   private void showMoreComics() {
     if (currentCharacter != null) {
       retrieveNextComicsByCharacterIdUseCase.execute(currentCharacter.getId(), new Callbacks<PageResult<List<ComicModel>>>() {
-        @Override
-        public void onExecute() {
+        @Override public void onExecute() {
           presentable().showWallLoading();
         }
 
-        @Override
-        public void onResult(PageResult<List<ComicModel>> pageResult) {
+        @Override public void onResult(PageResult<List<ComicModel>> pageResult) {
           presentable().appendComics(pageResult.result);
           if (pageResult.bottomReached) {
             presentable().hideWallLoading();
           }
         }
 
-        @Override
-        public void onError(Exception exception) {
+        @Override public void onError(Exception exception) {
           presentable().hideWallLoading(); // TODO: 14/11/2016 show retry button
           presentable().showError(exception.getMessage());
         }
@@ -161,21 +153,26 @@ import net.sgonzalez.example.presentation.presenter.AbsPresenter;
 
   private void showStoredComics() {
     if (currentCharacter != null) {
-      retrieveStoredComicsByCharacterIdUseCase.executeSync(currentCharacter.getId(), new CallbacksAdapter<List<ComicModel>>() {
-        @Override
-        public void onResult(List<ComicModel> result) {
-          presentable().appendComics(result);
-        }
-      });
+      retrieveStoredComicsByCharacterNameUseCase.executeSync(currentCharacter.getName(),
+                                                             new CallbacksAdapter<List<ComicModel>>() {
+                                                               @Override public void onResult(List<ComicModel> result) {
+                                                                 presentable().appendComics(result);
+                                                               }
+                                                             });
     }
   }
 
   public interface Presentable {
     void appendCharacters(List<CharacterModel> characters);
+
     void appendComics(List<ComicModel> comics);
+
     void clearComicsWall();
+
     void showWallLoading();
+
     void hideWallLoading();
+
     void showError(String message);
   }
 }

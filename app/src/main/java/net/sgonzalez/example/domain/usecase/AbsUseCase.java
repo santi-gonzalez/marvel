@@ -8,21 +8,8 @@ import net.sgonzalez.example.app.executor.SameThreadExecutor;
 import net.sgonzalez.example.domain.callbacks.Callbacks;
 import net.sgonzalez.example.domain.usecase.log.Logger;
 
-/**
- * All use cases must return {@link net.sgonzalez.example.domain.model.Model} type instances. Method {@link #dispatchExecute()} is triggered
- * automatically right before {@link #onExecute(Object)}, in the main thread. <h3>Usage</h3> Specify generic <i>Development</i> and <i>Result</i>,
- * which can be of any kind. Given more than a single field is required, create an {@code inner static final class Params} and / or {@code Result},
- * with final fields and public constructor.
- * <p>
- * Inject repositories and mappers (models from data source come as Entities, and should exit as Models).
- * <p>
- * Dispatch result with {@link #dispatchResult(Object)} or error with {@link #dispatchError(Exception)} for convenience from result callbacks.
- * <h3>Logging</h3> Use convenient {@code log*} methods for easy integration with master switches.
- *
- * @see net.sgonzalez.example.data.entity.Entity
- * @see net.sgonzalez.example.domain.model.Model
- */
-public abstract class AbsUseCase<Params, Result> implements Runnable {
+public abstract class AbsUseCase<Params, Result>
+implements Runnable {
   private final MainThreadExecutor mainThreadExecutor;
   private final NewThreadExecutor newThreadExecutor;
   private final SameThreadExecutor sameThreadExecutor;
@@ -30,7 +17,9 @@ public abstract class AbsUseCase<Params, Result> implements Runnable {
   private Params params;
   @Nullable private Callbacks<Result> callbacks;
 
-  public AbsUseCase(MainThreadExecutor mainThreadExecutor, NewThreadExecutor newThreadExecutor, SameThreadExecutor sameThreadExecutor) {
+  public AbsUseCase(MainThreadExecutor mainThreadExecutor,
+                    NewThreadExecutor newThreadExecutor,
+                    SameThreadExecutor sameThreadExecutor) {
     this.mainThreadExecutor = mainThreadExecutor;
     this.newThreadExecutor = newThreadExecutor;
     this.sameThreadExecutor = sameThreadExecutor;
@@ -45,7 +34,7 @@ public abstract class AbsUseCase<Params, Result> implements Runnable {
   }
 
   /**
-   * Happens on caller thread. Meant to be used by light local operations.
+   * Happens on caller thread. Meant to be used by local operations or by other use cases.
    */
   public final void executeSync(Params params, @Nullable Callbacks<Result> callbacks) {
     executeInternal(params, sameThreadExecutor, callbacks);
@@ -62,8 +51,7 @@ public abstract class AbsUseCase<Params, Result> implements Runnable {
     this.callbacks = callbacks;
   }
 
-  @Override
-  public final void run() {
+  @Override public final void run() {
     try {
       if (!calledFromExecute) {
         throw new IllegalStateException("run this use case by invoking #executeSync(...) or #execute(...)");
@@ -75,12 +63,14 @@ public abstract class AbsUseCase<Params, Result> implements Runnable {
     }
   }
 
+  /**
+   * Happens on the main thread.
+   */
   private void dispatchExecute() {
     logVerbose("onExecute");
     if (callbacks != null) {
       executeMainThread(new Runnable() {
-        @Override
-        public void run() {
+        @Override public void run() {
           callbacks.onExecute();
         }
       });
@@ -88,14 +78,13 @@ public abstract class AbsUseCase<Params, Result> implements Runnable {
   }
 
   /**
-   * Wrapped to happen the on main thread.
+   * Happens on the main thread.
    */
   protected void dispatchResult(final Result result) {
     logVerbose("onResult: " + result);
     if (callbacks != null) {
       executeMainThread(new Runnable() {
-        @Override
-        public void run() {
+        @Override public void run() {
           callbacks.onResult(result);
         }
       });
@@ -103,14 +92,13 @@ public abstract class AbsUseCase<Params, Result> implements Runnable {
   }
 
   /**
-   * Wrapped to happen the on main thread.
+   * Happens on the main thread.
    */
   protected void dispatchError(final Exception exception) {
     logException(exception);
     if (callbacks != null) {
       executeMainThread(new Runnable() {
-        @Override
-        public void run() {
+        @Override public void run() {
           callbacks.onError(exception);
         }
       });

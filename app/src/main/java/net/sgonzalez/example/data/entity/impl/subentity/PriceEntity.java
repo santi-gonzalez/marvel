@@ -32,8 +32,7 @@ public class PriceEntity {
     this.price = price;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "PriceEntity{" +
            "type='" + type + '\'' +
            ", price=" + price +

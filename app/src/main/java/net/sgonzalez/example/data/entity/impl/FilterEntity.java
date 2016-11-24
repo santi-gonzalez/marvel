@@ -4,7 +4,8 @@ import android.support.annotation.NonNull;
 import net.sgonzalez.example.data.entity.Entity;
 import net.sgonzalez.example.domain.model.impl.FilterModel;
 
-public class FilterEntity implements Entity<String, FilterModel> {
+public class FilterEntity
+implements Entity<String, FilterModel> {
   private String id;
   private String key;
   private String value;
@@ -20,13 +21,11 @@ public class FilterEntity implements Entity<String, FilterModel> {
     this.value = value;
   }
 
-  @Override
-  public String getId() {
+  @Override public String getId() {
     return id;
   }
 
-  @Override
-  public void setId(String id) {
+  @Override public void setId(String id) {
     this.id = id;
   }
 
@@ -46,18 +45,11 @@ public class FilterEntity implements Entity<String, FilterModel> {
     this.value = value;
   }
 
-  @NonNull
-  @Override
-  public FilterModel toModel() {
-    return FilterModel.newBuilder()
-                      .withId(getId())
-                      .withKey(getKey())
-                      .withValue(getValue())
-                      .build();
+  @NonNull @Override public FilterModel toModel() {
+    return FilterModel.newBuilder().withId(getId()).withKey(getKey()).withValue(getValue()).build();
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "FilterEntity{" +
            "id='" + id + '\'' +
            ", key='" + key + '\'' +

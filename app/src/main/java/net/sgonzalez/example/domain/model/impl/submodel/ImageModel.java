@@ -28,8 +28,7 @@ public class ImageModel {
     return getPath() + "." + getExtension();
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "ImageModel{" +
            "path='" + path + '\'' +
            ", extension='" + extension + '\'' +

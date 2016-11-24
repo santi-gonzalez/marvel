@@ -8,7 +8,8 @@ import net.sgonzalez.example.app.deeplink.parser.impl.NotificationParser;
 import net.sgonzalez.example.app.deeplink.parser.impl.ToastParser;
 import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 
-@ApplicationScope public class MainParser extends AbsParser {
+@ApplicationScope public class MainParser
+extends AbsParser {
   public static final int INDEX_ACTION_SEGMENT = 0;
   public static final String ACTION_NAVIGATION = "nav";
   public static final String ACTION_NOTIFICATION = "not";
@@ -18,20 +19,21 @@ import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
   private final Parser toastParser;
 
   @Inject
-  public MainParser(ActionFactory actionFactory, NavigationParser navigationParser, NotificationParser notificationParser, ToastParser toastParser) {
+  public MainParser(ActionFactory actionFactory,
+                    NavigationParser navigationParser,
+                    NotificationParser notificationParser,
+                    ToastParser toastParser) {
     super(actionFactory);
     this.navigationParser = navigationParser;
     this.notificationParser = notificationParser;
     this.toastParser = toastParser;
   }
 
-  @Override
-  protected int getExpectedParamCount() {
+  @Override protected int getExpectedParamCount() {
     return 1;
   }
 
-  @Override
-  public void onParse(DeepLinkActionRegistry deepLinkActionRegistry, String... params) {
+  @Override public void onParse(DeepLinkActionRegistry deepLinkActionRegistry, String... params) {
     // extend this switch to enable support for more actions
     String segment = params[INDEX_ACTION_SEGMENT];
     switch (segment) {

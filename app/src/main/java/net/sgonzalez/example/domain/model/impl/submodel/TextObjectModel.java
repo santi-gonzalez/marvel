@@ -30,8 +30,7 @@ public class TextObjectModel {
     return text;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "TextObjectModel{" +
            "type='" + type + '\'' +
            ", language='" + language + '\'' +

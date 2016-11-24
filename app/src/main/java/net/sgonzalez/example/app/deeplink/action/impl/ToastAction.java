@@ -7,16 +7,15 @@ import android.widget.Toast;
 import net.sgonzalez.example.app.App;
 import net.sgonzalez.example.app.deeplink.action.AbsAction;
 
-class ToastAction extends AbsAction {
+class ToastAction
+extends AbsAction {
   private final String message;
 
   ToastAction(String message) {
     this.message = message;
   }
 
-  @Override
-  protected void onExecute(@NonNull App app, @Nullable Context context) {
-    Toast.makeText(app, message, Toast.LENGTH_SHORT)
-         .show();
+  @Override protected void onExecute(@NonNull App app, @Nullable Context context) {
+    Toast.makeText(app, message, Toast.LENGTH_SHORT).show();
   }
 }

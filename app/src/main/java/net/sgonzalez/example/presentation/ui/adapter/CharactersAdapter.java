@@ -14,24 +14,21 @@ import net.sgonzalez.example.R;
 import net.sgonzalez.example.domain.model.impl.CharacterModel;
 import net.sgonzalez.example.presentation.ui.utils.PicassoUtils;
 
-public class CharactersAdapter extends BottomLoaderAdapter<CharactersAdapter.ViewHolder> {
+public class CharactersAdapter
+extends BottomLoaderAdapter<CharactersAdapter.ViewHolder> {
   private final List<CharacterModel> dataSet = new ArrayList<>();
   private OnItemClickListener onItemClickListener;
 
-  @Override
-  public ViewHolder onCreateViewHolderBLA(ViewGroup parent, int viewType) {
-    return new ViewHolder(LayoutInflater.from(parent.getContext())
-                                        .inflate(R.layout.list_item_character, parent, false));
+  @Override public ViewHolder onCreateViewHolderBLA(ViewGroup parent, int viewType) {
+    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_character, parent, false));
   }
 
-  @Override
-  public void onBindViewHolderBLA(ViewHolder holder, int position) {
+  @Override public void onBindViewHolderBLA(ViewHolder holder, int position) {
     CharacterModel item = getItem(position);
     holder.populate(holder.itemView, item, onItemClickListener);
   }
 
-  @Override
-  public int getItemCountBLA() {
+  @Override public int getItemCountBLA() {
     return dataSet.size();
   }
 
@@ -50,7 +47,8 @@ public class CharactersAdapter extends BottomLoaderAdapter<CharactersAdapter.Vie
     notifyItemRangeInserted(previousCount, finalCount);
   }
 
-  public static class ViewHolder extends RecyclerView.ViewHolder {
+  public static class ViewHolder
+  extends RecyclerView.ViewHolder {
     @BindView(R.id.text_view_character) TextView textView;
     @BindView(R.id.image_view_character) ImageView imageView;
 
@@ -61,11 +59,9 @@ public class CharactersAdapter extends BottomLoaderAdapter<CharactersAdapter.Vie
 
     public void populate(View view, final CharacterModel item, final OnItemClickListener onItemClickListener) {
       textView.setText(String.valueOf(item.getName()));
-      PicassoUtils.placeImage(this.itemView.getContext(), item.getThumbnail()
-                                                              .getFullPath(), imageView);
+      PicassoUtils.placeImage(this.itemView.getContext(), item.getThumbnail().getFullPath(), imageView);
       view.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
+        @Override public void onClick(View view) {
           if (onItemClickListener != null) {
             onItemClickListener.onItemClicked(view, item);
           }

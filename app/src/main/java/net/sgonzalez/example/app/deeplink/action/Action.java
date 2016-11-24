@@ -7,5 +7,6 @@ import net.sgonzalez.example.app.App;
 
 public interface Action {
   void execute(@NonNull App app, @Nullable Context context);
+
   boolean shouldEndExecution();
 }

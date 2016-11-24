@@ -13,8 +13,7 @@ import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
   private final App app;
   private final Map<String, Typeface> typefaces;
 
-  @Inject
-  public TypefaceManager(App app) {
+  @Inject public TypefaceManager(App app) {
     this.app = app;
     typefaces = new HashMap<>();
     prepare();

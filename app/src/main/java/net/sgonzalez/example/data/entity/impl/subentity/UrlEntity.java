@@ -32,8 +32,7 @@ public class UrlEntity {
     this.url = url;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "UrlEntity{" +
            "type='" + type + '\'' +
            ", url='" + url + '\'' +

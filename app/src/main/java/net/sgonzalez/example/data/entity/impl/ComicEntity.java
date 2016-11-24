@@ -16,7 +16,8 @@ import net.sgonzalez.example.domain.model.impl.submodel.ImageModel;
 import net.sgonzalez.example.domain.model.impl.submodel.ItemCollectionModel;
 import net.sgonzalez.example.domain.model.impl.submodel.ItemModel;
 
-public class ComicEntity implements Entity<Long, ComicModel> {
+public class ComicEntity
+implements Entity<Long, ComicModel> {
   private long id;
   private long digitalId;
   private String title;
@@ -49,20 +50,62 @@ public class ComicEntity implements Entity<Long, ComicModel> {
 
   // Mapper requirement
   public ComicEntity(@NonNull ComicModel source) {
-    this(source.getId(), source.getDigitalId(), source.getTitle(), source.getIssueNumber(), source.getVariantDescription(), source.getDescription(),
-    source.getModified(), source.getIsbn(), source.getUpc(), source.getDiamondCode(), source.getEan(), source.getIssn(), source.getFormat(),
-    source.getPageCount(), SubMapper.toTextObjectEntity(source.getTextObjects()), source.getResourceURI(), SubMapper.toUrlEntity(source.getUrls()),
-    new ItemEntity(source.getSeries()), SubMapper.toItemEntity(source.getVariants()), SubMapper.toDateEntity(source.getDates()),
-    SubMapper.toPriceEntity(source.getPrices()), new ImageEntity(source.getThumbnail()), SubMapper.toImageEntity(source.getImages()),
-    new ItemCollectionEntity(source.getCreators()), new ItemCollectionEntity(source.getCharacters()), new ItemCollectionEntity(source.getStories()),
-    new ItemCollectionEntity(source.getEvents()));
+    this(source.getId(),
+         source.getDigitalId(),
+         source.getTitle(),
+         source.getIssueNumber(),
+         source.getVariantDescription(),
+         source.getDescription(),
+         source.getModified(),
+         source.getIsbn(),
+         source.getUpc(),
+         source.getDiamondCode(),
+         source.getEan(),
+         source.getIssn(),
+         source.getFormat(),
+         source.getPageCount(),
+         SubMapper.toTextObjectEntity(source.getTextObjects()),
+         source.getResourceURI(),
+         SubMapper.toUrlEntity(source.getUrls()),
+         new ItemEntity(source.getSeries()),
+         SubMapper.toItemEntity(source.getVariants()),
+         SubMapper.toDateEntity(source.getDates()),
+         SubMapper.toPriceEntity(source.getPrices()),
+         new ImageEntity(source.getThumbnail()),
+         SubMapper.toImageEntity(source.getImages()),
+         new ItemCollectionEntity(source.getCreators()),
+         new ItemCollectionEntity(source.getCharacters()),
+         new ItemCollectionEntity(source.getStories()),
+         new ItemCollectionEntity(source.getEvents()));
   }
 
-  public ComicEntity(long id, long digitalId, String title, int issueNumber, String variantDescription, String description, String modified,
-                     String isbn, String upc, String diamondCode, String ean, String issn, String format, int pageCount,
-                     List<TextObjectEntity> textObjects, String resourceURI, List<UrlEntity> urls, ItemEntity series, List<ItemEntity> variants,
-                     List<DateEntity> dates, List<PriceEntity> prices, ImageEntity thumbnail, List<ImageEntity> images, ItemCollectionEntity creators,
-                     ItemCollectionEntity characters, ItemCollectionEntity stories, ItemCollectionEntity events) {
+  public ComicEntity(long id,
+                     long digitalId,
+                     String title,
+                     int issueNumber,
+                     String variantDescription,
+                     String description,
+                     String modified,
+                     String isbn,
+                     String upc,
+                     String diamondCode,
+                     String ean,
+                     String issn,
+                     String format,
+                     int pageCount,
+                     List<TextObjectEntity> textObjects,
+                     String resourceURI,
+                     List<UrlEntity> urls,
+                     ItemEntity series,
+                     List<ItemEntity> variants,
+                     List<DateEntity> dates,
+                     List<PriceEntity> prices,
+                     ImageEntity thumbnail,
+                     List<ImageEntity> images,
+                     ItemCollectionEntity creators,
+                     ItemCollectionEntity characters,
+                     ItemCollectionEntity stories,
+                     ItemCollectionEntity events) {
     this.id = id;
     this.digitalId = digitalId;
     this.title = title;
@@ -92,13 +135,11 @@ public class ComicEntity implements Entity<Long, ComicModel> {
     this.events = events;
   }
 
-  @Override
-  public Long getId() {
+  @Override public Long getId() {
     return id;
   }
 
-  @Override
-  public void setId(Long id) {
+  @Override public void setId(Long id) {
     this.id = id;
   }
 
@@ -310,9 +351,7 @@ public class ComicEntity implements Entity<Long, ComicModel> {
     this.events = events;
   }
 
-  @NonNull
-  @Override
-  public ComicModel toModel() {
+  @NonNull @Override public ComicModel toModel() {
     return ComicModel.newBuilder()
                      .withId(getId())
                      .withDigitalId(getDigitalId())
@@ -344,8 +383,7 @@ public class ComicEntity implements Entity<Long, ComicModel> {
                      .build();
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "ComicEntity{" +
            "id=" + id +
            ", digitalId=" + digitalId +

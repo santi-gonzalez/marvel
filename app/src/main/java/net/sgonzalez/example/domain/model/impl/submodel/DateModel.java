@@ -24,8 +24,7 @@ public class DateModel {
     return date;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "DateModel{" +
            "type='" + type + '\'' +
            ", date='" + date + '\'' +

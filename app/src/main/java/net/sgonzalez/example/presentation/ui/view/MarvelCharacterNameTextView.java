@@ -12,7 +12,8 @@ import net.sgonzalez.example.app.dependency.component.DaggerAndroidComponent;
 import net.sgonzalez.example.app.dependency.module.AndroidModule;
 import net.sgonzalez.example.presentation.ui.manager.TypefaceManager;
 
-public class MarvelCharacterNameTextView extends TextView {
+public class MarvelCharacterNameTextView
+extends TextView {
   @Inject TypefaceManager typefaceManager;
 
   public MarvelCharacterNameTextView(Context context) {

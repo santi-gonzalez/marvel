@@ -6,15 +6,16 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class AuthenticationInterceptor implements Interceptor {
+public class AuthenticationInterceptor
+implements Interceptor {
   private static final String PUBLIC_KEY = NoSourceControl.PUBLIC_KEY;
   private static final String PRIVATE_KEY = NoSourceControl.PRIVATE_KEY;
   private static final String API_KEY_QUERY_PARAM = "apikey";
   private static final String TIMESTAMP_QUERY_PARAM = "ts";
   private static final String HASH_QUERY_PARAM = "hash";
 
-  @Override
-  public Response intercept(Chain chain) throws IOException {
+  @Override public Response intercept(Chain chain) throws
+  IOException {
     AuthInfo authInfo = generateAuthInfo();
     Request request = new Request.Builder().url(chain.request()
                                                      .url()
@@ -22,8 +23,7 @@ public class AuthenticationInterceptor implements Interceptor {
                                                      .addQueryParameter(API_KEY_QUERY_PARAM, authInfo.apiKey)
                                                      .addQueryParameter(TIMESTAMP_QUERY_PARAM, authInfo.timestamp)
                                                      .addQueryParameter(HASH_QUERY_PARAM, authInfo.hash)
-                                                     .build())
-                                           .build();
+                                                     .build()).build();
     return chain.proceed(request);
   }
 

@@ -39,8 +39,7 @@ public class ItemCollectionModel {
     return returned;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "ItemCollectionModel{" +
            "available=" + available +
            ", collectionURI='" + collectionURI + '\'' +

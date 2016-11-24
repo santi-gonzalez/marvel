@@ -14,8 +14,7 @@ public abstract class AbsMapper<M extends Model<?>, E extends Entity<?, M>> {
     this.entityClass = entityClass;
   }
 
-  @NonNull
-  public M toModel(@NonNull E source) {
+  @NonNull public M toModel(@NonNull E source) {
     //noinspection unchecked
     return source.toModel();
   }
@@ -28,12 +27,10 @@ public abstract class AbsMapper<M extends Model<?>, E extends Entity<?, M>> {
     return result;
   }
 
-  @NonNull
-  private E toEntity(@NonNull M model) {
+  @NonNull private E toEntity(@NonNull M model) {
     try {
       // the reflection of me is alive! (you better implement constructor with model parameter in every entity ;)
-      return entityClass.getConstructor(model.getClass())
-                        .newInstance(model);
+      return entityClass.getConstructor(model.getClass()).newInstance(model);
     } catch(Exception ex) {
       throw new RuntimeException(ex);
     }

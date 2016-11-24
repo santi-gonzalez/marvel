@@ -17,13 +17,16 @@ import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 import net.sgonzalez.example.app.navigation.NavigationDestiny;
 
 /**
- * Invoke any {@code parse(...)} method to start. Provide a valid Uri when needed (i.e.: {@code "framework://open/nav"}). See each parser constant
+ * Invoke any {@code parse(...)} method to start. Provide a valid Uri when needed (i.e.: {@code "framework://open/nav"}). See each
+ * parser constant
  * definition or <i>.readme.txt</i> for quick reference.
  * <p>
- * Manually set {@link #__SHOULD_OPEN_APP} in order to force open app on the event of a fatal parsing error (due to malformed URI, or any other
+ * Manually set {@link #__SHOULD_OPEN_APP} in order to force open app on the event of a fatal parsing error (due to malformed URI,
+ * or any other
  * kind).
  */
-@ApplicationScope public class DeepLinkResolver implements DeepLinkActionRegistry {
+@ApplicationScope public class DeepLinkResolver
+implements DeepLinkActionRegistry {
   public static final String TAG = DeepLinkResolver.class.getSimpleName();
   public static boolean __SHOULD_OPEN_APP = true;
   private final Parser mainParser;
@@ -33,8 +36,7 @@ import net.sgonzalez.example.app.navigation.NavigationDestiny;
   private Iterator<String> segmentsIterator;
   private Context context;
 
-  @Inject
-  public DeepLinkResolver(MainParser mainParser) {
+  @Inject public DeepLinkResolver(MainParser mainParser) {
     this.mainParser = mainParser;
     this.actions = new Stack<>();
     this.segmentsIterator = null;
@@ -79,22 +81,19 @@ import net.sgonzalez.example.app.navigation.NavigationDestiny;
     }
   }
 
-  @Override
-  public String requestParameter() {
+  @Override public String requestParameter() {
     if (segmentsIterator.hasNext()) {
       return segmentsIterator.next();
     }
     throw new IllegalArgumentException("parameter requested but no url segment was provided");
   }
 
-  @Override
-  public void registerAction(Action action) {
+  @Override public void registerAction(Action action) {
     actions.push(action);
     Logger.logDebug(TAG, action + " registered successfully!");
   }
 
-  @Override
-  public void clearRemainingActions() {
+  @Override public void clearRemainingActions() {
     actions.clear();
     Logger.logDebug(TAG, "action stack is empty");
   }

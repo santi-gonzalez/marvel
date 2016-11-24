@@ -5,6 +5,8 @@ package net.sgonzalez.example.domain.callbacks;
  */
 public interface Callbacks<Result> {
   void onExecute();
+
   void onResult(Result result);
+
   void onError(Exception exception);
 }

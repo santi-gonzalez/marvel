@@ -54,8 +54,7 @@ public class ItemCollectionEntity {
     this.returned = returned;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "ItemCollectionEntity{" +
            "available=" + available +
            ", collectionURI='" + collectionURI + '\'' +

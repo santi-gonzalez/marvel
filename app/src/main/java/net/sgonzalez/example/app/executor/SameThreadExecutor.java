@@ -5,13 +5,12 @@ import java.util.concurrent.Executor;
 import javax.inject.Inject;
 import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 
-@ApplicationScope public class SameThreadExecutor implements Executor {
-  @Inject
-  public SameThreadExecutor() {
+@ApplicationScope public class SameThreadExecutor
+implements Executor {
+  @Inject public SameThreadExecutor() {
   }
 
-  @Override
-  public void execute(@NonNull Runnable runnable) {
+  @Override public void execute(@NonNull Runnable runnable) {
     runnable.run();
   }
 }

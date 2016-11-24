@@ -8,23 +8,21 @@ import net.sgonzalez.example.app.deeplink.parser.Parser;
 import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 import net.sgonzalez.example.app.navigation.NavigationDestiny;
 
-@ApplicationScope public class NavigationParser extends AbsParser {
+@ApplicationScope public class NavigationParser
+extends AbsParser {
   public static final int INDEX_SHORT_DESTINY_NAME = 0;
   private final Parser exampleParser;
 
-  @Inject
-  public NavigationParser(ActionFactory actionFactory, ExampleParser exampleParser) {
+  @Inject public NavigationParser(ActionFactory actionFactory, ExampleParser exampleParser) {
     super(actionFactory);
     this.exampleParser = exampleParser;
   }
 
-  @Override
-  protected int getExpectedParamCount() {
+  @Override protected int getExpectedParamCount() {
     return 1;
   }
 
-  @Override
-  public void onParse(DeepLinkActionRegistry deepLinkActionRegistry, String... params) {
+  @Override public void onParse(DeepLinkActionRegistry deepLinkActionRegistry, String... params) {
     String destinyName = params[INDEX_SHORT_DESTINY_NAME];
     NavigationDestiny destiny = NavigationDestiny.from(destinyName);
     deepLinkActionRegistry.registerAction(actionFactory.newNavigationAction(destiny));

@@ -1,7 +1,9 @@
-package net.sgonzalez.example.domain.callbacks;
+package net.sgonzalez.example.data.callbacks;
 
-public abstract class CallbacksAdapter<Result>
-implements Callbacks<Result> {
+import android.support.annotation.NonNull;
+
+public abstract class CallbacksAdapter<Entity>
+implements Callbacks<Entity> {
   private final Callbacks forward;
 
   public CallbacksAdapter() {
@@ -12,24 +14,18 @@ implements Callbacks<Result> {
     this.forward = forward;
   }
 
-  @Override public void onExecute() {
-    if (forward != null) {
-      forward.onExecute();
-    }
-  }
-
-  @Override public void onResult(Result result) {
+  @Override public void onDone(Entity result) {
     try {
       if (forward != null) {
         //noinspection unchecked
-        forward.onResult(result);
+        forward.onDone(result);
       }
     } catch(Exception exception) {
       onError(exception);
     }
   }
 
-  @Override public void onError(Exception exception) {
+  @Override public void onError(@NonNull Exception exception) {
     if (forward != null) {
       forward.onError(exception);
     }

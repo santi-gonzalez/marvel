@@ -14,27 +14,24 @@ import net.sgonzalez.example.R;
 import net.sgonzalez.example.domain.model.impl.ComicModel;
 import net.sgonzalez.example.presentation.ui.utils.PicassoUtils;
 
-public class ComicsAdapter extends BottomLoaderAdapter<ComicsAdapter.ViewHolder> {
+public class ComicsAdapter
+extends BottomLoaderAdapter<ComicsAdapter.ViewHolder> {
   private final List<ComicModel> dataSet = new ArrayList<>();
 
   public ComicsAdapter() {
     super(false);
   }
 
-  @Override
-  public ViewHolder onCreateViewHolderBLA(ViewGroup parent, int viewType) {
-    return new ViewHolder(LayoutInflater.from(parent.getContext())
-                                        .inflate(R.layout.list_item_comic, parent, false));
+  @Override public ViewHolder onCreateViewHolderBLA(ViewGroup parent, int viewType) {
+    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_comic, parent, false));
   }
 
-  @Override
-  public void onBindViewHolderBLA(ViewHolder holder, int position) {
+  @Override public void onBindViewHolderBLA(ViewHolder holder, int position) {
     ComicModel item = getItem(position);
     holder.populate(item);
   }
 
-  @Override
-  public int getItemCountBLA() {
+  @Override public int getItemCountBLA() {
     return dataSet.size();
   }
 
@@ -55,7 +52,8 @@ public class ComicsAdapter extends BottomLoaderAdapter<ComicsAdapter.ViewHolder>
     notifyItemRangeRemoved(0, previousCount);
   }
 
-  public static class ViewHolder extends RecyclerView.ViewHolder {
+  public static class ViewHolder
+  extends RecyclerView.ViewHolder {
     @BindView(R.id.text_view) TextView textView;
     @BindView(R.id.image_view) ImageView imageView;
 
@@ -66,8 +64,7 @@ public class ComicsAdapter extends BottomLoaderAdapter<ComicsAdapter.ViewHolder>
 
     public void populate(ComicModel item) {
       textView.setText(item.getTitle());
-      PicassoUtils.placeImage(itemView.getContext(), item.getThumbnail()
-                                                         .getFullPath(), imageView);
+      PicassoUtils.placeImage(itemView.getContext(), item.getThumbnail().getFullPath(), imageView);
     }
   }
 }

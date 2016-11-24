@@ -23,53 +23,37 @@ import retrofit2.converter.gson.GsonConverterFactory;
     this.app = app;
   }
 
-  @Provides
-  @ApplicationScope
-  App getApp() {
+  @Provides @ApplicationScope App getApp() {
     return this.app;
   }
 
-  @Provides
-  @ApplicationScope
-  Application getApplication() {
+  @Provides @ApplicationScope Application getApplication() {
     return getApp();
   }
 
-  @Provides
-  @ApplicationScope
-  Navigator getBaseNavigator(BaseNavigator baseNavigator) {
+  @Provides @ApplicationScope Navigator getBaseNavigator(BaseNavigator baseNavigator) {
     return baseNavigator;
   }
 
-  @Provides
-  @ApplicationScope
-  OkHttpClient getOkHttpClient() {
+  @Provides @ApplicationScope OkHttpClient getOkHttpClient() {
     HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
     httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
     AuthenticationInterceptor authenticationInterceptor = new AuthenticationInterceptor();
-    return new OkHttpClient.Builder().addInterceptor(authenticationInterceptor)
-                                     .addInterceptor(httpLoggingInterceptor)
-                                     .build();
+    return new OkHttpClient.Builder().addInterceptor(authenticationInterceptor).addInterceptor(httpLoggingInterceptor).build();
   }
 
-  @Provides
-  @ApplicationScope
-  Retrofit getRetrofit(OkHttpClient client) {
+  @Provides @ApplicationScope Retrofit getRetrofit(OkHttpClient client) {
     return new Retrofit.Builder().baseUrl(MARVEL_BASE_URL)
                                  .client(client)
                                  .addConverterFactory(GsonConverterFactory.create())
                                  .build();
   }
 
-  @Provides
-  @ApplicationScope
-  ComicService getComicsService(Retrofit retrofit) {
+  @Provides @ApplicationScope ComicService getComicsService(Retrofit retrofit) {
     return retrofit.create(ComicService.class);
   }
 
-  @Provides
-  @ApplicationScope
-  CharacterService getCharacterService(Retrofit retrofit) {
+  @Provides @ApplicationScope CharacterService getCharacterService(Retrofit retrofit) {
     return retrofit.create(CharacterService.class);
   }
 }

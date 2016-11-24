@@ -7,6 +7,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ComicService {
-  @GET("/v1/public/characters/{characterId}/comics")
-  Call<ComicResponse> getComicsByCharacterId(@Path("characterId") long characterId, @Query("offset") int offset);
+  @GET("/v1/public/characters/{characterId}/comics") Call<ComicResponse> getComicsByCharacterId(@Path("characterId")
+                                                                                                long characterId,
+                                                                                                @Query("offset") int offset);
 }

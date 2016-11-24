@@ -6,22 +6,20 @@ import net.sgonzalez.example.app.deeplink.action.impl.ActionFactory;
 import net.sgonzalez.example.app.deeplink.parser.AbsParser;
 import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 
-@ApplicationScope public class ExampleParser extends AbsParser {
+@ApplicationScope public class ExampleParser
+extends AbsParser {
   public static final int INDEX_PARAM_1 = 0;
   public static final int INDEX_PARAM_2 = 1;
 
-  @Inject
-  public ExampleParser(ActionFactory actionFactory) {
+  @Inject public ExampleParser(ActionFactory actionFactory) {
     super(actionFactory);
   }
 
-  @Override
-  protected int getExpectedParamCount() {
+  @Override protected int getExpectedParamCount() {
     return 0;
   }
 
-  @Override
-  public void onParse(DeepLinkActionRegistry deepLinkActionRegistry, String... params) {
+  @Override public void onParse(DeepLinkActionRegistry deepLinkActionRegistry, String... params) {
     // retrieve params and do something
   }
 }

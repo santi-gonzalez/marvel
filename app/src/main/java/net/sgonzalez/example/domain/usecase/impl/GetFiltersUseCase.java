@@ -12,27 +12,27 @@ import net.sgonzalez.example.data.repository.impl.FiltersRepository;
 import net.sgonzalez.example.domain.model.impl.FilterModel;
 import net.sgonzalez.example.domain.usecase.AbsUseCase;
 
-public class GetFiltersUseCase extends AbsUseCase<String, FilterModel> {
+public class GetFiltersUseCase
+extends AbsUseCase<String, FilterModel> {
   private final FiltersRepository filtersRepository;
 
   @Inject
-  public GetFiltersUseCase(MainThreadExecutor mainThreadExecutor, NewThreadExecutor newThreadExecutor, SameThreadExecutor sameThreadExecutor,
+  public GetFiltersUseCase(MainThreadExecutor mainThreadExecutor,
+                           NewThreadExecutor newThreadExecutor,
+                           SameThreadExecutor sameThreadExecutor,
                            FiltersRepository filtersRepository) {
     super(mainThreadExecutor, newThreadExecutor, sameThreadExecutor);
     this.filtersRepository = filtersRepository;
   }
 
-  @Override
-  protected void onExecute(String id) {
+  @Override protected void onExecute(String id) {
     if (!TextUtils.isEmpty(id)) {
       filtersRepository.retrieveById(id, new Callbacks<FilterEntity>() {
-        @Override
-        public void onDone(FilterEntity entity) {
+        @Override public void onDone(FilterEntity entity) {
           dispatchResult(entity.toModel());
         }
 
-        @Override
-        public void onError(@NonNull Exception exception) {
+        @Override public void onError(@NonNull Exception exception) {
           dispatchError(exception);
         }
       });

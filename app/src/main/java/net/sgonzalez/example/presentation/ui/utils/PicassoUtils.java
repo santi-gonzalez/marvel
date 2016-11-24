@@ -9,8 +9,6 @@ public final class PicassoUtils {
   }
 
   public static void placeImage(Context context, String url, ImageView target) {
-    Picasso.with(context)
-           .load(url)
-           .into(target);
+    Picasso.with(context).load(url).into(target);
   }
 }

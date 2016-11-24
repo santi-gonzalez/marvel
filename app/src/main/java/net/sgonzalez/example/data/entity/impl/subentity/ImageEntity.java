@@ -32,8 +32,7 @@ public class ImageEntity {
     this.extension = extension;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "ImageEntity{" +
            "path='" + path + '\'' +
            ", extension='" + extension + '\'' +

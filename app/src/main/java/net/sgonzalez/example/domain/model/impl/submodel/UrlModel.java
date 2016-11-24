@@ -24,8 +24,7 @@ public class UrlModel {
     return url;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "UrlModel{" +
            "type='" + type + '\'' +
            ", url='" + url + '\'' +

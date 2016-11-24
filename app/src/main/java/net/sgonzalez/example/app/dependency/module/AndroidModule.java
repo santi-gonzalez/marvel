@@ -14,15 +14,11 @@ import net.sgonzalez.example.app.navigation.impl.ContextNavigator;
     this.context = context;
   }
 
-  @AndroidScope
-  @Provides
-  Context getContext() {
+  @AndroidScope @Provides Context getContext() {
     return context;
   }
 
-  @AndroidScope
-  @Provides
-  Navigator getContextNavigator(ContextNavigator contextNavigator) {
+  @AndroidScope @Provides Navigator getContextNavigator(ContextNavigator contextNavigator) {
     return contextNavigator;
   }
 }

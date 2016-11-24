@@ -17,11 +17,18 @@ import net.sgonzalez.example.presentation.ui.manager.TypefaceManager;
 @ApplicationScope @Component(modules = { AppModule.class }) public interface AppComponent
 extends RepositoryProvider, DataSourceProvider, MapperProvider {
   void inject(App app);
+
   App getApp();
+
   Application getApplication();
+
   DeepLinkResolver getDeepLinkResolver();
+
   MainThreadExecutor getMainThreadExecutor();
+
   NewThreadExecutor getNewThreadExecutor();
+
   SameThreadExecutor getSameThreadExecutor();
+
   TypefaceManager getTypefaceManager();
 }

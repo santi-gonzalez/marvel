@@ -9,10 +9,13 @@ import net.sgonzalez.example.app.navigation.impl.ContextNavigator;
 
 public interface Navigator {
   Context getActivityContext();
+
   boolean hasActivityContext();
+
   /**
-   * Mutate this navigator to a {@link ContextNavigator} by the use of the provided Activity.
+   * Mutate this navigator into a {@link ContextNavigator} by using of the provided Activity.
    */
-  ContextNavigator withActivityContext(Activity activity);
+  ContextNavigator withActivityContext(@NonNull Activity activity);
+
   void navigateTo(@NonNull NavigationDestiny navigationDestiny, @Nullable ExtrasProvider extrasProvider);
 }

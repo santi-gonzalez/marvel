@@ -8,24 +8,26 @@ import net.sgonzalez.example.app.retrofit.response.ComicResponse;
 import net.sgonzalez.example.app.retrofit.response.PageResult;
 import net.sgonzalez.example.app.retrofit.service.ComicService;
 import net.sgonzalez.example.data.callbacks.Callbacks;
-import net.sgonzalez.example.data.datasource.AbsRetrofitCloudDataSource;
+import net.sgonzalez.example.data.datasource.AbsRetrofitDataSource;
 import net.sgonzalez.example.data.entity.impl.ComicEntity;
 import net.sgonzalez.example.data.repository.impl.ComicRepository;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 
-@ApplicationScope public class ComicRetrofitCloudDataSource extends AbsRetrofitCloudDataSource {
+@ApplicationScope public class ComicCloudDataSource
+extends AbsRetrofitDataSource {
   private final ComicService comicService;
 
-  @Inject
-  public ComicRetrofitCloudDataSource(Retrofit retrofit, ComicService comicService) {
+  @Inject public ComicCloudDataSource(Retrofit retrofit, ComicService comicService) {
     super(retrofit);
     this.comicService = comicService;
   }
 
-  public void retrieveByCharacterId(ComicRepository.ByCharacterIdRequest byCharacterIdRequest, Callbacks<PageResult<List<ComicEntity>>> callbacks) {
+  public void retrieveByCharacterId(ComicRepository.ByCharacterIdRequest byCharacterIdRequest,
+                                    Callbacks<PageResult<List<ComicEntity>>> callbacks) {
     try {
-      Call<ComicResponse> request = comicService.getComicsByCharacterId(byCharacterIdRequest.characterId, byCharacterIdRequest.offset);
+      Call<ComicResponse> request =
+      comicService.getComicsByCharacterId(byCharacterIdRequest.characterId, byCharacterIdRequest.offset);
       ComicResponse response = executeRequest(request);
       Log.w("", "offset" + byCharacterIdRequest.offset);
       Log.w("", "count" + response.data.count);

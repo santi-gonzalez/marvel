@@ -32,8 +32,7 @@ public class DateEntity {
     this.date = date;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "DateEntity{" +
            "type='" + type + '\'' +
            ", date='" + date + '\'' +

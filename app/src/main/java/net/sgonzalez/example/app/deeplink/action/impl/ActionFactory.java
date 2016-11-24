@@ -11,15 +11,14 @@ import net.sgonzalez.example.app.navigation.extras.ExtrasProvider;
 @ApplicationScope public class ActionFactory {
   @Inject Navigator navigator;
 
-  @Inject
-  public ActionFactory() {
+  @Inject public ActionFactory() {
   }
 
   public Action newNavigationAction(NavigationDestiny navigationDestiny) {
-    return new NavigationAction(navigator, navigationDestiny, null);
+    return newNavigationAction(navigationDestiny, null);
   }
 
-  public Action newNavigationAction(@Nullable ExtrasProvider extrasProvider, NavigationDestiny navigationDestiny) {
+  public Action newNavigationAction(NavigationDestiny navigationDestiny, @Nullable ExtrasProvider extrasProvider) {
     return new NavigationAction(navigator, navigationDestiny, extrasProvider);
   }
 

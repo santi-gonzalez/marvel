@@ -5,18 +5,20 @@ import net.sgonzalez.example.app.deeplink.DeepLinkActionRegistry;
 import net.sgonzalez.example.app.deeplink.action.impl.ActionFactory;
 import net.sgonzalez.example.app.deeplink.log.Logger;
 
-public abstract class AbsParser implements Parser {
+public abstract class AbsParser
+implements Parser {
   protected final ActionFactory actionFactory;
 
   public AbsParser(ActionFactory actionFactory) {
     this.actionFactory = actionFactory;
   }
 
-  @Override
-  public void parse(DeepLinkActionRegistry deepLinkActionRegistry, String... params) {
+  @Override public void parse(DeepLinkActionRegistry deepLinkActionRegistry, String... params) {
     if (!checkParams(params)) {
-      throw new IllegalArgumentException(
-                                        "param count does not match; expected " + getExpectedParamCount() + " got " + getProvidedParamsCount(params));
+      throw new IllegalArgumentException("param count does not match; expected "
+                                         + getExpectedParamCount()
+                                         + " got "
+                                         + getProvidedParamsCount(params));
     }
     logVerbose("parsing... (params " + Arrays.asList(params) + ")");
     onParse(deepLinkActionRegistry, params);
@@ -31,6 +33,7 @@ public abstract class AbsParser implements Parser {
   }
 
   protected abstract int getExpectedParamCount();
+
   protected abstract void onParse(DeepLinkActionRegistry deepLinkActionRegistry, String... params);
 
   protected void logVerbose(String message) {

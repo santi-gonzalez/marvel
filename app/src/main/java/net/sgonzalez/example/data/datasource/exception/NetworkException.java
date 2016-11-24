@@ -1,9 +1,9 @@
 package net.sgonzalez.example.data.datasource.exception;
 
-import java.io.IOException;
 import net.sgonzalez.example.app.retrofit.response.ErrorResponse;
 
-public class NetworkException extends RuntimeException {
+public class NetworkException
+extends RuntimeException {
   public static final int NON_PRESENT = -1;
   public static final String NETWORK_ERROR_MESSAGE = "network error";
   private final int responseCode;
@@ -24,7 +24,7 @@ public class NetworkException extends RuntimeException {
     this.errorResponse = response;
   }
 
-  public NetworkException(IOException exception) {
+  public NetworkException(Exception exception) {
     super(exception);
     this.responseCode = NON_PRESENT;
     this.responseMessage = "";

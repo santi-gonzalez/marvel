@@ -11,7 +11,8 @@ import net.sgonzalez.example.domain.model.impl.submodel.PriceModel;
 import net.sgonzalez.example.domain.model.impl.submodel.TextObjectModel;
 import net.sgonzalez.example.domain.model.impl.submodel.UrlModel;
 
-public class ComicModel implements Model<Long> {
+public class ComicModel
+implements Model<Long> {
   private final long id;
   private final long digitalId;
   private final String title;
@@ -106,8 +107,7 @@ public class ComicModel implements Model<Long> {
                        .withEvents(copy.getEvents());
   }
 
-  @Override
-  public Long getId() {
+  @Override public Long getId() {
     return id;
   }
 
@@ -215,8 +215,7 @@ public class ComicModel implements Model<Long> {
     return events;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "ComicModel{" +
            "id=" + id +
            ", digitalId=" + digitalId +

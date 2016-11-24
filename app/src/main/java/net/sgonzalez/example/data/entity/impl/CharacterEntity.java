@@ -11,7 +11,8 @@ import net.sgonzalez.example.domain.model.impl.CharacterModel;
 import net.sgonzalez.example.domain.model.impl.submodel.ImageModel;
 import net.sgonzalez.example.domain.model.impl.submodel.ItemCollectionModel;
 
-public class CharacterEntity implements Entity<Long, CharacterModel> {
+public class CharacterEntity
+implements Entity<Long, CharacterModel> {
   private Long id;
   private String name;
   private String description;
@@ -26,13 +27,29 @@ public class CharacterEntity implements Entity<Long, CharacterModel> {
 
   // Mapper requirement
   public CharacterEntity(@NonNull CharacterModel source) {
-    this(source.getId(), source.getName(), source.getDescription(), source.getModified(), new ImageEntity(source.getThumbnail()),
-    source.getResourceURI(), new ItemCollectionEntity(source.getComics()), new ItemCollectionEntity(source.getSeries()),
-    new ItemCollectionEntity(source.getStories()), new ItemCollectionEntity(source.getEvents()), SubMapper.toUrlEntity(source.getUrls()));
+    this(source.getId(),
+         source.getName(),
+         source.getDescription(),
+         source.getModified(),
+         new ImageEntity(source.getThumbnail()),
+         source.getResourceURI(),
+         new ItemCollectionEntity(source.getComics()),
+         new ItemCollectionEntity(source.getSeries()),
+         new ItemCollectionEntity(source.getStories()),
+         new ItemCollectionEntity(source.getEvents()),
+         SubMapper.toUrlEntity(source.getUrls()));
   }
 
-  public CharacterEntity(Long id, String name, String description, String modified, ImageEntity thumbnail, String resourceURI,
-                         ItemCollectionEntity comics, ItemCollectionEntity series, ItemCollectionEntity stories, ItemCollectionEntity events,
+  public CharacterEntity(Long id,
+                         String name,
+                         String description,
+                         String modified,
+                         ImageEntity thumbnail,
+                         String resourceURI,
+                         ItemCollectionEntity comics,
+                         ItemCollectionEntity series,
+                         ItemCollectionEntity stories,
+                         ItemCollectionEntity events,
                          List<UrlEntity> urls) {
     this.id = id;
     this.name = name;
@@ -47,13 +64,11 @@ public class CharacterEntity implements Entity<Long, CharacterModel> {
     this.urls = urls;
   }
 
-  @Override
-  public Long getId() {
+  @Override public Long getId() {
     return id;
   }
 
-  @Override
-  public void setId(Long id) {
+  @Override public void setId(Long id) {
     this.id = id;
   }
 
@@ -137,9 +152,7 @@ public class CharacterEntity implements Entity<Long, CharacterModel> {
     this.urls = urls;
   }
 
-  @NonNull
-  @Override
-  public CharacterModel toModel() {
+  @NonNull @Override public CharacterModel toModel() {
     new ItemCollectionModel(getComics());
     return CharacterModel.newBuilder()
                          .withId(getId())
@@ -156,8 +169,7 @@ public class CharacterEntity implements Entity<Long, CharacterModel> {
                          .build();
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "CharacterEntity{" +
            "id=" + id +
            ", name='" + name + '\'' +

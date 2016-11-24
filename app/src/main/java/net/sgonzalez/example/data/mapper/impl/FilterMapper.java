@@ -6,11 +6,11 @@ import net.sgonzalez.example.data.entity.impl.FilterEntity;
 import net.sgonzalez.example.data.mapper.AbsMapper;
 import net.sgonzalez.example.domain.model.impl.FilterModel;
 
-@ApplicationScope public class FilterMapper extends AbsMapper<FilterModel, FilterEntity> {
+@ApplicationScope public class FilterMapper
+extends AbsMapper<FilterModel, FilterEntity> {
   public static final FilterMapper INSTANCE = new FilterMapper();
 
-  @Inject
-  public FilterMapper() {
+  @Inject public FilterMapper() {
     super(FilterEntity.class);
   }
 }

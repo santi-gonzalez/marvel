@@ -10,7 +10,8 @@ import net.sgonzalez.example.app.navigation.NavigationDestiny;
 import net.sgonzalez.example.app.navigation.Navigator;
 import net.sgonzalez.example.app.navigation.extras.ExtrasProvider;
 
-class NavigationAction extends AbsAction {
+class NavigationAction
+extends AbsAction {
   private final NavigationDestiny navigationDestiny;
   private final ExtrasProvider extrasProvider;
   private Navigator navigator;
@@ -21,8 +22,7 @@ class NavigationAction extends AbsAction {
     this.extrasProvider = extrasProvider;
   }
 
-  @Override
-  protected void onExecute(@NonNull App app, @Nullable Context context) {
+  @Override protected void onExecute(@NonNull App app, @Nullable Context context) {
     if (!navigator.hasActivityContext() && context != null) {
       navigator = this.navigator.withActivityContext((Activity) context);
     }

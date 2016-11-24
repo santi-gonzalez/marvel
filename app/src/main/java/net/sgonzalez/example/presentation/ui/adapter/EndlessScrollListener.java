@@ -3,7 +3,8 @@ package net.sgonzalez.example.presentation.ui.adapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-public abstract class EndlessScrollListener extends RecyclerView.OnScrollListener {
+public abstract class EndlessScrollListener
+extends RecyclerView.OnScrollListener {
   private static final int DEFAULT_VISIBLE_THRESHOLD = 5;
   private boolean enabled;
   private int previousTotal; // The total number of items in the data set after the last load
@@ -21,8 +22,7 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
     enable();
   }
 
-  @Override
-  public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+  @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
     super.onScrolled(recyclerView, dx, dy);
     RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
     if (layoutManager instanceof LinearLayoutManager) {

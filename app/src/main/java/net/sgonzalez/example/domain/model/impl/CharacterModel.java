@@ -8,7 +8,8 @@ import net.sgonzalez.example.domain.model.impl.submodel.ImageModel;
 import net.sgonzalez.example.domain.model.impl.submodel.ItemCollectionModel;
 import net.sgonzalez.example.domain.model.impl.submodel.UrlModel;
 
-public class CharacterModel implements Model<Long> {
+public class CharacterModel
+implements Model<Long> {
   private final long id;
   private final String name;
   private final String description;
@@ -53,8 +54,7 @@ public class CharacterModel implements Model<Long> {
                        .withUrls(copy.getUrls());
   }
 
-  @Override
-  public Long getId() {
+  @Override public Long getId() {
     return id;
   }
 
@@ -98,8 +98,7 @@ public class CharacterModel implements Model<Long> {
     return urls;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "CharacterModel{" +
            "id=" + id +
            ", name='" + name + '\'' +

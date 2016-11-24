@@ -7,16 +7,15 @@ import java.util.concurrent.Executors;
 import javax.inject.Inject;
 import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 
-@ApplicationScope public class NewThreadExecutor implements Executor {
+@ApplicationScope public class NewThreadExecutor
+implements Executor {
   ExecutorService executorService;
 
-  @Inject
-  public NewThreadExecutor() {
+  @Inject public NewThreadExecutor() {
     executorService = Executors.newCachedThreadPool();
   }
 
-  @Override
-  public void execute(@NonNull Runnable runnable) {
+  @Override public void execute(@NonNull Runnable runnable) {
     executorService.execute(runnable);
   }
 }

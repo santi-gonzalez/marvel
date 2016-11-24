@@ -6,9 +6,9 @@ import android.support.annotation.Nullable;
 import net.sgonzalez.example.app.App;
 import net.sgonzalez.example.app.deeplink.log.Logger;
 
-public abstract class AbsAction implements Action {
-  @Override
-  public void execute(@NonNull App app, @Nullable Context context) {
+public abstract class AbsAction
+implements Action {
+  @Override public void execute(@NonNull App app, @Nullable Context context) {
     try {
       logVerbose("executing sync...");
       onExecute(app, context);
@@ -17,15 +17,15 @@ public abstract class AbsAction implements Action {
     }
   }
 
-  @Override
-  public boolean shouldEndExecution() {
+  @Override public boolean shouldEndExecution() {
     return false;
   }
 
   /**
    * Parameter <i>context</i> (which can be always safely casted into Activity) is always {@code null} for async operations.
    */
-  protected abstract void onExecute(@NonNull App app, @Nullable Context context) throws Exception;
+  protected abstract void onExecute(@NonNull App app, @Nullable Context context) throws
+  Exception;
 
   protected void logVerbose(String message) {
     Logger.logVerbose(getClass().getSimpleName(), message);

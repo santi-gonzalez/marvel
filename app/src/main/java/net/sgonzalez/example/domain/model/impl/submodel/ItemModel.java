@@ -24,8 +24,7 @@ public class ItemModel {
     return name;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "ItemEntity{" +
            "resourceURI='" + resourceURI + '\'' +
            ", name='" + name + '\'' +

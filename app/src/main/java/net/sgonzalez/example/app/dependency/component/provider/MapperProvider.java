@@ -6,6 +6,8 @@ import net.sgonzalez.example.data.mapper.impl.FilterMapper;
 
 public interface MapperProvider {
   FilterMapper getFilterMapper();
+
   ComicMapper getComicMapper();
+
   CharacterMapper getCharacterMapper();
 }

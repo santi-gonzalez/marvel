@@ -2,7 +2,8 @@ package net.sgonzalez.example.domain.model.impl;
 
 import net.sgonzalez.example.domain.model.Model;
 
-public class FilterModel implements Model<String> {
+public class FilterModel
+implements Model<String> {
   private final String id;
   private final String key;
   private final String value;
@@ -18,13 +19,10 @@ public class FilterModel implements Model<String> {
   }
 
   public static Builder newBuilder(FilterModel copy) {
-    return newBuilder().withId(copy.id)
-                       .withKey(copy.getKey())
-                       .withValue(copy.getValue());
+    return newBuilder().withId(copy.id).withKey(copy.getKey()).withValue(copy.getValue());
   }
 
-  @Override
-  public String getId() {
+  @Override public String getId() {
     return id;
   }
 
@@ -36,8 +34,7 @@ public class FilterModel implements Model<String> {
     return value;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "FilterModel{" +
            "id='" + id + '\'' +
            ", key='" + key + '\'' +

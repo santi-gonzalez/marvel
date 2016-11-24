@@ -24,8 +24,7 @@ public class PriceModel {
     return price;
   }
 
-  @Override
-  public String toString() {
+  @Override public String toString() {
     return "PriceModel{" +
            "type='" + type + '\'' +
            ", price=" + price +
