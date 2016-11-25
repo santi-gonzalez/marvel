@@ -17,7 +17,7 @@ extends AbsRetrofitDataSource {
   public void retrieveById(@NonNull String id, @NonNull Callbacks<FilterEntity> callbacks) {
     try {
       FilterEntity result = new FilterEntity(id, "key-" + id, "value-" + id);
-      callbacks.onDone(result);
+      callbacks.onResult(result);
     } catch(Exception exception) {
       callbacks.onError(exception);
     }

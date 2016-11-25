@@ -32,7 +32,8 @@ extends AbsUseCase<Long, PageResult<List<ComicModel>>> {
 
   @Override protected void onExecute(Long characterId) {
     comicRepository.retrieveNextPageByCharacterId(characterId, new Callbacks<PageResult<List<ComicEntity>>>() {
-      @Override public void onDone(PageResult<List<ComicEntity>> pageResult) {
+
+      @Override public void onResult(PageResult<List<ComicEntity>> pageResult) {
         dispatchResult(comicMapper.toPRListModel(pageResult));
       }
 

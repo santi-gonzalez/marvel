@@ -61,6 +61,7 @@ extends BottomLoaderAdapter<CharactersAdapter.ViewHolder> {
       textView.setText(String.valueOf(item.getName()));
       PicassoUtils.placeImage(this.itemView.getContext(), item.getThumbnail().getFullPath(), imageView);
       view.setOnClickListener(new View.OnClickListener() {
+
         @Override public void onClick(View view) {
           if (onItemClickListener != null) {
             onItemClickListener.onItemClicked(view, item);

@@ -53,6 +53,7 @@ extends AbsPresenter<MainPresenter.Presentable> {
     if (state != null) {
       final long currentCharacterId = state.getLong(CURRENT_CHARACTER_ID, 0L);
       loadCurrentCharacter(currentCharacterId, new CallbacksAdapter<CharacterModel>() {
+
         @Override public void onResult(CharacterModel result) {
           setCurrentCharacter(result);
           showStoredComics();
@@ -63,6 +64,7 @@ extends AbsPresenter<MainPresenter.Presentable> {
 
   public void onViewReady() {
     retrieveStoredCharacters(new CallbacksAdapter<List<CharacterModel>>() {
+
       @Override public void onResult(List<CharacterModel> result) {
         if (!result.isEmpty()) {
           presentable().appendCharacters(result);
@@ -100,6 +102,7 @@ extends AbsPresenter<MainPresenter.Presentable> {
   private void loadCharacterComicsWall(final CharacterModel character) {
     if (currentCharacter != character) {
       clearComics(new CallbacksAdapter<Void>() {
+
         @Override public void onResult(Void result) {
           setCurrentCharacter(character);
           showMoreComics();
@@ -118,12 +121,14 @@ extends AbsPresenter<MainPresenter.Presentable> {
   }
 
   private void showMoreCharacters() {
-    retrieveNextCharactersUseCase.execute(null, new CallbacksAdapter<List<CharacterModel>>() {
+    retrieveNextCharactersUseCase.execute(new CallbacksAdapter<List<CharacterModel>>() {
+
       @Override public void onResult(List<CharacterModel> result) {
         presentable().appendCharacters(result);
       }
 
-      @Override public void onError(Exception exception) {
+      @Override public void onError(@NonNull Exception exception) {
+        presentable().hideDrawerLoading(); // TODO: 14/11/2016 show retry button
         presentable().showError(exception.getMessage());
       }
     });
@@ -132,6 +137,7 @@ extends AbsPresenter<MainPresenter.Presentable> {
   private void showMoreComics() {
     if (currentCharacter != null) {
       retrieveNextComicsByCharacterIdUseCase.execute(currentCharacter.getId(), new Callbacks<PageResult<List<ComicModel>>>() {
+
         @Override public void onExecute() {
           presentable().showWallLoading();
         }
@@ -143,7 +149,7 @@ extends AbsPresenter<MainPresenter.Presentable> {
           }
         }
 
-        @Override public void onError(Exception exception) {
+        @Override public void onError(@NonNull Exception exception) {
           presentable().hideWallLoading(); // TODO: 14/11/2016 show retry button
           presentable().showError(exception.getMessage());
         }
@@ -154,11 +160,12 @@ extends AbsPresenter<MainPresenter.Presentable> {
   private void showStoredComics() {
     if (currentCharacter != null) {
       retrieveStoredComicsByCharacterNameUseCase.executeSync(currentCharacter.getName(),
-                                                             new CallbacksAdapter<List<ComicModel>>() {
-                                                               @Override public void onResult(List<ComicModel> result) {
-                                                                 presentable().appendComics(result);
-                                                               }
-                                                             });
+      new CallbacksAdapter<List<ComicModel>>() {
+
+        @Override public void onResult(List<ComicModel> result) {
+          presentable().appendComics(result);
+        }
+      });
     }
   }
 
@@ -172,6 +179,8 @@ extends AbsPresenter<MainPresenter.Presentable> {
     void showWallLoading();
 
     void hideWallLoading();
+
+    void hideDrawerLoading();
 
     void showError(String message);
   }

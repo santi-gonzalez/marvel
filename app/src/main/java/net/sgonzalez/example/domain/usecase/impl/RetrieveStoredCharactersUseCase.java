@@ -31,7 +31,8 @@ extends AbsUseCase<Void, List<CharacterModel>> {
 
   @Override protected void onExecute(Void params) {
     characterRepository.retrieveStored(new Callbacks<List<CharacterEntity>>() {
-      @Override public void onDone(List<CharacterEntity> entities) {
+
+      @Override public void onResult(List<CharacterEntity> entities) {
         dispatchResult(characterMapper.toModel(entities));
       }
 

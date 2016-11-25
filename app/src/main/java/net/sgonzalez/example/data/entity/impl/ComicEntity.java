@@ -50,33 +50,15 @@ implements Entity<Long, ComicModel> {
 
   // Mapper requirement
   public ComicEntity(@NonNull ComicModel source) {
-    this(source.getId(),
-         source.getDigitalId(),
-         source.getTitle(),
-         source.getIssueNumber(),
-         source.getVariantDescription(),
-         source.getDescription(),
-         source.getModified(),
-         source.getIsbn(),
-         source.getUpc(),
-         source.getDiamondCode(),
-         source.getEan(),
-         source.getIssn(),
-         source.getFormat(),
-         source.getPageCount(),
-         SubMapper.toTextObjectEntity(source.getTextObjects()),
-         source.getResourceURI(),
-         SubMapper.toUrlEntity(source.getUrls()),
-         new ItemEntity(source.getSeries()),
-         SubMapper.toItemEntity(source.getVariants()),
-         SubMapper.toDateEntity(source.getDates()),
-         SubMapper.toPriceEntity(source.getPrices()),
-         new ImageEntity(source.getThumbnail()),
-         SubMapper.toImageEntity(source.getImages()),
-         new ItemCollectionEntity(source.getCreators()),
-         new ItemCollectionEntity(source.getCharacters()),
-         new ItemCollectionEntity(source.getStories()),
-         new ItemCollectionEntity(source.getEvents()));
+    this(source.getId(), source.getDigitalId(), source.getTitle(), source.getIssueNumber(), source.getVariantDescription(),
+    source.getDescription(), source.getModified(), source.getIsbn(), source.getUpc(), source.getDiamondCode(), source.getEan(),
+    source.getIssn(), source.getFormat(), source.getPageCount(), SubMapper.toTextObjectEntity(source.getTextObjects()),
+    source.getResourceURI(), SubMapper.toUrlEntity(source.getUrls()), new ItemEntity(source.getSeries()),
+    SubMapper.toItemEntity(source.getVariants()), SubMapper.toDateEntity(source.getDates()),
+    SubMapper.toPriceEntity(source.getPrices()), new ImageEntity(source.getThumbnail()),
+    SubMapper.toImageEntity(source.getImages()), new ItemCollectionEntity(source.getCreators()),
+    new ItemCollectionEntity(source.getCharacters()), new ItemCollectionEntity(source.getStories()),
+    new ItemCollectionEntity(source.getEvents()));
   }
 
   public ComicEntity(long id,

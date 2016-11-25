@@ -3,6 +3,7 @@ package net.sgonzalez.example.app.dependency.module;
 import android.app.Application;
 import dagger.Module;
 import dagger.Provides;
+import java.util.concurrent.TimeUnit;
 import net.sgonzalez.example.app.App;
 import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 import net.sgonzalez.example.app.navigation.Navigator;
@@ -39,7 +40,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
     HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
     httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
     AuthenticationInterceptor authenticationInterceptor = new AuthenticationInterceptor();
-    return new OkHttpClient.Builder().addInterceptor(authenticationInterceptor).addInterceptor(httpLoggingInterceptor).build();
+    return new OkHttpClient.Builder().connectTimeout(1, TimeUnit.MILLISECONDS)
+                                     .addInterceptor(authenticationInterceptor)
+                                     .addInterceptor(httpLoggingInterceptor)
+                                     .build();
   }
 
   @Provides @ApplicationScope Retrofit getRetrofit(OkHttpClient client) {

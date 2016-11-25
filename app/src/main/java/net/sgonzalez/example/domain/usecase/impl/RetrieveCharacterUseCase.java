@@ -30,7 +30,8 @@ extends AbsUseCase<Long, CharacterModel> {
 
   @Override protected void onExecute(Long characterId) {
     characterRepository.retrieveById(characterId, new Callbacks<CharacterEntity>() {
-      @Override public void onDone(CharacterEntity entity) {
+
+      @Override public void onResult(CharacterEntity entity) {
         dispatchResult(characterMapper.toModel(entity));
       }
 

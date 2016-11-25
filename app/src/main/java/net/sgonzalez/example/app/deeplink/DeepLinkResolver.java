@@ -17,11 +17,13 @@ import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 import net.sgonzalez.example.app.navigation.NavigationDestiny;
 
 /**
- * Invoke any {@code parse(...)} method to start. Provide a valid Uri when needed (i.e.: {@code "framework://open/nav"}). See each
+ * Invoke any {@code parse(...)} method to start. Provide a valid Uri when needed (i.e.: {@code "framework://open/nav"}). See
+ * each
  * parser constant
  * definition or <i>.readme.txt</i> for quick reference.
  * <p>
- * Manually set {@link #__SHOULD_OPEN_APP} in order to force open app on the event of a fatal parsing error (due to malformed URI,
+ * Manually set {@link #__SHOULD_OPEN_APP} in order to force open app on the event of a fatal parsing error (due to malformed
+ * URI,
  * or any other
  * kind).
  */

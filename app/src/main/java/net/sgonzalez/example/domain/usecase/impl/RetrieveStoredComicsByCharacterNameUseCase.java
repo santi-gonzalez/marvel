@@ -31,7 +31,8 @@ extends AbsUseCase<String, List<ComicModel>> {
 
   @Override protected void onExecute(String characterName) {
     comicRepository.retrieveStoredByCharacterName(characterName, new Callbacks<List<ComicEntity>>() {
-      @Override public void onDone(List<ComicEntity> pageResult) {
+
+      @Override public void onResult(List<ComicEntity> pageResult) {
         dispatchResult(comicMapper.toModel(pageResult));
       }
 

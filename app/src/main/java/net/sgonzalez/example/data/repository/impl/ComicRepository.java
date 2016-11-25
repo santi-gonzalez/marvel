@@ -7,6 +7,7 @@ import net.sgonzalez.example.app.dependency.scope.ApplicationScope;
 import net.sgonzalez.example.app.retrofit.response.PageResult;
 import net.sgonzalez.example.data.cache.impl.TimeCachePolicy;
 import net.sgonzalez.example.data.callbacks.Callbacks;
+import net.sgonzalez.example.data.callbacks.CallbacksAdapter;
 import net.sgonzalez.example.data.callbacks.Matcher;
 import net.sgonzalez.example.data.datasource.impl.ComicCloudDataSource;
 import net.sgonzalez.example.data.datasource.impl.ComicLocalDataSource;
@@ -27,6 +28,7 @@ extends AbsRepository {
 
   public void retrieveStoredByCharacterName(final String characterName, @NonNull Callbacks<List<ComicEntity>> callbacks) {
     comicLocalDataSource.getAll(new Matcher<ComicEntity>() {
+
       @Override public boolean isValid(ComicEntity entity) {
         for (ItemEntity itemEntity : entity.getCharacters().getItems()) {
           if (itemEntity.getName().equals(characterName)) {
@@ -40,46 +42,26 @@ extends AbsRepository {
 
   public void retrieveNextPageByCharacterId(final long characterId,
                                             @NonNull final Callbacks<PageResult<List<ComicEntity>>> callbacks) {
-    comicLocalDataSource.count(characterId, new Callbacks<Integer>() {
-      @Override public void onDone(Integer offset) {
-        final ByCharacterIdRequest byCharacterIdRequest = new ByCharacterIdRequest(characterId, offset);
-        comicCloudDataSource.retrieveByCharacterId(byCharacterIdRequest, new Callbacks<PageResult<List<ComicEntity>>>() {
-          @Override public void onDone(final PageResult<List<ComicEntity>> result) {
-            comicLocalDataSource.store(byCharacterIdRequest.characterId, result.result, new Callbacks<List<ComicEntity>>() {
-              @Override public void onDone(List<ComicEntity> entities) {
-                callbacks.onDone(result);
-              }
+    comicLocalDataSource.count(characterId, new CallbacksAdapter<Integer>(callbacks) {
 
-              @Override public void onError(@NonNull Exception exception) {
-                callbacks.onError(exception);
-                callbacks.onDone(result);
+      @Override public void onResult(Integer offset) {
+        comicCloudDataSource.retrieveByCharacterId(characterId, offset,
+        new CallbacksAdapter<PageResult<List<ComicEntity>>>(callbacks) {
+
+          @Override public void onResult(final PageResult<List<ComicEntity>> result) {
+            comicLocalDataSource.store(characterId, result.result, new CallbacksAdapter<List<ComicEntity>>(callbacks) {
+
+              @Override public void onResult(List<ComicEntity> comicEntities) {
+                callbacks.onResult(result);
               }
             });
           }
-
-          @Override public void onError(@NonNull Exception exception) {
-            callbacks.onError(exception);
-          }
         });
-      }
-
-      @Override public void onError(@NonNull Exception exception) {
-        callbacks.onError(exception);
       }
     });
   }
 
-  public void clearInLocalByCharacterId(long characterId, @NonNull final Callbacks<Void> callbacks) {
+  public void clearStoredByCharacterId(long characterId, @NonNull final Callbacks<Void> callbacks) {
     comicLocalDataSource.clear(characterId, callbacks);
-  }
-
-  public static final class ByCharacterIdRequest {
-    public final long characterId;
-    public final int offset;
-
-    public ByCharacterIdRequest(long characterId, int offset) {
-      this.characterId = characterId;
-      this.offset = offset;
-    }
   }
 }

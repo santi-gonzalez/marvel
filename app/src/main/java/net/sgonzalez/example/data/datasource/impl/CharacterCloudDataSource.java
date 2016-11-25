@@ -24,7 +24,7 @@ extends AbsRetrofitDataSource {
     try {
       Call<CharacterResponse> request = characterService.getCharacters(offset);
       CharacterResponse response = executeRequest(request);
-      callbacks.onDone(response.data.results);
+      callbacks.onResult(response.data.results);
     } catch(Exception exception) {
       callbacks.onError(exception);
     }

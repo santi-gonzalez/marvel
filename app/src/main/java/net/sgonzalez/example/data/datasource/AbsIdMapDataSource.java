@@ -24,26 +24,31 @@ implements LocalDataSource<E> {
   }
 
   @Override public void store(final List<E> entities, @NonNull final Callbacks<List<E>> callbacks) {
-    for (E entity : entities) {
-      memory().put(entity.getId(), entity);
+    try {
+      for (E entity : entities) {
+        memory().put(entity.getId(), entity);
+      }
+    } catch(Exception exception) {
+      callbacks.onError(exception);
     }
-    callbacks.onDone(entities);
+    callbacks.onResult(entities);
   }
 
   public void get(@NonNull IdType id, @NonNull final Callbacks<E> callbacks) {
-    callbacks.onDone(memory().get(id));
+    callbacks.onResult(memory().get(id));
   }
 
   @Override public void get(@NonNull Matcher<E> matcher, @NonNull final Callbacks<E> callbacks) {
     getAll(matcher, new CallbacksAdapter<List<E>>(callbacks) {
-      @Override public void onDone(List<E> result) {
-        callbacks.onDone(result.size() > 0 ? result.get(0) : null);
+
+      @Override public void onResult(List<E> result) {
+        callbacks.onResult(result.size() > 0 ? result.get(0) : null);
       }
     });
   }
 
   @Override public void getAll(@NonNull final Callbacks<List<E>> callbacks) {
-    callbacks.onDone(new ArrayList<>(memory().values()));
+    callbacks.onResult(new ArrayList<>(memory().values()));
   }
 
   @Override public void getAll(@Nullable Matcher<E> matcher, @NonNull final Callbacks<List<E>> callbacks) {
@@ -57,12 +62,12 @@ implements LocalDataSource<E> {
           result.add(entity);
         }
       }
-      callbacks.onDone(result);
+      callbacks.onResult(result);
     }
   }
 
   @Override public void count(@NonNull final Callbacks<Integer> callbacks) {
-    callbacks.onDone(memory().size());
+    callbacks.onResult(memory().size());
   }
 
   @Override public void count(@Nullable Matcher<E> matcher, @NonNull Callbacks<Integer> callbacks) {
@@ -76,7 +81,7 @@ implements LocalDataSource<E> {
           size++;
         }
       }
-      callbacks.onDone(size);
+      callbacks.onResult(size);
     }
   }
 }

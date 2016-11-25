@@ -28,7 +28,8 @@ extends AbsUseCase<String, FilterModel> {
   @Override protected void onExecute(String id) {
     if (!TextUtils.isEmpty(id)) {
       filtersRepository.retrieveById(id, new Callbacks<FilterEntity>() {
-        @Override public void onDone(FilterEntity entity) {
+
+        @Override public void onResult(FilterEntity entity) {
           dispatchResult(entity.toModel());
         }
 

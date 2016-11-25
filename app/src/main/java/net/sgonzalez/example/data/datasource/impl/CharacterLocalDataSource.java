@@ -20,22 +20,25 @@ extends AbsIdMapDataSource<Long, CharacterEntity> {
 
   @Override public void getAll(@NonNull final Callbacks<List<CharacterEntity>> callbacks) {
     super.getAll(new CallbacksAdapter<List<CharacterEntity>>(callbacks) {
-      @Override public void onDone(List<CharacterEntity> result) {
-        callbacks.onDone(sortByName(result));
+
+      @Override public void onResult(List<CharacterEntity> result) {
+        callbacks.onResult(sortByName(result));
       }
     });
   }
 
   @Override public void getAll(@Nullable Matcher<CharacterEntity> matcher, @NonNull Callbacks<List<CharacterEntity>> callbacks) {
     super.getAll(matcher, new CallbacksAdapter<List<CharacterEntity>>() {
-      @Override public void onDone(List<CharacterEntity> result) {
-        super.onDone(sortByName(result));
+
+      @Override public void onResult(List<CharacterEntity> result) {
+        super.onResult(sortByName(result));
       }
     });
   }
 
   private List<CharacterEntity> sortByName(List<CharacterEntity> set) {
     Collections.sort(set, new Comparator<CharacterEntity>() {
+
       @Override public int compare(CharacterEntity left, CharacterEntity right) {
         return left.getName().compareTo(right.getName());
       }

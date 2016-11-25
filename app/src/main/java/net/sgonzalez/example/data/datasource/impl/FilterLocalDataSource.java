@@ -13,11 +13,11 @@ extends AbsIdMapDataSource<String, FilterEntity> {
   }
 
   public void retrieveById(@NonNull final String id, @NonNull final Callbacks<FilterEntity> callbacks) {
-    callbacks.onDone(memory().get(id));
+    callbacks.onResult(memory().get(id));
   }
 
   public void store(@NonNull final FilterEntity entity, @NonNull final Callbacks<FilterEntity> callbacks) {
     memory().put(entity.getId(), entity);
-    callbacks.onDone(entity);
+    callbacks.onResult(entity);
   }
 }

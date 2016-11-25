@@ -23,11 +23,10 @@ extends AbsAction {
 
   @Override protected void onExecute(@NonNull App app, @Nullable Context context) {
     NotificationManager notificationManager = (NotificationManager) app.getSystemService(NOTIFICATION_SERVICE);
-    notificationManager.notify(1,
-                               new NotificationCompat.Builder(app).setSmallIcon(R.drawable.ic_notification)
-                                                                  .setContentTitle(title)
-                                                                  .setContentText(message)
-                                                                  .setAutoCancel(true)
-                                                                  .build());
+    notificationManager.notify(1, new NotificationCompat.Builder(app).setSmallIcon(R.drawable.ic_notification)
+                                                                     .setContentTitle(title)
+                                                                     .setContentText(message)
+                                                                     .setAutoCancel(true)
+                                                                     .build());
   }
 }

@@ -24,23 +24,28 @@ extends AbsIdMapDataSource<Long, ComicEntity> {
     characterComicsMap = new HashMap<>();
   }
 
+  /**
+   * Store and assign given <i>comics</i> to given <i>characterId</i>.
+   */
   public void store(final long characterId,
                     final List<ComicEntity> entities,
                     @NonNull final Callbacks<List<ComicEntity>> callbacks) {
-    store(entities, new Callbacks<List<ComicEntity>>() {
-      @Override public void onDone(List<ComicEntity> entities) {
+    store(entities, new CallbacksAdapter<List<ComicEntity>>(callbacks) {
+
+      @Override public void onResult(List<ComicEntity> entities) {
         assignComics(characterId, entities);
-        callbacks.onDone(entities);
+        super.onResult(entities);
       }
 
       @Override public void onError(@NonNull Exception exception) {
-        callbacks.onError(exception);
+        assignComics(characterId, entities);
+        super.onError(exception);
       }
     });
   }
 
   public void assignComics(long characterId, List<ComicEntity> entities) {
-    createComicListIfNecessary(characterId, entities);
+    ensureComicListReady(characterId, entities);
     for (ComicEntity entity : entities) {
       assignComic(characterId, entity);
     }
@@ -52,30 +57,32 @@ extends AbsIdMapDataSource<Long, ComicEntity> {
 
   @Override public void getAll(@NonNull final Callbacks<List<ComicEntity>> callbacks) {
     super.getAll(new CallbacksAdapter<List<ComicEntity>>(callbacks) {
-      @Override public void onDone(List<ComicEntity> result) {
-        super.onDone(sortByDigitalIdReversed(result));
+
+      @Override public void onResult(List<ComicEntity> result) {
+        super.onResult(sortByDigitalIdReversed(result));
       }
     });
   }
 
   @Override public void getAll(@Nullable Matcher<ComicEntity> matcher, @NonNull Callbacks<List<ComicEntity>> callbacks) {
     super.getAll(matcher, new CallbacksAdapter<List<ComicEntity>>(callbacks) {
-      @Override public void onDone(List<ComicEntity> result) {
-        super.onDone(sortByDigitalIdReversed(result));
+
+      @Override public void onResult(List<ComicEntity> result) {
+        super.onResult(sortByDigitalIdReversed(result));
       }
     });
   }
 
   public void count(long characterId, @NonNull final Callbacks<Integer> callbacks) {
-    callbacks.onDone(characterComicsMap.containsKey(characterId) ? characterComicsMap.get(characterId).size() : 0);
+    callbacks.onResult(characterComicsMap.containsKey(characterId) ? characterComicsMap.get(characterId).size() : 0);
   }
 
   public void clear(long characterId, Callbacks<Void> callbacks) {
     characterComicsMap.remove(characterId);
-    callbacks.onDone(null);
+    callbacks.onResult(null);
   }
 
-  private void createComicListIfNecessary(long characterId, List<ComicEntity> entities) {
+  private void ensureComicListReady(long characterId, List<ComicEntity> entities) {
     if (!characterComicsMap.containsKey(characterId)) {
       characterComicsMap.put(characterId, new ArrayList<Long>(entities.size()));
     }
@@ -83,6 +90,7 @@ extends AbsIdMapDataSource<Long, ComicEntity> {
 
   private List<ComicEntity> sortByTitle(List<ComicEntity> set) {
     Collections.sort(set, new Comparator<ComicEntity>() {
+
       @Override public int compare(ComicEntity left, ComicEntity right) {
         return left.getTitle().compareTo(right.getTitle());
       }
@@ -92,6 +100,7 @@ extends AbsIdMapDataSource<Long, ComicEntity> {
 
   private List<ComicEntity> sortByDigitalId(List<ComicEntity> set) {
     Collections.sort(set, new Comparator<ComicEntity>() {
+
       @Override public int compare(ComicEntity left, ComicEntity right) {
         return Long.valueOf(left.getDigitalId()).compareTo(right.getDigitalId());
       }

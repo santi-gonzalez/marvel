@@ -27,17 +27,10 @@ implements Entity<Long, CharacterModel> {
 
   // Mapper requirement
   public CharacterEntity(@NonNull CharacterModel source) {
-    this(source.getId(),
-         source.getName(),
-         source.getDescription(),
-         source.getModified(),
-         new ImageEntity(source.getThumbnail()),
-         source.getResourceURI(),
-         new ItemCollectionEntity(source.getComics()),
-         new ItemCollectionEntity(source.getSeries()),
-         new ItemCollectionEntity(source.getStories()),
-         new ItemCollectionEntity(source.getEvents()),
-         SubMapper.toUrlEntity(source.getUrls()));
+    this(source.getId(), source.getName(), source.getDescription(), source.getModified(), new ImageEntity(source.getThumbnail()),
+    source.getResourceURI(), new ItemCollectionEntity(source.getComics()), new ItemCollectionEntity(source.getSeries()),
+    new ItemCollectionEntity(source.getStories()), new ItemCollectionEntity(source.getEvents()),
+    SubMapper.toUrlEntity(source.getUrls()));
   }
 
   public CharacterEntity(Long id,
@@ -153,7 +146,6 @@ implements Entity<Long, CharacterModel> {
   }
 
   @NonNull @Override public CharacterModel toModel() {
-    new ItemCollectionModel(getComics());
     return CharacterModel.newBuilder()
                          .withId(getId())
                          .withName(getName())

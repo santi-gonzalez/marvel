@@ -93,6 +93,7 @@ implements MainPresenter.Presentable {
     // init adapter
     charactersAdapter = new CharactersAdapter();
     charactersAdapter.setOnItemClickListener(new OnItemClickListener() {
+
       @Override public void onItemClicked(View view, CharacterModel character) {
         drawerLayout.closeDrawers();
         comicsEndlessScrollListener.disable();
@@ -105,6 +106,7 @@ implements MainPresenter.Presentable {
     charactersRecyclerView.setLayoutManager(linearLayoutManager);
     charactersRecyclerView.setAdapter(charactersAdapter);
     charactersRecyclerView.addOnScrollListener(new EndlessScrollListener() {
+
       @Override public void onLoadMore(int currentPage) {
         mainPresenter.onCharactersBottomReached(currentPage);
       }
@@ -122,10 +124,11 @@ implements MainPresenter.Presentable {
     RecyclerView.LayoutManager linearLayoutManager = createComicsLayoutManager(comicsAdapter);
     // init recycler view;
     comicsRecyclerView.setLayoutManager(linearLayoutManager);
-    comicsRecyclerView.addItemDecoration(new PaddingItemDecoration(getResources().getDimensionPixelSize(R.dimen.default_gap),
-                                                                   true));
+    comicsRecyclerView.addItemDecoration(
+    new PaddingItemDecoration(getResources().getDimensionPixelSize(R.dimen.default_gap), true));
     comicsRecyclerView.setAdapter(comicsAdapter);
     comicsEndlessScrollListener = new EndlessScrollListener() {
+
       @Override public void onLoadMore(int currentPage) {
         mainPresenter.onComicsBottomReached(currentPage);
       }
@@ -179,16 +182,12 @@ implements MainPresenter.Presentable {
     Intent intent = new Intent(Intent.ACTION_VIEW);
     intent.setData(Uri.parse(URL));
     NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-    notificationManager.notify(0,
-                               new NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_notification)
-                                                                   .setContentTitle("Deep link notification")
-                                                                   .setContentText(URL)
-                                                                   .setContentIntent(PendingIntent.getActivity(this,
-                                                                                                               0,
-                                                                                                               intent,
-                                                                                                               PendingIntent
-                                                                                                               .FLAG_UPDATE_CURRENT))
-                                                                   .build());
+    notificationManager.notify(0, new NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_notification)
+                                                                      .setContentTitle("Deep link notification")
+                                                                      .setContentText(URL)
+                                                                      .setContentIntent(PendingIntent.getActivity(this, 0, intent,
+                                                                      PendingIntent.FLAG_UPDATE_CURRENT))
+                                                                      .build());
   }
 
   @Override public void appendCharacters(List<CharacterModel> characters) {
@@ -211,6 +210,10 @@ implements MainPresenter.Presentable {
 
   @Override public void hideWallLoading() {
     comicsAdapter.hideLoading();
+  }
+
+  @Override public void hideDrawerLoading() {
+    charactersAdapter.hideLoading();
   }
 
   @Override public void showError(String message) {

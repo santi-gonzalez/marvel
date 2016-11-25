@@ -29,6 +29,13 @@ implements Runnable {
   /**
    * Happens on a worker thread.
    */
+  public final void execute(@Nullable Callbacks<Result> callbacks) {
+    execute(null, callbacks);
+  }
+
+  /**
+   * Happens on a worker thread.
+   */
   public final void execute(Params params, @Nullable Callbacks<Result> callbacks) {
     executeInternal(params, newThreadExecutor, callbacks);
   }
@@ -64,12 +71,13 @@ implements Runnable {
   }
 
   /**
-   * Happens on the main thread.
+   * Convenient method. Happens on the main thread.
    */
   private void dispatchExecute() {
     logVerbose("onExecute");
     if (callbacks != null) {
       executeMainThread(new Runnable() {
+
         @Override public void run() {
           callbacks.onExecute();
         }
@@ -78,12 +86,13 @@ implements Runnable {
   }
 
   /**
-   * Happens on the main thread.
+   * Convenient method. Happens on the main thread.
    */
   protected void dispatchResult(final Result result) {
     logVerbose("onResult: " + result);
     if (callbacks != null) {
       executeMainThread(new Runnable() {
+
         @Override public void run() {
           callbacks.onResult(result);
         }
@@ -92,12 +101,13 @@ implements Runnable {
   }
 
   /**
-   * Happens on the main thread.
+   * Convenient method. Happens on the main thread.
    */
   protected void dispatchError(final Exception exception) {
     logException(exception);
     if (callbacks != null) {
       executeMainThread(new Runnable() {
+
         @Override public void run() {
           callbacks.onError(exception);
         }

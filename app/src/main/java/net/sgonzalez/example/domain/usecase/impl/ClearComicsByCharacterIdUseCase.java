@@ -23,8 +23,9 @@ extends AbsUseCase<Long, Void> {
   }
 
   @Override protected void onExecute(Long characterId) {
-    comicRepository.clearInLocalByCharacterId(characterId, new Callbacks<Void>() {
-      @Override public void onDone(Void result) {
+    comicRepository.clearStoredByCharacterId(characterId, new Callbacks<Void>() {
+
+      @Override public void onResult(Void result) {
         dispatchResult(result);
       }
 
